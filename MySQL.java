@@ -8,10 +8,16 @@ import com.mysql.jdbc.PreparedStatement;
 public class MySQL {
 	private static String url="jdbc:mysql://localhost:3306/traveldb";    //JDBCµÄURL 
 	private static String username="root";
-	private static String password="yy745628661";
-    public static boolean InsertBasic(Basic temp) {
+	private static String pword="yy745628661";
+	public static boolean InsertBasic(Basic temp) {
     	try {
-    		Connection conn = DriverManager.getConnection(url,username,password);
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
 			String sql = "INSERT INTO Basic VALUES ('"+temp.getID()+"','"+temp.getPassword()+"','"
     		+temp.getNickname()+ "','"+temp.getName()+"','"+temp.isSex()+"','"
 			+temp.getComcity()+"','"+temp.getBirthday()+"','"+temp.getPhonenum()+"');";
@@ -28,7 +34,13 @@ public class MySQL {
     }
     public static boolean UpdateBasic(Basic temp) {
     	try {
-    		Connection conn = DriverManager.getConnection(url,username,password);
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
 			String sql = "update Basic set PassWord=?,NickName=?,Name=?,Sex=?,ComCity=?,Birthday=?,PhoneNum=? where ID=?";
 	        PreparedStatement ptmt = (PreparedStatement) conn.prepareStatement(sql);
 	        ptmt.setString(1, temp.getPassword());
@@ -49,7 +61,13 @@ public class MySQL {
     }
     public static boolean DeleteBasic(Basic temp) {
     	try {
-    		Connection conn = DriverManager.getConnection(url,username,password);
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
 			String sql = "delete from Basic where ID=?";
 	        PreparedStatement ptmt = (PreparedStatement) conn.prepareStatement(sql);
 	        ptmt.setString(1, temp.getID());
@@ -61,9 +79,44 @@ public class MySQL {
 			return false;
 		}
     }
+    public boolean QueryBasic1(String ID, String password) {
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "select PassWord from Basic where ID='" +ID+ "';";
+	        Statement stmt= conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        String password_temp = new String();
+	        if(rs.next()) {
+            	password_temp=rs.getString("PassWord");
+	        	stmt.close();conn.close();rs.close();
+	        	if(password_temp.equals(password))
+	        		return true;
+	        	else
+	        		return false;
+	        }
+	        else
+	        	return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+    }
+    
     public static boolean InsertTravelPlan(TravelPlan temp) {
     	try {
-    		Connection conn = DriverManager.getConnection(url,username,password);
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
 			String sql = "INSERT INTO TravelPlan VALUES ('"+temp.getID()+"','"+temp.getTeamID()+"','"
     		+temp.getPath()+ "','"+temp.getWishdate()+"');";
 	        Statement stmt= conn.createStatement();
@@ -79,7 +132,13 @@ public class MySQL {
     }
     public static boolean UpdateTravelPlan(TravelPlan temp) {
     	try {
-    		Connection conn = DriverManager.getConnection(url,username,password);
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
 			String sql = "update TravelPlan set TeamID=?,Path=?,WishDate=? where ID=?";
 	        PreparedStatement ptmt = (PreparedStatement) conn.prepareStatement(sql);
 	        ptmt.setString(1, temp.getTeamID());
@@ -96,7 +155,13 @@ public class MySQL {
     }
     public static boolean DeleteTravelPlan(TravelPlan temp) {
     	try {
-    		Connection conn = DriverManager.getConnection(url,username,password);
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
 			String sql = "delete from TravelPlan where ID=?";
 	        PreparedStatement ptmt = (PreparedStatement) conn.prepareStatement(sql);
 	        ptmt.setString(1, temp.getID());
