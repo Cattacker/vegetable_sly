@@ -1,0 +1,10 @@
+#Java class file
+*.class
+
+#Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+#build
+/build/
