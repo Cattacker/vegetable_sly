@@ -8,3 +8,6 @@ Desktop.ini
 
 #build
 /build/
+
+#project settings
+/.settings/
