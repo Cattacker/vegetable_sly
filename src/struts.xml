@@ -4,22 +4,34 @@
 <struts>
     <include file="struts-default.xml"/>
     
-    <constant name="struts.i18n.encoding" value="UTF-8"/>
-    
     
     <package name="action" extends="struts-default">
         <action name="LoginAction" class="action.LoginAction">
             <result name="success">start.jsp</result>
-            <result name="login" >/loginresult.jsp</result>
-            <result name="error">/loginresult.jsp</result>
+            <result name="input">/login.jsp</result>
         </action>
         <action name="RegAction" class="action.RegAction">
+        	<result name="input">register.jsp</result>
             <result name="success">login.jsp</result>
-            <result name="login" >/loginresult.jsp</result>
-            <result name="error">/loginresult.jsp</result>
         </action>
         <action name="LogoutAction" class="action.LogoutAction">
         	<result name="success">start.jsp</result>
         </action>
+        <action name="AddFriends" class="action.AddFriends">
+        	<result name="input">/homepage.jsp</result>
+        	<result >start.jsp</result>
+        </action>
+        <action name="QueryFriends" class="action.QueryFriends">
+        	<result name="input">/homepage.jsp</result>
+        	<result name="success">/friends.jsp</result>
+        </action>
+        <action name="DeleteFriend" class="action.DeleteFriend">
+        	<result name="success">/homepage.jsp</result>
+        </action>
+        <action name="FriendDetails" class="action.FriendDetails">
+        	<result name="success">/friend_details.jsp</result>
+        </action>
     </package>
+    
+   
 </struts>

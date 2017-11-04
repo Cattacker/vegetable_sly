@@ -7,8 +7,9 @@
 </head>
 <body>
 		<h2>主页</h2>
-        欢迎，${sessionScope.user_ID}，您一登录
-        
-	
+        欢迎，${sessionScope.user_ID}，您已登录
+        <input type="button" value="个人主页" onclick="window.location.href='homepage.jsp';"/>
+   		<input type="button" value="注册" onclick="window.location.href='register.jsp';"/>
+   		<a href="LogoutAction.action">注销</a>
 </body>
 </html>

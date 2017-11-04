@@ -8,30 +8,25 @@ import mysql.MySQL;
 public class LoginAction extends ActionSupport {
 
 	/**登陆成功返回success
-	 * 用户名密码错误返回login
-	 * 数据格式错误返回error
+	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String password;
-	private String none;
-
+	
+	
+	 public void validate() {
+		 super.validate();
+	       
+	     MySQL my = new MySQL();
+	     if(my.QueryBasic1(id, password)==false)  {
+	    	 this.addFieldError("error", "用户名密码错误！请重新输入");
+	     }
+	}
 	public String execute(){
-		if(true) {
-			MySQL my = new MySQL();
-			if(my.QueryBasic1(id, password)==true) {
-				ActionContext.getContext().getSession().put("user_ID", id);
-				ActionContext.getContext().getSession().put("user_password", password);
-				return SUCCESS;//登陆成功
-			}
-			else//用户名密码错误
-			{
-				setNone("用户名密码错误！请重新输入");
-				return LOGIN;
-			}
-		}
-		setNone("数据格式输入有误！");
-		return ERROR;//数据格式错误
+			ActionContext.getContext().getSession().put("user_ID", id);
+			ActionContext.getContext().getSession().put("user_password", password);
+			return SUCCESS;
 	}
 	
 	public String getId() {
@@ -47,12 +42,4 @@ public class LoginAction extends ActionSupport {
 		this.password = password;
 	}
 
-	public String getNone() {
-		return none;
-	}
-
-	public void setNone(String none) {
-		this.none = none;
-	}
-	
 }

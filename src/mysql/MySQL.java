@@ -1,6 +1,8 @@
 package mysql;
 
 import java.sql.*;
+import java.util.ArrayList;
+
 import mysql.Basic;
 import mysql.TravelPlan;
 import com.mysql.jdbc.PreparedStatement;
@@ -84,6 +86,38 @@ public class MySQL {
 			return false;
 		}
     }
+    public Basic QueryBasic(String ID) {
+    	Basic temp = new Basic();
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "select * from Basic where ID='" +ID+ "';";
+	        Statement stmt= conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        if(rs.next()) {
+            	temp.setBirthday(rs.getDate("Birthday"));
+            	temp.setComcity(rs.getString("Comcity"));
+            	temp.setID(ID);
+            	temp.setName(rs.getString("Name"));
+            	temp.setNickname("NickName");
+            	temp.setPhonenum("PhoneNum");
+            	if(rs.getInt("Sex")==1) {
+            		temp.setSex(true);
+            	}
+            	else
+            		temp.setSex(false);
+	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return temp;
+    }
+    //查询用户名密码是否匹配
     public boolean QueryBasic1(String ID, String password) {
     	try {
     		try {
@@ -112,7 +146,29 @@ public class MySQL {
 			return false;
 		}
     }
-    
+    //查询用户ID是否已经存在
+    public boolean QueryBasic2(String ID) {
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "select PassWord from Basic where ID='" +ID+ "';";
+	        Statement stmt= conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        if(rs.next()) {
+            	return true;
+	        }
+	        else
+	        	return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+    }
     public static boolean InsertTravelPlan(TravelPlan temp) {
     	try {
     		try {
@@ -146,7 +202,7 @@ public class MySQL {
     		Connection conn = DriverManager.getConnection(url,username,pword);
 			String sql = "update TravelPlan set TeamID=?,Path=?,WishDate=? where ID=?";
 	        PreparedStatement ptmt = (PreparedStatement) conn.prepareStatement(sql);
-	        ptmt.setString(1, temp.getTeamID());
+	        ptmt.setLong(1, temp.getTeamID());
 	        ptmt.setLong(2, temp.getPath());
 	        ptmt.setString(3, temp.getWishdate());
 	        ptmt.setString(4, temp.getID());
@@ -178,5 +234,65 @@ public class MySQL {
 			return false;
 		}
     }
-    
+    public static boolean InsertUserRelation(UserRelation temp) {
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "INSERT INTO user_relation VALUES ('"+temp.getFollowing_user_id()+"','"
+    		+temp.getFollowed_user_id()+"');";
+	        Statement stmt= conn.createStatement();
+	        stmt.execute(sql);
+	        
+	        stmt.close();conn.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+    }
+    public ArrayList<String>  QueryUserRelation(String ID) {
+    	ArrayList<String> followed_user_id=new ArrayList<String>();
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "select followed_user_id from user_relation where following_user_id='" +ID+ "';";
+	        Statement stmt= conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        while(rs.next()) {
+            	followed_user_id.add(rs.getString("followed_user_id"));
+	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return followed_user_id;
+    }
+    public static boolean DeleteUserRelation(String id) {
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "delete from user_relation where followed_user_id=?";
+	        PreparedStatement ptmt = (PreparedStatement) conn.prepareStatement(sql);
+	        ptmt.setString(1,id);
+	        ptmt.execute();
+	        ptmt.close();conn.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+    }
 }

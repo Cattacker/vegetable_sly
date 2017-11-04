@@ -6,19 +6,22 @@
 <head>
 
 <title>登陆</title>
-<s:head theme="ajax"/>
 
 </head>
 <body>
 		<h2>登陆</h2>
-        <s:form id="loginform" action="LoginAction" method='post'  theme="ajax">
-        <s:textfield name="id" label="ID"/>
-        <s:textfield name="password" label="PassWord"/>
-        <s:submit value="登陆" targets="show" /> 
+        <s:form id="loginform" action="LoginAction" >
+        <s:fielderror name="error"/>
+        <br>
+        ID:<br><input type="text" name="id" />
+        <br>
+        PassWord:<br><input type="password"  name="password"/>
+        <br>
+        <s:submit value="登陆" /> 
         </s:form >
-        <div id="show" ></div>
+        
         <input type="button" value="返回首页" onclick="window.location.href='start.jsp';"/>
-   		<a href="register.jsp">注册</a>
+   		<input type="button" value="注册" onclick="window.location.href='register.jsp';"/>
    		<a href="LogoutAction.action">注销</a>
 </body>
 </html>

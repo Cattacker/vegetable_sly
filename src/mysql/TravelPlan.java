@@ -4,7 +4,7 @@ package mysql;
 
 public class TravelPlan {
 	private String ID;
-	private String teamID;
+	private long  teamID;
 	private long path;
 	private String wishdate;
 	
@@ -20,10 +20,10 @@ public class TravelPlan {
 	public void setPath(long path) {
 		this.path = path;
 	}
-	public String getTeamID() {
+	public long getTeamID() {
 		return teamID;
 	}
-	public void setTeamID(String teamID) {
+	public void setTeamID(long teamID) {
 		this.teamID = teamID;
 	}
 	public String getWishdate() {

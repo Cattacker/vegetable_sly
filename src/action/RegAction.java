@@ -18,23 +18,22 @@ public class RegAction extends ActionSupport {
 	private String repassword;
 	private String none;
 
+	public void validate() {
+		 super.validate();
+	       
+	     MySQL my = new MySQL();
+	     if(password.equals(repassword)==false)  {
+	    	 this.addFieldError("error", "两次密码不一致！请重新输入");
+	     }
+	     else if(my.QueryBasic2(id)) {
+	    	 this.addFieldError("error", "该ID已被注册！请重新输入");
+	     }
+	}
 	public String execute(){
-		if(true) {
-			
-			if(password.equals(repassword)) {
-				Basic temp = new Basic();
-				temp.setID(id);temp.setPassword(password);temp.setNickname(nickname);
-				new MySQL().InsertBasic(temp);
-				return SUCCESS;//注册成功
-			}
-			else//两次密码不一致
-			{
-				setNone("两次密码不一致！请重新输入");
-				return LOGIN;
-			}
-		}
-		setNone("数据格式输入有误！");
-		return ERROR;//数据格式错误
+			Basic temp = new Basic();
+			temp.setID(id);temp.setPassword(password);temp.setNickname(nickname);
+			new MySQL().InsertBasic(temp);
+			return SUCCESS;//注册成功
 	}
 	
 	public String getId() {

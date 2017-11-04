@@ -6,19 +6,19 @@
 <head>
 
 <title>注册</title>
-<s:head theme="ajax"/>
+<s:head/>
 
 </head>
 <body>
 		<h2>注册</h2>
-        <s:form id="regform" action="RegAction" method='post'  theme="ajax">
-        <s:textfield name="id" label="ID"/>
-        <s:textfield name="nickname" label="NickName"/>
-        <s:textfield name="password" label="PassWord"/>
-        <s:textfield name="repassword" label="repassword"></s:textfield>
-        <s:submit value="注册" targets="show"/> 
+        <s:form id="regform" action="RegAction" >
+        <s:fielderror name="error"></s:fielderror>
+        ID:<br><input type="text" name="id" />
+        <br>NickName:<br><input type="text"name="nickname" />
+        <br>PassWord:<br><input type="password" name="password" />
+        <br>RePassWord:<br><input type="password" name="repassword" />
+        <s:submit value="注册" /> 
         </s:form >
-        <div id="show" ></div>
         <input type="button" value="返回首页" onclick="window.location.href='start.jsp';"/>
    		
 </body>
