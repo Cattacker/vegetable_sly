@@ -10,7 +10,7 @@ import com.mysql.jdbc.PreparedStatement;
 public class MySQL {
 	private static String url="jdbc:mysql://localhost:3306/traveldb";    //JDBCµÄURL 
 	private static String username="root";
-	private static String pword="yy745628661";
+	private static String pword="7374";
 	
 	public boolean InsertBasic(Basic temp) {
     	try {
@@ -234,6 +234,33 @@ public class MySQL {
 			return false;
 		}
     }
+    
+    public ArrayList<TravelPlan>  QueryTravelPlan(String ID){
+    	ArrayList<TravelPlan> travelplan=new ArrayList<TravelPlan>();
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "select travelplan.* from travelplan where ID='" +ID+ "';";
+	        Statement stmt= conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        while(rs.next()) {
+	        	String id = rs.getString("ID");
+	        	long teamid = rs.getLong("TeamID");
+	        	long path = rs.getLong("Path");
+	        	String wishdate = rs.getString("WishDate");
+	        	TravelPlan tmp = new TravelPlan(id,teamid,path,wishdate);
+	        	travelplan.add(tmp);
+	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return travelplan;
+    }
+    
     public static boolean InsertUserRelation(UserRelation temp) {
     	try {
     		try {

@@ -31,6 +31,10 @@
         <action name="FriendDetails" class="action.FriendDetails">
         	<result name="success">/friend_details.jsp</result>
         </action>
+        <action name="QueryTravelPlan" class="action.QueryTravelPlan">
+        	<result name="input">/homepage.jsp</result>
+        	<result name="success">/travelplan.jsp</result>
+        </action>
     </package>
     
    
