@@ -11,3 +11,7 @@ Desktop.ini
 
 #project settings
 /.settings/
+.project
+
+#localization
+/src/localization/
