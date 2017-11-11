@@ -171,6 +171,30 @@ public class MySQL {
 			return false;
 		}
     }
+    
+    public static boolean isUserExist(String ID) {
+        try {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (ClassNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            Connection conn = DriverManager.getConnection(url,username,pword);
+            String sql = "select PassWord from Basic where ID='" +ID+ "';";
+            Statement stmt= conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if(rs.next()) {
+                return true;
+            }
+            else
+                return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
     public static boolean InsertTravelPlan(TravelPlan temp) {
     	try {
     		try {
