@@ -14,10 +14,12 @@ public class LocationDataAccess implements LocalSettings {
             }
             Connection conn = DriverManager
                     .getConnection(databaseURL, username, password);
-            String sql = ""
+            String sql = "";
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
+        return 0;
     }
     
     public static boolean hasLocation(String location) {
@@ -29,10 +31,12 @@ public class LocationDataAccess implements LocalSettings {
             }
             Connection conn = DriverManager
                     .getConnection(databaseURL, username, password);
-            String sql = "SELECT "
+            String sql = "SELECT ";
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
+        return true;
     }
     
 }
