@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
@@ -122,6 +122,7 @@
         var start = $("#r-result1 input").val();
         var end = $("#r-result2 input").val();
         search(start,end,routePolicy[i]);
+	System.out.println("...");
         function search(start,end,route){
             var driving = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true},policy: route});
             driving.search(start,end);
