@@ -2,6 +2,8 @@ package action;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import mysql.Basic;
 import mysql.MySQL;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -29,17 +31,24 @@ public class QueryUsers extends ActionSupport {
     }
     
     public String execute() throws Exception {
-        users = new LinkedList<String>();
-        for (String id : keywords)
-            if (MySQL.isUserExist(id))
-                users.add(id);
+    	String id=keywords[0];
+    	Basic temp=new MySQL().QueryBasic(id);
+    	users.add("ID");
+    	users.add(id);
+    	users.add("NickName");
+    	users.add(temp.getNickname());
+    	users.add("Name");
+    	users.add(temp.getName());
+    	users.add("ComCity");
+    	users.add(temp.getComcity());
         return SUCCESS;
     }
     
     @Override
     public void validate() {
         super.validate();
-        if (keywords.length == 0)
-            addFieldError("keywords", "璇疯緭鍏ュ叧閿瓧!");
+        users = new LinkedList<String>();
+        if (MySQL.isUserExist(keywords[0])==false)
+            addFieldError("error", "用户不存在!");
     }
 }
