@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,11 +19,12 @@
 		<div class="col-md-12">
 			<ul class="breadcrumb">
 				<li>
-					<a href="homepage.jsp">个人主页</a> <span class="divider">/</span>
-				</li>
-				<li>
-					<a href="start.jsp">首页</a> <span class="divider">/</span>
-				</li>
+						<li>
+							<a href="MyDetails1.action?id=${sessionScope.user_ID}">个人主页</a> <span class="divider">/</span>
+						</li>
+						<li>
+							<a href="start.jsp">首页</a> <span class="divider">/</span>
+						</li>
 				
 			</ul>
 			<div class="carousel slide" id="carousel-242212">
@@ -61,7 +63,8 @@
 				</div> <a class="left carousel-control" href="#carousel-242212" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-242212" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
 			</div>
 			<ul class="breadcrumb">
-				
+				<li>
+				<s:fielderror name="error"></s:fielderror>
 			</ul>
 		</div>
 	</div>

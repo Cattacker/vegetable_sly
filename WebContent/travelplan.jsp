@@ -309,7 +309,8 @@
 
     <title>我的旅游计划</title>
 </head>
-
+<body>
+	
 <form id="form1" name="form1" method="post" action="">
     <h3>可编辑的表格</h3>
     <table width="698" border="0" cellpadding="0" cellspacing="0" id="tabProduct">
