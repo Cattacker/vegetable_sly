@@ -7,24 +7,17 @@ import com.opensymphony.xwork2.ActionContext;
 
 public class UserState {
     
-    private final Map session;
-    
-    public UserState() {
-        session = ActionContext.getContext().getSession();
+    public static boolean isManager() {
+        Map session = ActionContext.getContext().getSession();
+        return Objects.equals(session.get("user_ID"), "root");
     }
     
-    public boolean isManager() {
-        return Objects.equals(session.get("user_id"), "root");
+    public static boolean isVisitor() {
+        Map session = ActionContext.getContext().getSession();
+        return session.containsKey("user_ID") == false;
     }
     
-    public boolean isVisitor() {
-        return Objects.equals(session.get("user_id"), "tourist");
-    }
-    
-    public boolean isMember() {
-        if (session.containsKey("user_id"))
-            return !(isVisitor() || isManager());
-        else
-            return false;
+    public static boolean isMember() {
+        return !(isVisitor() || isManager());
     }
 }

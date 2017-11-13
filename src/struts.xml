@@ -37,5 +37,5 @@
         </action>
     </package>
     
-   
+	<include file="action/personal/personal.xml"/>
 </struts>
