@@ -38,6 +38,7 @@
         <action name="QueryTravelPlan" class="action.QueryTravelPlan">
         	<result name="input">/homepage.jsp</result>
         	<result name="success">/travelplan.jsp</result>
+
         </action>
     </package>
     
