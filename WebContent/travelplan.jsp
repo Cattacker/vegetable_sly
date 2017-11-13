@@ -346,7 +346,6 @@ function displayStatusMsg() {
                         row.cells[j].innerHTML = Expression(row,expn);
                     }
                 }
-
             }
         }
 
