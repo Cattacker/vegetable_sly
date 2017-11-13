@@ -43,7 +43,7 @@
     		<div class="container" style="padding-top: 20px; margin-top: 20px">
 		      <ul class="nav nav-pills nav-fill">
 		        <li class="nav-item">
-		          <a class="nav-link" href="homepage.jsp">我的信息</a>
+		          <a class="nav-link" href="MyDetails.action?id=${sessionScope.user_ID}">我的信息</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link active" href="QueryFriends.action">我的好友</a>
@@ -65,6 +65,7 @@
 		        </li>
 		      </ul>
 			</div>
+			<s:fielderror name="error"></s:fielderror>
 			<table class="table">
 			  <caption>我的好友</caption>
 			  <thead>
