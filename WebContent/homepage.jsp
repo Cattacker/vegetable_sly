@@ -58,7 +58,7 @@
 		          <a class="nav-link" href="">未评价计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="">全部计划</a>
+		          <a class="nav-link" href="QueryTravelPlan.action">全部计划</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link" href="searchauthorrequest?">待加</a>
@@ -66,6 +66,7 @@
 		      </ul>
 			</div>
 			<ul><s:fielderror name="error"/></ul>
+			<s:fielderror name="error"></s:fielderror>
 			<table class="table">
 			  <caption>我的信息</caption>
 			  <thead>

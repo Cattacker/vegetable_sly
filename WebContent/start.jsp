@@ -24,7 +24,7 @@
 						<a class="navbar-brand" href="index.jsp">寻找“驴友”</a>
 						</li>
 						<li>
-							<a href="homepage.jsp">个人主页</a> <span class="divider">/</span>
+							<a href="MyDetails.action?id=${sessionScope.user_ID}">个人主页</a> <span class="divider">/</span>
 						</li>
 						<li>
 							<a href="start.jsp">首页</a> <span class="divider">/</span>
@@ -65,7 +65,9 @@
 		        </li>
 		      </ul>
 			</div>
-			
+			<ul>
+				<s:fielderror name="error"></s:fielderror>
+			</ul>
 		</div>
 	
 	
