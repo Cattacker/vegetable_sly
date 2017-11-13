@@ -34,8 +34,13 @@
         <action name="MyDetails" class="action.FriendDetails">
         	<result name="input">/start.jsp</result>
         	<result name="success">/homepage.jsp</result>
+		</action>
+        <action name="QueryTravelPlan" class="action.QueryTravelPlan">
+        	<result name="input">/homepage.jsp</result>
+        	<result name="success">/travelplan.jsp</result>
+
         </action>
     </package>
     
-   
+	<include file="action/personal/personal.xml"/>
 </struts>

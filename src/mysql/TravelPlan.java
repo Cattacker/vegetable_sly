@@ -8,6 +8,13 @@ public class TravelPlan {
 	private long path;
 	private String wishdate;
 	
+	public TravelPlan(String id, long teamid, long path, String wishdate){
+		this.ID = id;
+		this.teamID = teamid;
+		this.path = path;
+		this.wishdate = wishdate;
+	}
+	
 	public String getID() {
 		return ID;
 	}

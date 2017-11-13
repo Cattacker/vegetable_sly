@@ -7,10 +7,12 @@ import mysql.Basic;
 import mysql.TravelPlan;
 import com.mysql.jdbc.PreparedStatement;
 
+import localization.LocalSettings;
+
 public class MySQL {
-	private static String url="jdbc:mysql://localhost:3306/traveldb";    //JDBCµÄURL 
-	private static String username="root";
-	private static String pword="yy745628661";
+	private static String url = LocalSettings.databaseURL;    //JDBCï¿½ï¿½URL 
+	private static String username = LocalSettings.username;
+	private static String pword = LocalSettings.password;
 	
 	public boolean InsertBasic(Basic temp) {
     	try {
@@ -117,7 +119,7 @@ public class MySQL {
 		}
     	return temp;
     }
-    //²éÑ¯ÓÃ»§ÃûÃÜÂëÊÇ·ñÆ¥Åä
+    //ï¿½ï¿½Ñ¯ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Æ¥ï¿½ï¿½
     public boolean QueryBasic1(String ID, String password) {
     	try {
     		try {
@@ -146,7 +148,7 @@ public class MySQL {
 			return false;
 		}
     }
-    //²éÑ¯ÓÃ»§IDÊÇ·ñÒÑ¾­´æÔÚ
+    //ï¿½ï¿½Ñ¯ï¿½Ã»ï¿½IDï¿½Ç·ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½
     public boolean QueryBasic2(String ID) {
     	try {
     		try {
@@ -169,6 +171,30 @@ public class MySQL {
 			return false;
 		}
     }
+    
+    public static boolean isUserExist(String ID) {
+        try {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (ClassNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            Connection conn = DriverManager.getConnection(url,username,pword);
+            String sql = "select PassWord from Basic where ID='" +ID+ "';";
+            Statement stmt= conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if(rs.next()) {
+                return true;
+            }
+            else
+                return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
     public static boolean InsertTravelPlan(TravelPlan temp) {
     	try {
     		try {
@@ -234,6 +260,33 @@ public class MySQL {
 			return false;
 		}
     }
+    
+    public ArrayList<TravelPlan>  QueryTravelPlan(String ID){
+    	ArrayList<TravelPlan> travelplan=new ArrayList<TravelPlan>();
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "select travelplan.* from travelplan where ID='" +ID+ "';";
+	        Statement stmt= conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        while(rs.next()) {
+	        	String id = rs.getString("ID");
+	        	long teamid = rs.getLong("TeamID");
+	        	long path = rs.getLong("Path");
+	        	String wishdate = rs.getString("WishDate");
+	        	TravelPlan tmp = new TravelPlan(id,teamid,path,wishdate);
+	        	travelplan.add(tmp);
+	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return travelplan;
+    }
+    
     public static boolean InsertUserRelation(UserRelation temp) {
     	try {
     		try {
