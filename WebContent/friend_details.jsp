@@ -43,7 +43,7 @@
     		<div class="container" style="padding-top: 20px; margin-top: 20px">
 		      <ul class="nav nav-pills nav-fill">
 		        <li class="nav-item">
-		          <a class="nav-link" href="homepage.jsp">我的信息</a>
+		          <a class="nav-link" href="MyDetails2.action?id=${sessionScope.user_ID}">我的信息</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link active" href="QueryFriends.action">我的好友</a>
@@ -65,6 +65,10 @@
 		        </li>
 		      </ul>
 			</div>
+			<div class="row">
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-10">
 			<table class="table">
 			  <caption>${name}详细信息</caption>
 			  <thead>
@@ -98,6 +102,10 @@
 			    
 			  </tbody>
 			</table>
+			</div>
+			<div class="col-md-1">
+			</div>
+			</div>
 		</div>
 	
 	

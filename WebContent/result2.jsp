@@ -67,9 +67,7 @@
 			</div>
 			<ul class="nav nav-pills nav-fill">
 			</ul>
-			<div class="row">
-				<div class="col-md-2">
-				</div>
+			
 					
 					<s:form class="form-horizontal" role="form"  action="OthersDedails.action">
 						<div class="col-md-6">
@@ -83,12 +81,13 @@
 						  <div class="col-md-3">
 						  <div class="form-group">
 						    <div class="col-sm-offset-2 col-sm-10">
-						      <sx:submit type="submit"  targets="result" value="查找"></sx:submit>
+						      <button type="submit" class="btn btn-primary">查找</button>
 						  	</div>
 						 </div>
 						 </div>
 					</s:form>
 					<s:fielderror name="error"></s:fielderror>
+					
 					<table class="table">
 			  <caption>${name}详细信息</caption>
 			  <thead>
@@ -121,16 +120,12 @@
 			      <td>${phonenum}</td></tr>
 			    <tr class="active">
 					      <td>操作</td>
-					      <td><a class="nav-link active" href="AddFriends.action">加好友</a></td></tr>
+					      <td><a class="nav-link active" href="AddFriends.action?id=${followed}">加好友</a></td></tr>
 			  </tbody>
 			</table>
-					
+				
 					    
-					   
-				<div class="col-md-1">
-				</div>
-			</div>
-			
+				
 		</div>
 		
 	

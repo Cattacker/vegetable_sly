@@ -13,7 +13,60 @@
     <meta name="description" content="Source code generated using layoutit.com">
     <meta name="author" content="LayoutIt!">
 	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    
+    <script language=Javascript>
+	   var bannerAD=new Array();
+	   var bannerADlink=new Array();
+	   var adNum=0;
+	 
+	   bannerAD[0]="http://localhost:8080/test1/image/gl2.png";
+	   bannerADlink[0]="http://www.mafengwo.cn/poi/404.html"
+	   bannerAD[1]="http://localhost:8080/test1/image/gl3.png";
+	   bannerADlink[1]="http://www.mafengwo.cn/poi/405.html";
+	   bannerAD[2]="http://localhost:8080/test1/image/gl4.png";
+	   bannerADlink[2]="http://www.mafengwo.cn/poi/407.html";
+	   bannerAD[3]="http://localhost:8080/test1/image/gl5.png";
+	   bannerADlink[3]="http://www.mafengwo.cn/poi/34011.html";
+	    
+	   var preloadedimages=new Array();
+	   for (i=1;i<bannerAD.length;i++){
+	      preloadedimages[i]=new Image();
+	      preloadedimages[i].src=bannerAD[i];
+	   }
+	 
+	function setTransition(){
+	   if (document.all){
+	      bannerADrotator.filters.revealTrans.Transition=Math.floor(Math.random()*23);
+	      bannerADrotator.filters.revealTrans.apply();
+	   }
+	}
+	 
+	function playTransition(){
+	   if (document.all)
+	      bannerADrotator.filters.revealTrans.play()
+	}
+	 
+	function nextAd(){
+	   if(adNum<bannerAD.length-1)adNum++ ;
+	      else adNum=0;
+	   setTransition();
+	   document.images.bannerADrotator.src=bannerAD[adNum];
+	   playTransition();
+	   theTimer=setTimeout("nextAd()", 5000);
+	}
+	 
+	function jump2url(){
+	   jumpUrl=bannerADlink[adNum];
+	   jumpTarget='_blank';
+	   if (jumpUrl != ''){
+	      if (jumpTarget != '')window.open(jumpUrl,jumpTarget);
+	      else location.href=jumpUrl;
+	   }
+	}
+	function displayStatusMsg() { 
+	   status=bannerADlink[adNum];
+	   document.returnValue = true;
+	}
+	</SCRIPT>
   </head>
   <body>
   
@@ -70,6 +123,8 @@
 			<ul>
 				<s:fielderror name="error"></s:fielderror>
 			</ul>
+			<A onmouseover="displayStatusMsg();return document.returnValue" href="javascript:jump2url()"><IMG style="FILTER: revealTrans(duration=2,transition=20)" src="http://image2.sina.com.cn/home/images/sina_logo2.gif" border=0 name=bannerADrotator></a>
+			<SCRIPT language=JavaScript>nextAd()</SCRIPT>
 		</div>
 	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 	<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>

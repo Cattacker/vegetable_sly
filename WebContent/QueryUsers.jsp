@@ -67,9 +67,7 @@
 			</div>
 			<ul class="nav nav-pills nav-fill">
 			</ul>
-			<div class="row">
-				<div class="col-md-2">
-				</div>
+			
 				
 					<s:form class="form-horizontal" role="form"  action="OthersDetails.action">
 						<div class="col-md-6">
@@ -83,11 +81,12 @@
 						  <div class="col-md-3">
 						  <div class="form-group">
 						    <div class="col-sm-offset-2 col-sm-10">
-						      <sx:submit type="submit"  targets="result" value="查找"></sx:submit>
+						      <button type="submit" class="btn btn-primary">查找</button>
 						  	</div>
 						 </div>
 						 </div>
 					</s:form>
+					
 					<table class="table" id="result">
 					  <caption>${name}详细信息</caption>
 					  <thead>
@@ -100,9 +99,7 @@
 					   
 					  </tbody>
 					</table>
-				<div class="col-md-1">
-				</div>
-			</div>
+				
 			
 		</div>
 		
