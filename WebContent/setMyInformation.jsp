@@ -11,15 +11,16 @@
     <s:form action="SetMyInformation_commit" >
     	<input type="hidden" name="user.id" value="${user.id}"/>
     	ID : ${user.id}<br/>
-		<s:textfield name="user.nickname" label="昵称" 
-					value='${user.nickname}'/>
-		<s:textfield name="user.name" label="姓名" value="${user.name}"/>
-		<s:textfield name="user.startCity" label="常用出发城市"
-					value="${user.startCity}"/>
-		<s:textfield name="user.birthday" label="出生日期"
-					value="${user.birthday}"/>
-		<s:textfield name="user.phoneNum" label="电话号码"
-					value="${user.phoneNum}"/>
+		<s:textfield name="user.nickname" label="昵称">
+			${user.nickname}</s:textfield>
+		<s:textfield name="user.name" label="姓名">
+			${user.name}</s:textfield>
+		<s:textfield name="user.startCity" label="常用出发城市">
+			${user.startCity}</s:textfield>
+		<s:textfield name="user.birthday" label="出生日期">
+					${user.birthday}</s:textfield>
+		<s:textfield name="user.phoneNum" label="电话号码">
+					${user.phoneNum}</s:textfield>
 		<s:submit value="提交修改" /> 
 	</s:form >
 </body>
