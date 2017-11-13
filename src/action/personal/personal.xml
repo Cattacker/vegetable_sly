@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="action.personal" namespace="/" extends="struts-default">
+		<action name="GetMyInformation" 
+				class="action.personal.GetMyInformationAction">
+			<result name="login">login.jsp</result>
+			<result name="success">myInformation.jsp</result>
+		</action>
+		<action name="SetMyInformation_*"
+				class="action.personal.SetMyInformationAction"
+				method="{1}">
+			<result name="login">login.jsp</result>
+			<result name="success">myInformation.jsp</result>
+			<result name="getView">setMyInformation.jsp</result>
+		</action>
+			
+	</package>
+</struts>

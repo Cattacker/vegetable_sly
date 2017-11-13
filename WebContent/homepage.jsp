@@ -11,6 +11,7 @@
 		<s:fielderror  name="error"/>
 		<input type="button"  value="我的好友" onclick="window.location.href='QueryFriends.action';">
 		<input type="button"  value="我的旅游计划" onclick="window.location.href='QueryTravelPlan.action';">
-	
+		<input type="button" value="个人信息" 
+			onclick="window.location.href='GetMyInformation.action;'"/>
 </body>
 </html>
