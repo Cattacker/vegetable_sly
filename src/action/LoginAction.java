@@ -15,7 +15,7 @@ public class LoginAction extends ActionSupport {
 	private String password;
 	
 	
-	 public void validate() {
+	public void validate() {
 		 super.validate();
 	       
 	     MySQL my = new MySQL();
