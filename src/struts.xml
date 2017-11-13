@@ -31,6 +31,10 @@
         <action name="FriendDetails" class="action.FriendDetails">
         	<result name="success">/friend_details.jsp</result>
         </action>
+        <action name="MyDetails" class="action.FriendDetails">
+        	<result name="input">/start.jsp</result>
+        	<result name="success">/homepage.jsp</result>
+        </action>
     </package>
     
    

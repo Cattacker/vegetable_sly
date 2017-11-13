@@ -16,7 +16,13 @@ public class FriendDetails extends ActionSupport {
 	private String phonenum;
 	private int sex;
 	private String birthday;
-	
+	public void validate() {
+		 super.validate();
+	    
+	     if(id.equals(""))  {
+	    	 this.addFieldError("error", "ÇëÄúÏÈµÇÂ½");
+	     }
+	}
 	public String execute(){
 		 Basic temp=new MySQL().QueryBasic(id);
 		 setNickname(temp.getNickname());
