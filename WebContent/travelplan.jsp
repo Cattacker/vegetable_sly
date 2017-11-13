@@ -1,5 +1,6 @@
 ﻿<%@ page contentType="text/html; charset=UTF-8"  language="java"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -39,6 +40,63 @@
         }
         -->
     </style>
+  
+   <script language=Javascript>
+   var bannerAD=new Array();
+   var bannerADlink=new Array();
+   var adNum=0;
+ 
+   bannerAD[0]="http://localhost:8080/Sprint1MasterE/image/gl2.png";
+   bannerADlink[0]="http://www.mafengwo.cn/poi/404.html"
+   bannerAD[1]="http://localhost:8080/Sprint1MasterE/image/gl3.png";
+   bannerADlink[1]="http://www.mafengwo.cn/poi/405.html";
+   bannerAD[2]="http://localhost:8080/Sprint1MasterE/image/gl4.png";
+   bannerADlink[2]="http://www.mafengwo.cn/poi/407.html";
+   bannerAD[3]="http://localhost:8080/Sprint1MasterE/image/gl5.png";
+   bannerADlink[3]="http://www.mafengwo.cn/poi/34011.html";
+    
+   var preloadedimages=new Array();
+   for (i=1;i<bannerAD.length;i++){
+      preloadedimages[i]=new Image();
+      preloadedimages[i].src=bannerAD[i];
+   }
+ 
+function setTransition(){
+   if (document.all){
+      bannerADrotator.filters.revealTrans.Transition=Math.floor(Math.random()*23);
+      bannerADrotator.filters.revealTrans.apply();
+   }
+}
+ 
+function playTransition(){
+   if (document.all)
+      bannerADrotator.filters.revealTrans.play()
+}
+ 
+function nextAd(){
+   if(adNum<bannerAD.length-1)adNum++ ;
+      else adNum=0;
+   setTransition();
+   document.images.bannerADrotator.src=bannerAD[adNum];
+   playTransition();
+   theTimer=setTimeout("nextAd()", 5000);
+}
+ 
+function jump2url(){
+   jumpUrl=bannerADlink[adNum];
+   jumpTarget='_blank';
+   if (jumpUrl != ''){
+      if (jumpTarget != '')window.open(jumpUrl,jumpTarget);
+      else location.href=jumpUrl;
+   }
+}
+function displayStatusMsg() { 
+   status=bannerADlink[adNum];
+   document.returnValue = true;
+}
+</SCRIPT>
+    
+    
     <script>
         /**
          * JS实现可编辑的表格
@@ -309,6 +367,10 @@
 
     <title>我的旅游计划</title>
 </head>
+<body>
+
+<A onmouseover="displayStatusMsg();return document.returnValue" href="javascript:jump2url()"><IMG style="FILTER: revealTrans(duration=2,transition=20)" src="http://image2.sina.com.cn/home/images/sina_logo2.gif" border=0 name=bannerADrotator></a>
+<SCRIPT language=JavaScript>nextAd()</SCRIPT>
 
 <form id="form1" name="form1" method="post" action="">
     <h3>可编辑的表格</h3>

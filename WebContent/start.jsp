@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -15,6 +16,7 @@
     
   </head>
   <body>
+  
   	<div class="container-fluid">
   	<div class="col-md-12">
 			<div class="row">
@@ -69,8 +71,6 @@
 				<s:fielderror name="error"></s:fielderror>
 			</ul>
 		</div>
-	
-	
 	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 	<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 </body>
