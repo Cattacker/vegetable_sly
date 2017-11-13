@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="sx" uri="/struts-dojo-tags"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -24,7 +25,7 @@
 						<a class="navbar-brand" href="index.jsp">寻找“驴友”</a>
 						</li>
 						<li>
-							<a href="homepage.jsp">个人主页</a> <span class="divider">/</span>
+							<a href="MyDetails3.action?id=${sessionScope.user_ID}">个人主页</a> <span class="divider">/</span>
 						</li>
 						<li>
 							<a href="start.jsp">首页</a> <span class="divider">/</span>
@@ -70,23 +71,35 @@
 				<div class="col-md-2">
 				</div>
 				
-					<form class="form-horizontal" role="form"  action="LoginAction.action">
+					<s:form class="form-horizontal" role="form"  action="OthersDetails.action">
 						<div class="col-md-6">
   						<div class="form-group">
     						<label for="firstname" class="col-sm-2 control-label">关键字</label>
 						    <div class="col-sm-10">
-						      <input type="text" class="form-control" name="keywords" placeholder="请输入关键字进行查询">
+						      <input type="text" class="form-control" name="id" placeholder="请输入关键字进行查询">
 						    </div>
 						  </div>
 						  </div>
 						  <div class="col-md-3">
 						  <div class="form-group">
 						    <div class="col-sm-offset-2 col-sm-10">
-						      <button type="submit" class="btn btn-default">查找</button>
+						      <sx:submit type="submit"  targets="result" value="查找"></sx:submit>
 						  	</div>
 						 </div>
 						 </div>
-					</form>
+					</s:form>
+					<table class="table" id="result">
+					  <caption>${name}详细信息</caption>
+					  <thead>
+					    <tr>
+					      <th>属性</th>
+					      <th>属性值</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					   
+					  </tbody>
+					</table>
 				<div class="col-md-1">
 				</div>
 			</div>

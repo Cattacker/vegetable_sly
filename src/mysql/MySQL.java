@@ -325,6 +325,7 @@ public class MySQL {
 	        while(rs.next()) {
             	followed_user_id.add(rs.getString("followed_user_id"));
 	        }
+	        
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

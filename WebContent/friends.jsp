@@ -24,7 +24,7 @@
 						<a class="navbar-brand" href="index.jsp">寻找“驴友”</a>
 						</li>
 						<li>
-							<a href="homepage.jsp">个人主页</a> <span class="divider">/</span>
+							<a href="MyDetails.action?id=${sessionScope.user_ID}">个人主页</a> <span class="divider">/</span>
 						</li>
 						<li>
 							<a href="start.jsp">首页</a> <span class="divider">/</span>
@@ -33,18 +33,9 @@
 				</div>
 				<div class="col-md-2">
 					<ul class="breadcrumb">
-					 <c:choose>
-						<c:when test="${sessionScope.user_ID==null}">
-							<a href="login.jsp">登陆</a> <span class="divider">/</span>
-							<a href="register.jsp">注册</a> <span class="divider">/</span>
-						</c:when>
-						 <c:when test="${sessionScope.user_ID!=null}">
-							<button type="button" class="btn btn-primary btn-lg" style="font-size: 10px" onclick="window.location.href='homepage.jsp';">
-										<span class="glyphicon glyphicon-user"></span> 我的主页
-							</button>
-							
-						</c:when>
-					  </c:choose>
+					<li>
+					 	<a href="LogoutAction.action">注销</a>
+					 </li>
 					</ul>
 				</div>
 			</div>
@@ -67,7 +58,7 @@
 		          <a class="nav-link" href="">未评价计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="">全部计划</a>
+		          <a class="nav-link" href="QueryTravelPlan.action">全部计划</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link" href="searchauthorrequest?">待加</a>

@@ -30,7 +30,10 @@ public class FriendDetails extends ActionSupport {
 		 setComcity(temp.getComcity());
 		 setPhonenum(temp.getPhonenum());
 		 setSex(temp.isSex());
-		 setBirthday(temp.getBirthday().toString());
+		 if(temp.getBirthday()!=null)
+			 setBirthday(temp.getBirthday().toString());
+		 else
+			 setBirthday(null);
 		return SUCCESS;
 	}
 	public String getId() {
