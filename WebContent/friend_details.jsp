@@ -1,41 +1,107 @@
-<%@ page contentType="text/html; charset=UTF-8"  language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-<title>好友详细信息</title>
-</head>
-<body>
-	<table border="1">
-	<tr>
- 	 	<th>ID</th>
-  		<td>${id}</td>
-	</tr>
-	<tr>
- 	 	<th>NickName</th>
-  		<td>${nickname}</td>
-	</tr>
-	<tr>
- 	 	<th>Name</th>
-  		<td>${name}</td>
-	</tr>
-	<tr>
- 	 	<th>Sex</th>
-  		<td>${sex}</td>
-	</tr>
-	<tr>
- 	 	<th>ComCity</th>
-  		<td>${comcity}</td>
-	</tr>
-	<tr>
- 	 	<th>Birthday</th>
-  		<td>${birthday}</td>
-	</tr>
-	<tr>
- 	 	<th>PhoneNum</th>
-  		<td>${phonenum}</td>
-	</tr>
-	</table>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>好友详细信息</title>
 
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    
+  </head>
+  <body>
+  	<div class="container-fluid">
+  	<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-10">
+					<ul class="breadcrumb">
+						<li>
+						<a class="navbar-brand" href="index.jsp">寻找“驴友”</a>
+						</li>
+						<li>
+							<a href="homepage.jsp">个人主页</a> <span class="divider">/</span>
+						</li>
+						<li>
+							<a href="start.jsp">首页</a> <span class="divider">/</span>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-2">
+					<ul class="breadcrumb">
+					 <c:choose>
+						<c:when test="${sessionScope.user_ID==null}">
+							<a href="login.jsp">登陆</a> <span class="divider">/</span>
+							<a href="register.jsp">注册</a> <span class="divider">/</span>
+						</c:when>
+						 <c:when test="${sessionScope.user_ID!=null}">
+							<button type="button" class="btn btn-primary btn-lg" style="font-size: 10px" onclick="window.location.href='homepage.jsp';">
+										<span class="glyphicon glyphicon-user"></span> 我的主页
+							</button>
+							
+						</c:when>
+					  </c:choose>
+					</ul>
+				</div>
+			</div>
+			</div>
+    		<div class="container" style="padding-top: 20px; margin-top: 20px">
+		      <ul class="nav nav-pills nav-fill">
+		        <li class="nav-item">
+		          <a class="nav-link" href="homepage.jsp">我的信息</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link active" href="QueryFriends.action">我的好友</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="">我的计划</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="searchauthorrequest?">待加</a>
+		        </li>
+		      </ul>
+			</div>
+			<table class="table">
+			  <caption>${name}详细信息</caption>
+			  <thead>
+			    <tr>
+			      <th>属性</th>
+			      <th>属性值</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr class="active">
+			      <td>ID</td>
+			      <td>${id}</td></tr>
+			    <tr class="success">
+			      <td>NickName</td>
+			      <td>${nickname}</td></tr>
+			    <tr class="warning">
+			      <td>Name</td>
+			      <td>${name}</td></tr>
+			    <tr class="danger">
+			      <td>Sex</td>
+			      <td>${sex}</td></tr>
+			 	<tr class="active">
+			      <td>ComCity</td>
+			      <td>${comcity}</td></tr>
+			    <tr class="success">
+			      <td>Birthday</td>
+			      <td>${birthday}</td></tr>
+			    <tr class="warning">
+			      <td>PhoneNum</td>
+			      <td>${phonenum}</td></tr>
+			    
+			  </tbody>
+			</table>
+		</div>
+	
+	
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 </body>
 </html>
