@@ -7,12 +7,15 @@ public class TravelPlan {
 	private long  teamID;
 	private long path;
 	private String wishdate;
+	private int state;
 	
-	public TravelPlan(String id, long teamid, long path, String wishdate){
+	
+	public TravelPlan(String id, long teamid, long path, String wishdate,int state){
 		this.ID = id;
 		this.teamID = teamid;
 		this.path = path;
 		this.wishdate = wishdate;
+		this.state = state;
 	}
 	
 	public String getID() {
@@ -38,6 +41,12 @@ public class TravelPlan {
 	}
 	public void setWishdate(String wishdate) {
 		this.wishdate = wishdate;
+	}
+	public int getState(){
+		return this.state;
+	}
+	public void setState(int state){
+		this.state = state;
 	}
 
 }

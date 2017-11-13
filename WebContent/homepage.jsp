@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -49,16 +49,13 @@
 		          <a class="nav-link active" href="QueryFriends.action">我的好友</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="">待执行计划</a>
+		          <a class="nav-link" href="QueryTravelPlan.action?state=0">待执行计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="">正在执行计划</a>
+		          <a class="nav-link" href="QueryTravelPlan.action?state=1">正在执行计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="">未评价计划</a>
-		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="QueryTravelPlan.action">全部计划</a>
+		          <a class="nav-link" href="QueryTravelPlan.action?state=2">未评价计划</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link" href="searchauthorrequest?">待加</a>

@@ -261,7 +261,7 @@ public class MySQL {
 		}
     }
     
-    public ArrayList<TravelPlan>  QueryTravelPlan(String ID){
+    public ArrayList<TravelPlan>  QueryTravelPlan(String ID, int state){
     	ArrayList<TravelPlan> travelplan=new ArrayList<TravelPlan>();
     	try {
     		try {
@@ -270,7 +270,7 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "select travelplan.* from travelplan where ID='" +ID+ "';";
+			String sql = "select travelplan.* from travelplan where ID='" +ID+ "' and state = '"+ state +"';";
 	        Statement stmt= conn.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 	        while(rs.next()) {
@@ -278,7 +278,8 @@ public class MySQL {
 	        	long teamid = rs.getLong("TeamID");
 	        	long path = rs.getLong("Path");
 	        	String wishdate = rs.getString("WishDate");
-	        	TravelPlan tmp = new TravelPlan(id,teamid,path,wishdate);
+	        	int tmpstate = rs.getInt("state");
+	        	TravelPlan tmp = new TravelPlan(id,teamid,path,wishdate,tmpstate);
 	        	travelplan.add(tmp);
 	        }
 		} catch (SQLException e) {
@@ -286,6 +287,7 @@ public class MySQL {
 		}
     	return travelplan;
     }
+    
     
     public static boolean InsertUserRelation(UserRelation temp) {
     	try {
