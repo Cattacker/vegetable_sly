@@ -16,7 +16,13 @@ public class FriendDetails extends ActionSupport {
 	private String phonenum;
 	private int sex;
 	private String birthday;
-	
+	public void validate() {
+		 super.validate();
+	    
+	     if(id.equals(""))  {
+	    	 this.addFieldError("error", "ÇëÄúÏÈµÇÂ½");
+	     }
+	}
 	public String execute(){
 		 Basic temp=new MySQL().QueryBasic(id);
 		 setNickname(temp.getNickname());
@@ -24,7 +30,10 @@ public class FriendDetails extends ActionSupport {
 		 setComcity(temp.getComcity());
 		 setPhonenum(temp.getPhonenum());
 		 setSex(temp.isSex());
-		 setBirthday(temp.getBirthday().toString());
+		 if(temp.getBirthday()!=null)
+			 setBirthday(temp.getBirthday().toString());
+		 else
+			 setBirthday(null);
 		return SUCCESS;
 	}
 	public String getId() {
