@@ -14,7 +14,7 @@ public class Location implements localization.LocalSettings{
     
     private String name;
     
-    public Location(Long id, String name) {
+    private Location(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -31,6 +31,42 @@ public class Location implements localization.LocalSettings{
             conn = DriverManager.getConnection(databaseURL, username, password);
             stmt = conn.createStatement();
             String sql = "SELECT * FROM location WHERE id=" + id + ";";
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                ret = new Location(rs.getLong("id"), rs.getString("name"));
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }    
+        finally {
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return ret;
+        }
+    }
+    
+    @SuppressWarnings("finally")
+    public static Location getLocation(String name) {
+        Connection conn = null;
+        Statement stmt = null;
+        Location ret = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(databaseURL, username, password);
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM location WHERE name='" + name + "';";
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 ret = new Location(rs.getLong("id"), rs.getString("name"));
@@ -106,6 +142,41 @@ public class Location implements localization.LocalSettings{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
             String sql = "SELECT 1 FROM location WHERE name='" + name + "';";
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next())
+                ret = true;
+            rs.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return ret;
+        }
+    }
+    
+    @SuppressWarnings("finally")
+    public static boolean hasLocation(Long id) {
+        Connection conn = null;
+        Statement stmt = null;
+        boolean ret = false;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(databaseURL, username, password);
+            String sql = "SELECT 1 FROM location WHERE id=" + id + ";";
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next())
