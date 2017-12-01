@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Objects;
 
 
 public class Location implements localization.LocalSettings{
@@ -18,8 +19,6 @@ public class Location implements localization.LocalSettings{
         this.id = id;
         this.name = name;
     }
-    
-    
     
     @SuppressWarnings("finally")
     public static Location getLocation(Long id) {
@@ -102,7 +101,7 @@ public class Location implements localization.LocalSettings{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
             stmt = conn.createStatement();
-            String sql = "SELECT 1 FROM location WHERE name='" + name + "';";
+            String sql = "SELECT 1 FROM location WHERE name='" + name + "' LIMIT 1;";
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next())
                 ret = false;
@@ -141,7 +140,7 @@ public class Location implements localization.LocalSettings{
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
-            String sql = "SELECT 1 FROM location WHERE name='" + name + "';";
+            String sql = "SELECT 1 FROM location WHERE name='" + name + "' LIMIT 1;";
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next())
@@ -176,7 +175,7 @@ public class Location implements localization.LocalSettings{
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
-            String sql = "SELECT 1 FROM location WHERE id=" + id + ";";
+            String sql = "SELECT 1 FROM location WHERE id=" + id + " LIMIT 1;";
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next())
@@ -201,5 +200,25 @@ public class Location implements localization.LocalSettings{
             }
             return ret;
         }
+    }
+
+
+
+    
+    public Long getId() {
+        return id;
+    }
+
+
+    
+    public String getName() {
+        return name;
+    }
+
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
