@@ -1,7 +1,5 @@
 package mysql;
 
-
-
 public class TravelPlan {
 	private String ID;
 	private long  teamID;

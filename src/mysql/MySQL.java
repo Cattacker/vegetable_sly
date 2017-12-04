@@ -2,12 +2,15 @@ package mysql;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import mysql.Basic;
 import mysql.TravelPlan;
 import com.mysql.jdbc.PreparedStatement;
 
 import localization.LocalSettings;
+import model.*;
 
 public class MySQL {
 	private static String url = LocalSettings.databaseURL;    //JDBC��URL 
@@ -351,4 +354,46 @@ public class MySQL {
 			return false;
 		}
     }
+    
+    public ArrayList<Team> QueryMyTeam(String ID){
+    	ArrayList<Team> myteam=new ArrayList<Team>();
+    	ArrayList<TeamMember> teamids=new ArrayList<TeamMember>();
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "select * from team_member where member_id='" +ID+ "';";
+	        Statement stmt= conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        while(rs.next()) {
+	        	int teamid = rs.getInt("team_id");
+	        	String memberid = rs.getString("member_id");
+	        	TeamMember tmp = new TeamMember(teamid,memberid);
+	        	teamids.add(tmp);
+	        }
+	        System.out.println("getteamids");
+	        int length = teamids.size();
+	        for(int i = 0;i < length;i++){
+	        	String tempsql = "select * from team where id='" +teamids.get(i).team_id+ "';";
+	        	ResultSet rs1 = stmt.executeQuery(tempsql);
+	        	while(rs1.next()) {
+	        		String name = rs1.getString("name");
+	        		int planid = rs1.getInt("plan_id");
+	        		String cid = rs1.getString("captain_id");
+		        	Team tmp = new Team(name,planid,cid);
+		        	myteam.add(tmp);
+		        }
+	        }
+	        System.out.println("getteams");
+	        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return myteam;
+	}
 }
+
+	

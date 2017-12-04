@@ -54,7 +54,10 @@
         <action name="QueryTravelPlan" class="action.QueryTravelPlan">
         	<result name="input">/travelplan.jsp</result>
         	<result name="success">/travelplan.jsp</result>
-
+        </action>
+        <action name="QueryTeam" class="action.QueryTeam">
+        	<result name="input">/homepage.jsp</result>
+        	<result name="success">/MyTeam.jsp</result>
         </action>
     </package>
     
