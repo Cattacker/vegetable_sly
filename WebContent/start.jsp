@@ -116,7 +116,7 @@
 		          <a class="nav-link" href="path.jsp">路线查询</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="">待加</a>
+		          <a class="nav-link" href="newplan.html">创建计划</a>
 		        </li>
 		      </ul>
 			</div>
