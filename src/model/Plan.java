@@ -1,5 +1,15 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Plan implements localization.LocalSettings {
     public static final byte DEFAULT = 0x00;
     public static final byte TRAVEL_STATE = 0x03;
@@ -14,12 +24,163 @@ public class Plan implements localization.LocalSettings {
     
     private long id;
     
+    private String userId;
+    
+    private long teamId;
+    
+    private long pathId;
+    
     private byte state = 0;
     
+    private Date beginningDate;
     
+    private Date endingDate;
     
-    public boolean isStart() {
-        return (state & TRAVEL_STATE) != UNSTART;
+    private Path path;
+    
+    private Plan(long id, String userId, long teamId, long pathId
+            , byte state, Date begin, Date end) {
+        this.id = id;
+        this.userId = userId;
+        this.teamId = teamId;
+        this.pathId = pathId;
+        this.state = state;
+        this.setBeginningDate(begin);
+        this.setEndingDate(end);
+        if (begin.compareTo(Date.valueOf(LocalDate.now())) < 0)
+            setUnstart();
+        else if (end.compareTo(Date.valueOf(LocalDate.now())) < 0)
+            setTraveling();
+        else
+            setOver();
+        setPath(Path.getPath(pathId));
+    }
+    
+    public Plan() {
+        
+    }
+    
+    @SuppressWarnings("finally")
+    public static Plan getPlan(long id) {
+        Connection conn = null;
+        Statement stmt = null;
+        Plan ret = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(databaseURL, username, password);
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM travelPlan WHERE id=" + id + ";";
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                String userId = rs.getString("user_id");
+                long teamId = rs.getLong("team_id");
+                long pathId = rs.getLong("path_id");
+                byte state = rs.getByte("state");
+                Date begin = rs.getDate("date_begin");
+                Date end = rs.getDate("date_end");
+                ret = new Plan(id, userId, teamId, pathId, state, begin, end);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }    
+        finally {
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return ret;
+        }
+    }
+    
+    @SuppressWarnings("finally")
+    public static List<Plan> getPlan(String userId) {
+        Connection conn = null;
+        Statement stmt = null;
+        List<Plan> ret = new LinkedList<Plan>();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(databaseURL, username, password);
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM travelPlan WHERE user_id='" + userId + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                long id = rs.getLong("id");
+                long teamId = rs.getLong("team_id");
+                long pathId = rs.getLong("path_id");
+                byte state = rs.getByte("state");
+                Date begin = rs.getDate("date_begin");
+                Date end = rs.getDate("date_end");
+                ret.add(new Plan(id, userId, teamId, pathId, state, begin, end));
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }    
+        finally {
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return ret;
+        }
+    }
+    
+    @SuppressWarnings("finally")
+    public static boolean hasPlan(long id) {
+        Connection conn = null;
+        Statement stmt = null;
+        boolean ret = false;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(databaseURL, username, password);
+            String sql = "SELECT 1 FROM travelPlan WHERE id='" + id + "' LIMIT 1;";
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next())
+                ret = true;
+            rs.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return ret;
+        }
+    }
+    
+    public boolean isUnstart() {
+        return (state & TRAVEL_STATE) == UNSTART;
     }
     
     public boolean isTraveling() {
@@ -36,5 +197,44 @@ public class Plan implements localization.LocalSettings {
     
     public boolean isPersonalPlan() {
         return (state & RELATE_STATE) == PERSONAL;
+    }
+    
+    public void setUnstart() {
+        state &= TRAVEL_STATE;
+        state += UNSTART;
+    }
+    
+    public void setTraveling() {
+        state &= TRAVEL_STATE;
+        state += TRAVELING;
+    }
+    
+    public void setOver() {
+        state &= TRAVEL_STATE;
+        state += OVER;
+    }
+
+    public Date getBeginningDate() {
+        return beginningDate;
+    }
+
+    public void setBeginningDate(Date beginningDate) {
+        this.beginningDate = beginningDate;
+    }
+
+    public Date getEndingDate() {
+        return endingDate;
+    }
+
+    public void setEndingDate(Date endingDate) {
+        this.endingDate = endingDate;
+    }
+
+    public Path getPath() {
+        return path;
+    }
+
+    public void setPath(Path path) {
+        this.path = path;
     }
 }
