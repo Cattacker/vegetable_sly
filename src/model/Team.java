@@ -31,7 +31,13 @@ public class Team implements localization.LocalSettings{
 		this.Captain_id = captainid;
 		this.Name = name;
 		this.Plan_id = planid;
-		this.ID = -1L;
+	}
+	
+	public Team(long id, String name, int planid ,String captainid){
+		this.Captain_id = captainid;
+		this.Name = name;
+		this.Plan_id = planid;
+		this.ID = id;
 	}
 	
 	@SuppressWarnings("finally")

@@ -33,16 +33,9 @@ private static final long serialVersionUID = 1L;
     }
     
     public String execute() throws Exception {
-    	if(keywords == null){
-    		System.out.println("are you ok?");
-    	}
-    	else{
-    		System.out.println("i am ok");
-    	}
     	teamid = Long.parseLong(keywords);
     	System.out.println(teamid);
     	teams=new MySQL().QueryTeamsByIdOrName(teamid,keywords);
-    	System.out.println(teams.size());
         return SUCCESS;
     }
     

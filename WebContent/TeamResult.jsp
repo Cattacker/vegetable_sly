@@ -68,13 +68,13 @@
 			<ul class="nav nav-pills nav-fill">
 			</ul>
 			
-				
-					<s:form class="form-horizontal" role="form"  action="QueryTeams.action">
+					
+					<s:form class="form-horizontal" role="form"  action="OthersDedails.action">
 						<div class="col-md-6">
   						<div class="form-group">
     						<label for="firstname" class="col-sm-2 control-label">关键字</label>
 						    <div class="col-sm-10">
-						      <input type="text" class="form-control" name="keywords" placeholder="请输入关键字进行查询">
+						      <input type="text" class="form-control" name="id" placeholder="请输入关键字进行查询">
 						    </div>
 						  </div>
 						  </div>
@@ -86,6 +86,30 @@
 						 </div>
 						 </div>
 					</s:form>
+					<s:fielderror name="error"></s:fielderror>
+					
+					<table width="698" border="0" cellpadding="0" cellspacing="0" id="tabProduct">
+        <tr>
+        	<td width="186" bgcolor="#EFEFEF" >团队id</td>
+            <td width="186" bgcolor="#EFEFEF" >团队名称</td>
+            <td width="186" bgcolor="#EFEFEF" >计划id</td>
+            <td width="186" bgcolor="#EFEFEF" >队长id</td>
+            <td width="186" bgcolor="#EFEFEF" >操作</td>
+        </tr>
+
+        <s:iterator value="teams">
+            <tr>
+            	<td>${ID}</td>
+                <td>${Name}</td>
+                <td >${Plan_id}</td>
+                <td >${Captain_id}</td>
+                <td><a class="nav-link active" href="ApplyTeam.action?teamid=${ID}">加好友</a></td>    
+            </tr>
+            
+        </s:iterator>
+				
+					    
+				
 		</div>
 		
 	

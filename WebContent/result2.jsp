@@ -120,7 +120,7 @@
 			      <td>${phonenum}</td></tr>
 			    <tr class="active">
 					      <td>操作</td>
-					      <td><a class="nav-link active" href="AddFriends.action?id=${followed}">加好友</a></td></tr>
+					      <td><a class="nav-link active" href="AddFriends.action?followed=${id}">加好友</a></td></tr>
 			  </tbody>
 			</table>
 				

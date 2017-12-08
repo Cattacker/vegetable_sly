@@ -61,7 +61,11 @@
         </action>
         <action name="QueryTeams" class="action.QueryTeams">
         	<result name="input">/homepage.jsp</result>
-        	<result name="success">/QueryTeams.jsp</result>
+        	<result name="success">/TeamResult.jsp</result>
+        </action>
+        <action name="ApplyTeam" class="action.ApplyTeam">
+        	<result name="input">/TeamResult.jsp</result>
+        	<result >start.jsp</result>
         </action>
         
     </package>
