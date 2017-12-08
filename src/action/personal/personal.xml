@@ -16,6 +16,17 @@
 			<result name="success">myInformation.jsp</result>
 			<result name="getView">setMyInformation.jsp</result>
 		</action>
+		<action name="GetMyTravelPlanList"
+				class="action.personal.GetMyTravelPlanListAction">
+			<result name="success">myTravelPlanList.jsp</result>
+			<result name="login">login.jsp</result>
+		</action>
+		<action name="SetMyTravelPlan_*"
+				class="action.personal.SetMyTravelPlanAction"
+				method="{1}">
+			<result name="jump">setMyTravelPlan.jsp</result>
+			<result name="success" type="redirectAction">GetMyTravelPlanList</result>
+		</action>
 			
 	</package>
 </struts>
