@@ -374,7 +374,7 @@ public class MySQL {
 	        	TeamMember tmp = new TeamMember(teamid,memberid);
 	        	teamids.add(tmp);
 	        }
-	        System.out.println("getteamids");
+	      
 	        int length = teamids.size();
 	        for(int i = 0;i < length;i++){
 	        	String tempsql = "select * from team where id='" +teamids.get(i).team_id+ "';";
@@ -387,13 +387,44 @@ public class MySQL {
 		        	myteam.add(tmp);
 		        }
 	        }
-	        System.out.println("getteams");
+	        
 	        
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
     	return myteam;
 	}
+    
+    public ArrayList<Team> QueryTeamsByIdOrName(long id, String name){
+    	ArrayList<Team> teams=new ArrayList<Team>();
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "select * from team where id ='" + id + "' or name = '" + name + "';";
+	        Statement stmt= conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        while(rs.next()) {
+	        	Long teamid = rs.getLong("id");
+	        	String mz = rs.getString("name");
+	        	int planid = rs.getInt("plan_id");
+	        	String cid = rs.getString("captain_id");
+	        	Team tmp = new Team(mz,planid,cid);
+	        	System.out.println(mz);
+	        	teams.add(tmp);
+	        }
+	        
+	        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return teams;
+	}
+    
+    
 }
 
 	

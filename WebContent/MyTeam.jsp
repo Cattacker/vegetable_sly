@@ -117,7 +117,7 @@
 
         <s:iterator value="myteam">
             <tr>
-                <td>${name}</td>
+                <td>${Name}</td>
                 <td >${Plan_id}</td>
                 <td >${Captain_id}</td>
             </tr>

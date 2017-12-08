@@ -59,6 +59,10 @@
         	<result name="input">/homepage.jsp</result>
         	<result name="success">/MyTeam.jsp</result>
         </action>
+        <action name="QueryTeams" class="action.QueryTeams">
+        	<result name="input">/homepage.jsp</result>
+        	<result name="success">/QueryTeams.jsp</result>
+        </action>
         
     </package>
 	<include file="action/personal/personal.xml"/>
