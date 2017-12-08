@@ -55,6 +55,7 @@ public class Path implements localization.LocalSettings {
         return Location.hasLocation(location);
     }
     
+    @SuppressWarnings("finally")
     public boolean save() {
         if (isSynchronous())
             return false;
