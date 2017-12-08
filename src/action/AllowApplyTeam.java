@@ -1,20 +1,23 @@
 package action;
-import mysql.TravelPlan;
+
 import java.util.ArrayList;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import model.ApplyTeamModel;
 import mysql.MySQL;
-import model.Team;
 
-public class QueryTeam extends ActionSupport{
+public class AllowApplyTeam extends ActionSupport{
 	
 	/**查询旅游计划
 	 * 返回旅游计划列表
 	 */
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Team> myteam= new ArrayList<Team>();
+	
+	private long teamid;
+	
+	private String userid;
 	
 	public void validate() {
 		 super.validate();
@@ -23,22 +26,29 @@ public class QueryTeam extends ActionSupport{
 			if(id==null) {
 				this.addFieldError("error", "请您先登陆！");
 			} 
-			if(id!=null&&my.QueryMyTeam(id).isEmpty()) {
-				this.addFieldError("error", "您还没有旅游计划！");
-			}
 	}
 	
 	public String execute(){
 		MySQL my = new MySQL();
-		String id = (String) ActionContext.getContext().getSession().get("user_ID");
-		setMyteam(my.QueryMyTeam(id));
+		my.AllowApplyTeams(teamid, userid);
+		System.out.println(teamid);
+		System.out.println(userid);
 		return SUCCESS;
 	}
-	public ArrayList<Team> getMyteam() {
-		return myteam;
-	}
-	public void setMyteam(ArrayList<Team> myteam) {
-		this.myteam = myteam;
+	public void setTeamid(long teamid){
+		this.teamid = teamid;
 	}
 	
+	public long getTeamid(){
+		return this.teamid;
+	}
+	
+	public void setUserid(String userid){
+		this.userid = userid;
+	}
+	
+	public String getUserid(){
+		return this.userid;
+	}
 }
+

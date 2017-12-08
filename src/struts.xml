@@ -67,6 +67,18 @@
         	<result name="input">/TeamResult.jsp</result>
         	<result >start.jsp</result>
         </action>
+        <action name="QueryApplyTeam" class="action.QueryApplyTeam">
+        	<result name="input">/SystemInformation.jsp</result>
+        	<result name="success">SystemInformation.jsp</result>
+        </action>
+        <action name="AllowApplyTeam" class="action.AllowApplyTeam">
+        	<result name="success">/start.jsp</result>
+        	<result >start.jsp</result>
+        </action>
+        <action name="RefuseApplyTeam" class="action.RefuseApplyTeam">
+        	<result name="success">/start.jsp</result>
+        	<result >start.jsp</result>
+        </action>
         
     </package>
 	<include file="action/personal/personal.xml"/>

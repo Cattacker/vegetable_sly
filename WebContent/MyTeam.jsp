@@ -110,7 +110,7 @@
     <h3>可编辑的表格</h3>
     <table width="698" border="0" cellpadding="0" cellspacing="0" id="tabProduct">
         <tr>
-            <td width="186" bgcolor="#EFEFEF" >用户名称</td>
+            <td width="186" bgcolor="#EFEFEF" >团队名称</td>
             <td width="186" bgcolor="#EFEFEF" >计划id</td>
             <td width="152" bgcolor="#EFEFEF" >队长id</td>
         </tr>

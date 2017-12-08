@@ -91,19 +91,17 @@
 					<table width="698" border="0" cellpadding="0" cellspacing="0" id="tabProduct">
         <tr>
         	<td width="186" bgcolor="#EFEFEF" >团队id</td>
-            <td width="186" bgcolor="#EFEFEF" >团队名称</td>
-            <td width="186" bgcolor="#EFEFEF" >计划id</td>
-            <td width="186" bgcolor="#EFEFEF" >队长id</td>
+            <td width="186" bgcolor="#EFEFEF" >申请者id</td>
+            <td width="186" bgcolor="#EFEFEF" >操作</td>
             <td width="186" bgcolor="#EFEFEF" >操作</td>
         </tr>
 
-        <s:iterator value="teams">
+        <s:iterator value="applyteams">
             <tr>
-            	<td>${ID}</td>
-                <td>${Name}</td>
-                <td >${Plan_id}</td>
-                <td >${Captain_id}</td>
-                <td><a class="nav-link active" href="ApplyTeam.action?teamid=${ID}&captainid=${Captain_id}">加好友</a></td>    
+            	<td>${teamid}</td>
+                <td>${userid}</td>
+                <td><a class="nav-link active" href="AllowApplyTeam.action?teamid=${teamid}&userid=${userid}">同意</a></td>  
+                <td><a class="nav-link active" href="RefuseApplyTeam.action?teamid=${teamid}&userid=${userid}">拒绝</a></td>  
             </tr>
             
         </s:iterator>

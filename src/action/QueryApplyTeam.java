@@ -1,20 +1,21 @@
 package action;
-import mysql.TravelPlan;
+
 import java.util.ArrayList;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import mysql.MySQL;
 import model.Team;
+import mysql.MySQL;
+import model.*;
 
-public class QueryTeam extends ActionSupport{
+public class QueryApplyTeam extends ActionSupport{
 	
 	/**查询旅游计划
 	 * 返回旅游计划列表
 	 */
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Team> myteam= new ArrayList<Team>();
+	private ArrayList<ApplyTeamModel> applyteams= new ArrayList<ApplyTeamModel>();
 	
 	public void validate() {
 		 super.validate();
@@ -23,22 +24,24 @@ public class QueryTeam extends ActionSupport{
 			if(id==null) {
 				this.addFieldError("error", "请您先登陆！");
 			} 
-			if(id!=null&&my.QueryMyTeam(id).isEmpty()) {
-				this.addFieldError("error", "您还没有旅游计划！");
+			if(id!=null&&my.QueryApplyTeams(id).isEmpty()) {
+				this.addFieldError("error", "您还没有消息！");
 			}
 	}
 	
 	public String execute(){
 		MySQL my = new MySQL();
 		String id = (String) ActionContext.getContext().getSession().get("user_ID");
-		setMyteam(my.QueryMyTeam(id));
+		setApplyteams(my.QueryApplyTeams(id));
+		System.out.println("QueryTeam");
 		return SUCCESS;
 	}
-	public ArrayList<Team> getMyteam() {
-		return myteam;
+	public ArrayList<ApplyTeamModel> getApplyteams() {
+		return this.applyteams;
 	}
-	public void setMyteam(ArrayList<Team> myteam) {
-		this.myteam = myteam;
+	public void setApplyteams(ArrayList<ApplyTeamModel> applyteams) {
+		this.applyteams = applyteams;
 	}
 	
 }
+

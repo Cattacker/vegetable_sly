@@ -15,10 +15,11 @@ public class ApplyTeam extends ActionSupport {
 	 */
 	private static final long serialVersionUID = 1L;
 	private long teamid;
+	private String captainid;
+	String follow = (String) ActionContext.getContext().getSession().get("user_ID");
 	public boolean isInteam() {
 		 MySQL my = new MySQL();
 		 
-		 String follow = (String) ActionContext.getContext().getSession().get("user_ID");
 		 ArrayList<TeamMember> teammembers=my.QueryTeammembers(teamid);
 		 if(teammembers==null)
 			 return false;
@@ -33,7 +34,9 @@ public class ApplyTeam extends ActionSupport {
 	public void validate() {
 		 super.validate();
 		 MySQL my = new MySQL();
-		 
+		 System.out.println(teamid);
+ 		 System.out.println(follow);
+		 System.out.println(captainid);
 		 String follow = (String) ActionContext.getContext().getSession().get("user_ID");
 		 
 			if(follow==null) {
@@ -43,9 +46,7 @@ public class ApplyTeam extends ActionSupport {
 				this.addFieldError("error", "您已加入该团队");
 			}
 			if(follow!=null&&isInteam()==false) {
-				boolean r =  my.InsertApplyTeam(teamid, follow);
-				System.out.println(teamid);
-				System.out.println(r);
+				boolean r =  my.InsertApplyTeam(teamid, follow, captainid);
 				this.addFieldError("error", "成功添加好友");
 			}
 	}
@@ -57,5 +58,13 @@ public class ApplyTeam extends ActionSupport {
 	}
 	public void setTeamid(long teamid) {
 		this.teamid = teamid;
+	}
+	
+	public String getCaptainid(){
+		return this.captainid;
+	}
+	
+	public void setCaptainid(String cid){
+		this.captainid = cid;
 	}
 }
