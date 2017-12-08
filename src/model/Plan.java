@@ -89,6 +89,24 @@ public class Plan implements localization.LocalSettings {
         return true;
     }
     
+    public boolean add(String location) {
+        boolean ret = path.add(location);
+        pathId = path.getId();
+        return ret;
+    }
+    
+    public boolean add(int index, String location) {
+        boolean ret = path.add(index, location);
+        pathId = path.getId();
+        return ret;
+    }
+    
+    public boolean set(int index, String location) {
+        boolean ret = path.set(index, location);
+        pathId = path.getId();
+        return ret;
+    }
+    
     public void save() {
         if (isSynchronous())
             return;
@@ -109,6 +127,7 @@ public class Plan implements localization.LocalSettings {
             stmt.setShort(4, this.state);
             stmt.setLong(5, getId());
             stmt.execute();
+            isSynchronous = true;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
