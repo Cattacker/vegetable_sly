@@ -37,10 +37,22 @@ public class Path implements localization.LocalSettings {
     }
     
     public boolean add(String location) {
-        boolean ret = Location.addLocation(location);
+        boolean ret = Location.hasLocation(location);
         locations.add(Location.getLocation(location));
         isSynchronous = false;
         return ret;
+    }
+    
+    public boolean set(int index, String location) {
+        locations.set(index, Location.getLocation(location));
+        isSynchronous = false;
+        return Location.hasLocation(location);
+    }
+    
+    public boolean add(int index, String location) {
+        locations.add(index, Location.getLocation(location));
+        isSynchronous = false;
+        return Location.hasLocation(location);
     }
     
     public boolean save() {

@@ -38,6 +38,8 @@ public class Plan implements localization.LocalSettings {
     
     private Path path;
     
+    private boolean isSynchronous;
+    
     private Plan(long id, String userId, long teamId, long pathId
             , byte state, Date begin, Date end) {
         this.id = id;
@@ -54,10 +56,21 @@ public class Plan implements localization.LocalSettings {
         else
             setOver();
         setPath(Path.getPath(pathId));
+        isSynchronous = true;
     }
     
-    public Plan() {
-        
+    public Plan(String userId) {
+        this.userId = userId;
+        this.teamId = 0;
+        setPersonalPlan();
+        isSynchronous = false;
+    }
+    
+    public Plan(long teamId) {
+        this.teamId = teamId;
+        this.userId = null;
+        setTeamPlan();
+        isSynchronous = false;
     }
     
     @SuppressWarnings("finally")
@@ -69,7 +82,7 @@ public class Plan implements localization.LocalSettings {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
             stmt = conn.createStatement();
-            String sql = "SELECT * FROM travelPlan WHERE id=" + id + ";";
+            String sql = "SELECT * FROM travelplan WHERE id=" + id + ";";
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 String userId = rs.getString("user_id");
@@ -111,7 +124,7 @@ public class Plan implements localization.LocalSettings {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
             stmt = conn.createStatement();
-            String sql = "SELECT * FROM travelPlan WHERE user_id='" + userId + "';";
+            String sql = "SELECT * FROM travelplan WHERE user_id='" + userId + "';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 long id = rs.getLong("id");
@@ -120,7 +133,52 @@ public class Plan implements localization.LocalSettings {
                 byte state = rs.getByte("state");
                 Date begin = rs.getDate("date_begin");
                 Date end = rs.getDate("date_end");
-                ret.add(new Plan(id, userId, teamId, pathId, state, begin, end));
+                Plan newPlan = new Plan(id, userId, teamId, pathId, state, begin, end);
+                if (newPlan.isPersonalPlan())
+                    ret.add(newPlan);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }    
+        finally {
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return ret;
+        }
+    }
+    
+    public static Plan getTeamPlan(long teamId) {
+        Connection conn = null;
+        Statement stmt = null;
+        Plan ret = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(databaseURL, username, password);
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM travelplan WHERE team_id=" + teamId + ";";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                long id = rs.getLong("id");
+                String userId = rs.getString("user_id");
+                long pathId = rs.getLong("path_id");
+                byte state = rs.getByte("state");
+                Date begin = rs.getDate("date_begin");
+                Date end = rs.getDate("date_end");
+                Plan newPlan = new Plan(id, userId, teamId, pathId, state, begin, end);
+                if (newPlan.isTeamPlan())
+                    ret = newPlan;
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -199,6 +257,10 @@ public class Plan implements localization.LocalSettings {
         return (state & RELATE_STATE) == PERSONAL;
     }
     
+    public boolean isSynchronous() {
+        return isSynchronous;
+    }
+    
     public void setUnstart() {
         state &= TRAVEL_STATE;
         state += UNSTART;
@@ -212,6 +274,16 @@ public class Plan implements localization.LocalSettings {
     public void setOver() {
         state &= TRAVEL_STATE;
         state += OVER;
+    }
+    
+    public void setPersonalPlan() {
+        state &= RELATE_STATE;
+        state += PERSONAL;
+    }
+    
+    public void setTeamPlan() {
+        state &= RELATE_STATE;
+        state += TEAM;
     }
 
     public Date getBeginningDate() {
@@ -236,5 +308,23 @@ public class Plan implements localization.LocalSettings {
 
     public void setPath(Path path) {
         this.path = path;
+        this.pathId = path.getId();
     }
+
+    public long getPathId() {
+        return pathId;
+    }
+
+    public long getTeamId() {
+        return teamId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public long getId() {
+        return id;
+    }
+    
 }
