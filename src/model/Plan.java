@@ -13,18 +13,18 @@ import java.util.List;
 import com.mysql.jdbc.PreparedStatement;
 
 public class Plan implements localization.LocalSettings {
-    public static final byte DEFAULT = 0x0;
-    public static final byte TRAVEL_STATE = 0x3;
-    public static final byte RELATE_STATE = 0x4;
-    public static final byte RATED_STATE = 0x8;
+    public static final short DEFAULT = 0x00;
+    public static final short TRAVEL_STATE = 0x03;
+    public static final short RELATE_STATE = 0x0C;
+    public static final short RATED_STATE = 0x10;
     
-    public static final byte UNSTART = 0x1;
-    public static final byte TRAVELING = 0x2;
-    public static final byte OVER = 0x3;
-    public static final byte TEAM = 0x4;
-    public static final byte PERSONAL = 0x0;
-    public static final byte RATED = 0x8;
-    public static final byte UNRATED = 0x0;
+    public static final short UNSTART = 0x01;
+    public static final short TRAVELING = 0x02;
+    public static final short OVER = 0x03;
+    public static final short TEAM = 0x04;
+    public static final short PERSONAL = 0x08;
+    public static final short RATED = 0x10;
+    public static final short UNRATED = 0x00;
     
     private long id;
     
@@ -34,7 +34,7 @@ public class Plan implements localization.LocalSettings {
     
     private long pathId;
     
-    private byte state = 0;
+    private short state = 0;
     
     private Date beginningDate;
     
@@ -47,7 +47,7 @@ public class Plan implements localization.LocalSettings {
     private boolean isSynchronous;
     
     private Plan(long id, String userId, long teamId, long pathId
-            , byte state, Date begin, Date end, String name) {
+            , short state, Date begin, Date end, String name) {
         this.id = id;
         this.userId = userId;
         this.teamId = teamId;
@@ -89,10 +89,89 @@ public class Plan implements localization.LocalSettings {
         return true;
     }
     
-    public boolean save() {
+    public void save() {
         if (isSynchronous())
-            return true;
-        return false;
+            return;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(databaseURL, username, password);
+            conn.setAutoCommit(false);
+            String sql = "UPDATE travelplan"
+                    + "set path_id=?, date_begin=?, name=?, state=? "
+                    + "WHERE id=?;";
+            stmt = (PreparedStatement) conn.prepareStatement(sql
+                    , Statement.RETURN_GENERATED_KEYS);
+            stmt.setLong(1, getPathId());
+            stmt.setDate(2, getBeginningDate());
+            stmt.setString(3, getName());
+            stmt.setShort(4, this.state);
+            stmt.setLong(5, getId());
+            stmt.execute();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }    
+        finally {
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    public void over() {
+        setOver();
+        isSynchronous = false;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(databaseURL, username, password);
+            conn.setAutoCommit(false);
+            String sql = "UPDATE travelplan SET"
+                    + "path_id=?, date_begin=?, name=?, state=?, date_end=? "
+                    + "WHERE id=?;";
+            stmt = (PreparedStatement) conn.prepareStatement(sql
+                    , Statement.RETURN_GENERATED_KEYS);
+            stmt.setLong(1, getPathId());
+            stmt.setDate(2, getBeginningDate());
+            stmt.setString(3, getName());
+            stmt.setShort(4, this.state);
+            setEndingDate(Date.valueOf(LocalDate.now()));
+            stmt.setDate(5, getEndingDate());
+            stmt.setLong(6, getId());
+            stmt.execute();
+            isSynchronous = true;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }    
+        finally {
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
     
     @SuppressWarnings("finally")
@@ -140,11 +219,72 @@ public class Plan implements localization.LocalSettings {
         }
     }
 
-    
     public void setOver(Date endingDate) {
         setOver();
         setUnrated();
         this.endingDate = endingDate;
+    }
+    
+    public static boolean endPersonalPlan(long planId) {
+        Plan plan = Plan.getPlan(planId);
+        if (plan == null || plan.isUnstart() || plan.isOver() || plan.isTeamPlan())
+            return false;
+        plan.over();
+        return true;
+    }
+    
+    @SuppressWarnings("finally")
+    public static Plan newRelatedPlan(long teamId, String userId) {
+        Plan teamPlan = getTeamPlan(teamId);
+        if (teamPlan == null)
+            return null;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        Plan ret = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(databaseURL, username, password);
+            conn.setAutoCommit(false);
+            String sql = "INSERT INTO travelplan"
+                    + "(user_id, team_id, path_id, date_begin, name, state) "
+                    + "VALUE (?, ?, ?, ?, ?, ?);";
+            stmt = (PreparedStatement) conn.prepareStatement(sql
+                    , Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, userId);
+            stmt.setLong(2, teamId);
+            stmt.setLong(3, teamPlan.getPath().getId());
+            stmt.setDate(4, teamPlan.getBeginningDate());
+            stmt.setString(5, teamPlan.getName());
+            stmt.setShort(6, (short)(UNSTART | PERSONAL | TEAM));
+            stmt.execute();
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next())
+                ret = new Plan(rs.getLong("id"), userId, teamId
+                        , teamPlan.getPath().getId()
+                        , (short)(UNSTART | PERSONAL | TEAM)
+                        , teamPlan.getBeginningDate()
+                        , rs.getDate("date_end"), teamPlan.getName());
+            rs.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }    
+        finally {
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return ret;
+        }
     }
     
     @SuppressWarnings("finally")
@@ -168,12 +308,12 @@ public class Plan implements localization.LocalSettings {
             stmt.setLong(3, path.getId());
             stmt.setDate(4, beginningDate);
             stmt.setString(5, name);
-            stmt.setByte(6, (byte)(UNSTART | PERSONAL));
+            stmt.setShort(6, (short)(UNSTART | PERSONAL));
             stmt.execute();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
                 ret = new Plan(rs.getLong("id"), userId, teamId, path.getId(),
-                        (byte)(UNSTART | PERSONAL), beginningDate,
+                        (short)(UNSTART | PERSONAL), beginningDate,
                         rs.getDate("date_end"), name);
             rs.close();
         } catch (ClassNotFoundException e) {
@@ -219,12 +359,12 @@ public class Plan implements localization.LocalSettings {
             stmt.setLong(3, path.getId());
             stmt.setDate(4, beginningDate);
             stmt.setString(5, name);
-            stmt.setByte(6, (byte)(UNSTART | TEAM));
+            stmt.setShort(6, (short)(UNSTART | TEAM));
             stmt.execute();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
                 ret = new Plan(rs.getLong("id"), userId, teamId, path.getId(),
-                        (byte)(UNSTART | TEAM), beginningDate,
+                        (short)(UNSTART | TEAM), beginningDate,
                         rs.getDate("date_end"), name);
             rs.close();
         } catch (ClassNotFoundException e) {
@@ -264,10 +404,11 @@ public class Plan implements localization.LocalSettings {
                 String userId = rs.getString("user_id");
                 long teamId = rs.getLong("team_id");
                 long pathId = rs.getLong("path_id");
-                byte state = rs.getByte("state");
+                short state = rs.getShort("state");
                 Date begin = rs.getDate("date_begin");
                 Date end = rs.getDate("date_end");
-                ret = new Plan(id, userId, teamId, pathId, state, begin, end);
+                String name = rs.getString("name");
+                ret = new Plan(id, userId, teamId, pathId, state, begin, end, name);
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -306,10 +447,11 @@ public class Plan implements localization.LocalSettings {
                 long id = rs.getLong("id");
                 long teamId = rs.getLong("team_id");
                 long pathId = rs.getLong("path_id");
-                byte state = rs.getByte("state");
+                short state = rs.getShort("state");
                 Date begin = rs.getDate("date_begin");
                 Date end = rs.getDate("date_end");
-                Plan newPlan = new Plan(id, userId, teamId, pathId, state, begin, end);
+                String name = rs.getString("name");
+                Plan newPlan = new Plan(id, userId, teamId, pathId, state, begin, end, name);
                 if (newPlan.isPersonalPlan())
                     ret.add(newPlan);
             }
@@ -335,6 +477,7 @@ public class Plan implements localization.LocalSettings {
         }
     }
     
+    @SuppressWarnings("finally")
     public static Plan getTeamPlan(long teamId) {
         Connection conn = null;
         Statement stmt = null;
@@ -349,10 +492,11 @@ public class Plan implements localization.LocalSettings {
                 long id = rs.getLong("id");
                 String userId = rs.getString("user_id");
                 long pathId = rs.getLong("path_id");
-                byte state = rs.getByte("state");
+                short state = rs.getShort("state");
                 Date begin = rs.getDate("date_begin");
                 Date end = rs.getDate("date_end");
-                Plan newPlan = new Plan(id, userId, teamId, pathId, state, begin, end);
+                String name = rs.getString("name");
+                Plan newPlan = new Plan(id, userId, teamId, pathId, state, begin, end, name);
                 if (newPlan.isTeamPlan())
                     ret = newPlan;
             }
