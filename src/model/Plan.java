@@ -107,6 +107,11 @@ public class Plan implements localization.LocalSettings {
         return ret;
     }
     
+    public void remove(int index) {
+        path.remove(index);
+        pathId = path.getId();
+    }
+    
     public void save() {
         if (isSynchronous())
             return;

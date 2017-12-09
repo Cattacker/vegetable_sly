@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -94,6 +93,21 @@ public class Path implements localization.LocalSettings {
             isSynchronous = true;
         }
         return Location.hasLocation(location);
+    }
+    
+    public void remove(int index) {
+        locations.remove(index);
+        Path path = getEquivalentPath();
+        if (path == null) {
+            isSynchronous = false;
+            rate = 0.0;
+            rateSize = 0;
+        } else {
+            id = path.id;
+            rate = path.rate;
+            rateSize = path.rateSize;
+            isSynchronous = true;
+        }
     }
     
     @SuppressWarnings("finally")
@@ -251,7 +265,8 @@ public class Path implements localization.LocalSettings {
             stmt = conn.createStatement();
             String sql = "SELECT path_id FROM path WHERE start_id="
                     + Location.getLocation(start).getId() + " AND "
-                    + "end_id=" + Location.getLocation(end).getId() + ";";
+                    + "end_id=" + Location.getLocation(end).getId()
+                    + " ORDER BY rate_aver;";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next())
                 ret.add(getPath(rs.getLong("path_id")));
