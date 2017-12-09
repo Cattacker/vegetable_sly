@@ -45,7 +45,6 @@
 						      <input type="text" class="form-control" name="id" placeholder="请输入用户名10位字符">
 						    </div>
 						  </div>
-						  
 						  <div class="form-group">
 						    <label for="lastname" class="col-sm-2 control-label"></label>
 						    <div class="col-sm-10">
@@ -57,10 +56,8 @@
 						    <div class="col-sm-offset-2 col-sm-10">
 						      <button type="submit" class="btn btn-default">注册</button>
 						  </div>
-						  
 						</div>
 					</form>
-					
 				</div>
 				<div class="col-md-3">
 				</div>
