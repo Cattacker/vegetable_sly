@@ -20,4 +20,9 @@ public class UserState {
     public static boolean isMember() {
         return !(isVisitor() || isManager());
     }
+    
+    public static String getUsername() {
+        Map session = ActionContext.getContext().getSession();
+        return (String) session.get("user_ID");
+    }
 }
