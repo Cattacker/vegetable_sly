@@ -10,10 +10,10 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class TeamMember implements localization.LocalSettings{
 	
-	public int team_id;
-	public int member_id;
+	public long team_id;
+	public String member_id;
 	
-	public TeamMember(int teamid, int memberid){
+	public TeamMember(long teamid, String memberid){
 		this.team_id = teamid;
 		this.member_id = memberid;
 	}
@@ -31,8 +31,8 @@ public class TeamMember implements localization.LocalSettings{
                     + "VALUE (?, ?);";
             stmt = (PreparedStatement) conn.prepareStatement(sql
                     , Statement.RETURN_GENERATED_KEYS);
-            stmt.setInt(1, this.team_id);
-            stmt.setInt(2, this.member_id);
+            stmt.setLong(1, this.team_id);
+            stmt.setString(2, this.member_id);
             stmt.execute();
             ResultSet rs = stmt.getGeneratedKeys();
             rs.close();
@@ -62,7 +62,7 @@ public class TeamMember implements localization.LocalSettings{
 	}
 	
 	@SuppressWarnings("finally")
-	boolean deleteTeamMember(int teamid,int memberid){
+	boolean deleteTeamMember(Long teamid,String memberid){
 		boolean ret = false;
 		Connection conn = null;
         PreparedStatement stmt = null;
@@ -73,8 +73,8 @@ public class TeamMember implements localization.LocalSettings{
             String sql = "delete from team_member where team_id = ? and member_id = ?;";
             stmt = (PreparedStatement) conn.prepareStatement(sql
                     , Statement.RETURN_GENERATED_KEYS);
-            stmt.setInt(1, this.team_id);
-            stmt.setInt(2, this.member_id);
+            stmt.setLong(1, this.team_id);
+            stmt.setString(2, this.member_id);
             stmt.execute();
             ResultSet rs = stmt.getGeneratedKeys();
             rs.close();
@@ -104,11 +104,11 @@ public class TeamMember implements localization.LocalSettings{
 		
 	}
 	
-	int getTeam_id(){
+	Long getTeam_id(){
 		return this.team_id;
 	}
 	
-	int getMember_id(){
+	String getMember_id(){
 		return this.member_id;
 	}
 }

@@ -2,12 +2,15 @@ package mysql;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import mysql.Basic;
 import mysql.TravelPlan;
 import com.mysql.jdbc.PreparedStatement;
 
 import localization.LocalSettings;
+import model.*;
 
 public class MySQL {
 	private static String url = LocalSettings.databaseURL;    //JDBC��URL 
@@ -351,4 +354,200 @@ public class MySQL {
 			return false;
 		}
     }
+    
+    public ArrayList<Team> QueryMyTeam(String ID){
+    	ArrayList<Team> myteam=new ArrayList<Team>();
+    	ArrayList<TeamMember> teamids=new ArrayList<TeamMember>();
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "select * from team_member where member_id='" +ID+ "';";
+	        Statement stmt= conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        while(rs.next()) {
+	        	int teamid = rs.getInt("team_id");
+	        	String memberid = rs.getString("member_id");
+	        	TeamMember tmp = new TeamMember(teamid,memberid);
+	        	teamids.add(tmp);
+	        }
+	      
+	        int length = teamids.size();
+	        for(int i = 0;i < length;i++){
+	        	String tempsql = "select * from team where id='" +teamids.get(i).team_id+ "';";
+	        	ResultSet rs1 = stmt.executeQuery(tempsql);
+	        	while(rs1.next()) {
+	        		String name = rs1.getString("name");
+	        		int planid = rs1.getInt("plan_id");
+	        		String cid = rs1.getString("captain_id");
+		        	Team tmp = new Team(name,planid,cid);
+		        	myteam.add(tmp);
+		        }
+	        }
+	        
+	        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return myteam;
+	}
+    
+    public ArrayList<Team> QueryTeamsByIdOrName(long id, String name){
+    	ArrayList<Team> teams=new ArrayList<Team>();
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "select * from team where id ='" + id + "' or name = '" + name + "';";
+	        Statement stmt= conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        while(rs.next()) {
+	        	Long teamid = rs.getLong("id");
+	        	String mz = rs.getString("name");
+	        	int planid = rs.getInt("plan_id");
+	        	String cid = rs.getString("captain_id");
+	        	Team tmp = new Team(teamid,mz,planid,cid);
+	        	System.out.println(mz);
+	        	teams.add(tmp);
+	        }
+	        
+	        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return teams;
+	}
+    
+    public ArrayList<TeamMember> QueryTeammembers(long id){
+    	ArrayList<TeamMember> members=new ArrayList<TeamMember>();
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "select * from team_member where team_id='" +id+ "';";
+	        Statement stmt= conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        while(rs.next()) {
+	        	int teamid = rs.getInt("team_id");
+	        	String memberid = rs.getString("member_id");
+	        	TeamMember tmp = new TeamMember(teamid,memberid);
+	        	members.add(tmp);
+	        }  
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	
+    	return members;
+    }
+    
+    public static boolean InsertApplyTeam(long teamid, String userid, String captainid){
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "INSERT INTO applyteam(team_id, user_id, captain_id) VALUES ('"+teamid+"','"
+    		+userid+"','"+ captainid +"' );";
+			System.out.println(sql);
+	        Statement stmt= conn.createStatement();
+	        stmt.execute(sql);
+	        stmt.close();conn.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+    }
+    
+    public ArrayList<ApplyTeamModel> QueryApplyTeams(String captainid){
+    	ArrayList<ApplyTeamModel> myteamapplied=new ArrayList<ApplyTeamModel>();
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "select * from applyteam where captain_id='" +captainid+ "';";
+	        Statement stmt= conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        while(rs.next()) {
+	        	long teamid = rs.getLong("team_id");
+	        	String memberid = rs.getString("user_id");
+	        	String cid = rs.getString("captain_id");
+	        	ApplyTeamModel tmp = new ApplyTeamModel(teamid,memberid,cid);
+	        	myteamapplied.add(tmp);
+	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return myteamapplied;
+	}
+    
+    public boolean AllowApplyTeams(long teamid, String userid){
+		
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "insert into team_member(team_id,member_id) value('"+teamid+"','"+userid+"');";
+			Statement stmt= conn.createStatement();
+			System.out.println(sql);
+	        stmt.execute(sql);
+	        
+	        
+	        String sql2 = "delete from applyteam where team_id = '"+teamid+"' and user_id = '"+userid+"';";
+	        System.out.println(sql2);
+	        stmt.execute(sql2);
+	        
+	        stmt.close();conn.close();
+	        return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    
+    	return false;
+    	
+    }
+    
+    public boolean RefuseApplyTeams(long teamid, String userid){
+    	
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "delete from applyteam where team_id = '"+teamid+"' and user_id = '"+userid+"';";
+			Statement stmt= conn.createStatement();
+			System.out.println(sql);
+	        stmt.execute(sql);
+	        stmt.close();conn.close();
+	        return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    
+    	return false;
+    	
+    }
 }
+
+	
