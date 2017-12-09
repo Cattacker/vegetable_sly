@@ -24,8 +24,8 @@
 		<action name="SetMyTravelPlan_*"
 				class="action.personal.SetMyTravelPlanAction"
 				method="{1}">
-			<result name="jump">setMyTravelPlan.jsp</result>
-			<result name="success" type="redirectAction">GetMyTravelPlanList</result>
+			<result name="show">setMyTravelPlan.jsp</result>
+			<result name="success" type="redirectAction">setMyTravelPlanList</result>
 		</action>
 			
 	</package>

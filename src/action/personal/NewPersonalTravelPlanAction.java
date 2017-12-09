@@ -3,11 +3,13 @@ package action.personal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.ListIterator;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import model.Location;
 import model.Path;
+import model.Plan;
 
 public class NewPersonalTravelPlanAction extends ActionSupport {
 
@@ -24,6 +26,8 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
     
     private Date date;
     
+    private Path path;
+    
     private List<Path> recommendPaths;
 
     @Override
@@ -36,7 +40,17 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
     @Override
     public String execute() throws Exception {
         recommendPaths = Path.getPath(start, end);
-        return SUCCESS;
+        ListIterator<Path> iter = recommendPaths.listIterator(recommendPaths.size());
+        while (iter.hasPrevious()) {
+            Path path = iter.previous();
+            if (path.size() == 2) {
+                setPath(path);
+                Plan.newPersonalPlan(tools.UserState.getUsername()
+                        , date, path, name);
+                return SUCCESS;
+            }
+        }
+        return ERROR;
     }
     
     public String getStart() {
@@ -77,6 +91,14 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
 
     public List<Path> getRecommendPaths() {
         return recommendPaths;
+    }
+
+    public Path getPath() {
+        return path;
+    }
+
+    public void setPath(Path path) {
+        this.path = path;
     }
     
 }

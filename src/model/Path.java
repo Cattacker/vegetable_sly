@@ -266,7 +266,7 @@ public class Path implements localization.LocalSettings {
             String sql = "SELECT path_id FROM path WHERE start_id="
                     + Location.getLocation(start).getId() + " AND "
                     + "end_id=" + Location.getLocation(end).getId()
-                    + " ORDER BY rate_aver;";
+                    + " ORDER BY rate_aver DESC;";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next())
                 ret.add(getPath(rs.getLong("path_id")));
