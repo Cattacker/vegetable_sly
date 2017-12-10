@@ -13,8 +13,8 @@
         	<!--密码长度验证-->
         	<field-validator type="stringlength">
            		<param name="minLength">8</param>
-            	<param name="maxLength">8</param>
-            	<message>密码必须为8位！</message>
+            	<param name="maxLength">16</param>
+            	<message>密码必须为8~16位！</message>
         	</field-validator>
     	</field>
     	<field name="nickname">
@@ -25,8 +25,8 @@
 
         	<!--昵称长度验证-->
         	<field-validator type="stringlength">
-            	<param name="maxLength">8</param>
-            	<message>昵称必须少于8位！</message>
+            	<param name="maxLength">10</param>
+            	<message>昵称必须少于10位！</message>
         	</field-validator>
     	</field>
     	<field name="id">
@@ -37,9 +37,9 @@
 
         	<!--ID长度验证-->
         	<field-validator type="stringlength">
-            	<param name="minLength">10</param>
-            	<param name="maxLength">10</param>
-            	<message>ID必须为10位！</message>
+            	<param name="minLength">8</param>
+            	<param name="maxLength">16</param>
+            	<message>ID必须为8~16位！</message>
         	</field-validator>
     	</field>
     </validators>
