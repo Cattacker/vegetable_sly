@@ -23,15 +23,21 @@ public class Team implements localization.LocalSettings{
 	
 	public int Plan_id;
 	
-	public int Captain_id;
+	public String Captain_id;
 	
 	public List<TeamMember> teammembers;
 	
-	public Team( String name, int planid ,int captainid){
+	public Team( String name, int planid ,String captainid){
 		this.Captain_id = captainid;
 		this.Name = name;
 		this.Plan_id = planid;
-		this.ID = -1L;
+	}
+	
+	public Team(long id, String name, int planid ,String captainid){
+		this.Captain_id = captainid;
+		this.Name = name;
+		this.Plan_id = planid;
+		this.ID = id;
 	}
 	
 	@SuppressWarnings("finally")
@@ -49,7 +55,7 @@ public class Team implements localization.LocalSettings{
                     , Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, this.Name);
             stmt.setLong(2, this.Plan_id);
-            stmt.setInt(3, this.Captain_id);
+            stmt.setString(3, this.Captain_id);
             stmt.execute();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
@@ -135,8 +141,8 @@ public class Team implements localization.LocalSettings{
                     , Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()) {
-	        	int teamid = rs.getInt("team_id");
-	        	int memberid = rs.getInt("member_id");
+	        	Long teamid = rs.getLong("team_id");
+	        	String memberid = rs.getString("member_id");
 	        	TeamMember tmp = new TeamMember(teamid, memberid);
 	        	this.teammembers.add(tmp);
 	        }
@@ -172,11 +178,11 @@ public class Team implements localization.LocalSettings{
 		return this.Name;
 	}
 	
-	void setCaptain_id(int captainid){
+	void setCaptain_id(String captainid){
 		this.Captain_id = captainid;
 	}
 	
-	int getCaotain_id(){
+	String getCaotain_id(){
 		return this.Captain_id;
 	}
 	

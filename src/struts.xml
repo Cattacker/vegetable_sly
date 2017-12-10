@@ -54,9 +54,32 @@
         <action name="QueryTravelPlan" class="action.QueryTravelPlan">
         	<result name="input">/travelplan.jsp</result>
         	<result name="success">/travelplan.jsp</result>
-
         </action>
+        <action name="QueryTeam" class="action.QueryTeam">
+        	<result name="input">/homepage.jsp</result>
+        	<result name="success">/MyTeam.jsp</result>
+        </action>
+        <action name="QueryTeams" class="action.QueryTeams">
+        	<result name="input">/homepage.jsp</result>
+        	<result name="success">/TeamResult.jsp</result>
+        </action>
+        <action name="ApplyTeam" class="action.ApplyTeam">
+        	<result name="input">/TeamResult.jsp</result>
+        	<result >start.jsp</result>
+        </action>
+        <action name="QueryApplyTeam" class="action.QueryApplyTeam">
+        	<result name="input">/SystemInformation.jsp</result>
+        	<result name="success">SystemInformation.jsp</result>
+        </action>
+        <action name="AllowApplyTeam" class="action.AllowApplyTeam">
+        	<result name="success">/start.jsp</result>
+        	<result >start.jsp</result>
+        </action>
+        <action name="RefuseApplyTeam" class="action.RefuseApplyTeam">
+        	<result name="success">/start.jsp</result>
+        	<result >start.jsp</result>
+        </action>
+        
     </package>
-    
 	<include file="action/personal/personal.xml"/>
 </struts>
