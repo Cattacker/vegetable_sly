@@ -50,6 +50,7 @@ public class Path implements localization.LocalSettings {
     
     public boolean add(String location) {
         boolean ret = Location.hasLocation(location);
+        Location.addLocation(location);
         locations.add(Location.getLocation(location));
         Path path = getEquivalentPath();
         if (path == null) {
@@ -66,6 +67,7 @@ public class Path implements localization.LocalSettings {
     }
     
     public boolean set(int index, String location) {
+        Location.addLocation(location);
         locations.set(index, Location.getLocation(location));
         Path path = getEquivalentPath();
         if (path == null) {
@@ -82,6 +84,7 @@ public class Path implements localization.LocalSettings {
     }
     
     public boolean add(int index, String location) {
+        Location.addLocation(location);
         locations.add(index, Location.getLocation(location));
         Path path = getEquivalentPath();
         if (path == null) {
@@ -123,7 +126,6 @@ public class Path implements localization.LocalSettings {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
-            conn.setAutoCommit(false);
             String sql = "INSERT INTO path(start_id, end_id, path_size, hash_code) "
                     + "VALUE (?, ?, ?, ?);";
             stmt = (PreparedStatement) conn.prepareStatement(sql
@@ -132,12 +134,13 @@ public class Path implements localization.LocalSettings {
             stmt.setLong(2, getEnd().getId());
             stmt.setInt(3, getSize());
             stmt.setInt(4, hashCode());
-            stmt.execute();
+            stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
-                this.id = rs.getLong("path_id");
+                this.id = rs.getLong(1);
             rs.close();
             stmt.close();
+            conn.setAutoCommit(false);
             sql = "INSERT INTO "
                     + "path_struct(path_id, location_id, location_index) "
                     + "VALUE (?, ?, ?);";
@@ -310,7 +313,7 @@ public class Path implements localization.LocalSettings {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
             stmt = conn.createStatement();
-            String sql = "SELECT rate_size, rate_aver FROM path WHERE id="
+            String sql = "SELECT rate_size, rate_aver FROM path WHERE path_id="
                     + id + ";";
             ResultSet rs = stmt.executeQuery(sql);
             int rateSize = 0;

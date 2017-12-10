@@ -30,11 +30,8 @@
 			<s:iterator value="plan.path" id="location" status="status">
 				<th>
 					<form action="SetMyTravelPlan_newLocation">
-						<div id = "r-result">
+						<div id="l-map"></div>
 						<input type="text" name="newLocation" id="suggestId${status.index}" value="百度"/>
-						<a href="#" rel="external nofollow" rel="external nofollow" 
-								rel="external nofollow" class="removeclass"></a>
-						</div>
 						<input name="planId" type="hidden" value="${planId}"/>
 						<input name="locationIndex" type="hidden" value="${status.index}"/>
 						<input type="submit" value="添加地点"/>
@@ -52,14 +49,11 @@
 			
 			<th>
 				<form action="SetMyTravelPlan_newLocation">
-				<div id = "r-result">
+					<div id="l-map"></div>
 					<input type="text" name="newLocation" id="suggestId" value="百度"/>
-					<a href="#" rel="external nofollow" rel="external nofollow" 
-						rel="external nofollow" class="removeclass"></a>
-				</div>
-				<input name="planId" type="hidden" value="${planId}"/>
-				<input name="locationIndex" type="hidden" value="${plan.size}"/>
-				<input type="submit" value="添加地点"/>
+					<input name="planId" type="hidden" value="${planId}"/>
+					<input name="locationIndex" type="hidden" value="${plan.size}"/>
+					<input type="submit" value="添加地点"/>
 				</form>
 			</th>
 			
@@ -74,32 +68,6 @@
 
 
 <script type="text/javascript">
-$(document).ready(function() {
-	var MaxInputs    = 8; //maximum input boxes allowed
-	var InputsWrapper  = $("#InputsWrapper"); //Input boxes wrapper ID
-	var AddButton    = $("#AddMoreFileBox"); //Add button ID
-	var x = InputsWrapper.length; //initlal text box count
-	var FieldCount=4; //to keep track of text box added
-	$(AddButton).click(function (e) //on add input button click
-	{
-	    if(x <= MaxInputs) //max input box allowed
-	    {
-	      FieldCount++; //text box added increment
-	      //add input box
-	      $(InputsWrapper).append('<div id="l-map"></div><div id = "r-result"><input type="text" name="mytext[]" id="suggestId4" value="百度"/><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="removeclass"><input type="button" value="删除"></a></div>');
-	      x++; //text box increment
-	    }
-	return false;
-	});
-	$("body").on("click",".removeclass", function(e){ //user click on remove text
-	    if( x > 1 ) {
-	        $(this).parent('div').remove(); //remove text box
-	        x--; //decrement textbox
-	    }
-	return false;
-	})
-	});
-	
 	// 百度地图API功能
 	function G(id) {
 		return document.getElementById(id);
@@ -110,6 +78,10 @@ $(document).ready(function() {
 
 	var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
 		{"input" : "suggestId"
+		,"location" : map
+	});
+	var ac1 = new BMap.Autocomplete(    //建立一个自动完成的对象
+		{"input" : "suggestId1"
 		,"location" : map
 	});
   	var ac2 = new BMap.Autocomplete(    //建立一个自动完成的对象
@@ -154,7 +126,23 @@ $(document).ready(function() {
 		str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
 		G("searchResultPanel").innerHTML = str;
 	});
-  
+	ac1.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+	var str = "";
+		var _value = e.fromitem.value;
+		var value = "";
+		if (e.fromitem.index > -1) {
+			value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+		}    
+		str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+		
+		value = "";
+		if (e.toitem.index > -1) {
+			_value = e.toitem.value;
+			value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+		}    
+		str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+		G("searchResultPanel").innerHTML = str;
+	});
   	ac2.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
 	var str = "";
 		var _value = e.fromitem.value;
@@ -265,6 +253,7 @@ $(document).ready(function() {
 
 
 	var myValue;
+	var myValue1;
   	var myValue2;
   	var myValue3;
   	var myValue4;
@@ -275,6 +264,12 @@ $(document).ready(function() {
 	var _value = e.item.value;
 		myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
 		G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+		setPlace();
+	});
+	ac1.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+	var _value = e.item.value;
+		myValue1 = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+		G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue1;
 		setPlace();
 	});
   	ac2.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
