@@ -35,13 +35,6 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
     private long choosenPathId;
     
     private List<Path> recommendPaths;
-
-    @Override
-    public void validate() {
-        super.validate();
-        if (date.compareTo(Date.valueOf(LocalDate.now())) <= 0)
-            addFieldError("date", "请选择正确的开始日期");
-    }
     
     public String newTravelPlan() throws Exception {
         recommendPaths = Path.getPath(start, end);
