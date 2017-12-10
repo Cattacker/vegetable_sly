@@ -24,30 +24,15 @@
 		<sx:datetimepicker name="date" label="出发日期"
 			displayFormat="yyyy-MM-dd" value="%{'today'}"/>
 		<div id="l-map"></div>
-		<div id = "r-result">
-			起点:<input type="text" name="start" id="suggestId3" value="百度"/>
+		<s:textfield label="起点:" name="start" id="suggestId" value="百度"/>
 			
-		</div><br/>
+		<br/>
 		
-		<div id = "r-result">
-			终点:<input type="text" name="end" id="suggestId4" value="百度"/>
+		<s:textfield label="终点:" name="end" id="suggestId2" value="百度"/>
 			
-		</div><br/>
 		<input type="submit" value="下一步"/>
 	</form>
-	
-	
-	<div id="allmap"></div>
-<div id="driving_way">
-    <div id="l-map"></div>
-    <div id="r-result1">èµ·å§å°ç¹ï¼<input type="text" name = "location" id="suggestId" size="20" value="Ã§ÂÂ¾Ã¥ÂºÂ¦" style="width:150px;" /></div>
-    <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
-    <div id="2-map"></div>
-    <div id="r-result2">ç»æ­¢å°ç¹:<input type="text" name = "location2" id="suggestId2" size="20" value="Ã§ÂÂ¾Ã¥ÂºÂ¦" style="width:150px;" /></div>
-    <div id="searchResultPanel2" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
-    <input type="button" id="result" value="Ã¦ÂÂ¥Ã¨Â¯Â¢" />
-</div>
-<div id="r-result"></div>
+
 </body>
 </html>
 

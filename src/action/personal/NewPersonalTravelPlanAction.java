@@ -28,7 +28,7 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
     
     private Date date;
     
-    private long planId;
+    private long planId = 0;
     
     private Plan plan;
     
@@ -36,7 +36,22 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
     
     private List<Path> recommendPaths;
     
+    @Override
+    public void validate() {
+        if (planId == 0) {
+            if (getStart() == null || getStart().trim().equals(""))
+                addFieldError("start", "请填写出发地!");
+            if (getEnd() == null || getEnd().trim().equals(""))
+                addFieldError("end", "请填写目的地!");
+            if (getName() == null || getName().trim().equals("")
+                    || getName().length() > 50)
+                addFieldError("name", "计划名不能为空, 且不多于50个字符");
+        }
+    }
+    
     public String newTravelPlan() throws Exception {
+        if (tools.UserState.isMember() == false)
+            return LOGIN;
         recommendPaths = Path.getPath(start, end);
         ListIterator<Path> iter = recommendPaths.listIterator(recommendPaths.size());
         while (iter.hasPrevious()) {
@@ -45,10 +60,10 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
                 plan = Plan.newPersonalPlan(tools.UserState.getUsername()
                         , date, path, name);
                 planId = plan.getId();
-                return NEXT;
+                break;
             }
         }
-        return ERROR;
+        return NEXT;
     }
     
     public String choosePath() throws Exception {

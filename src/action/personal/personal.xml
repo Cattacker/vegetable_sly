@@ -26,6 +26,8 @@
 				method="{1}">
 			<result name="next">choosePath.jsp</result>
 			<result name="success" type="redirectAction">GetMyTravelPlanList</result>
+			<result name="login">login.jsp</result>
+			<result name="input">newPersonalTravelPlan.jsp</result>
 		</action>
 		<action name="SetMyTravelPlan_*"
 				class="action.personal.SetMyTravelPlanAction"
