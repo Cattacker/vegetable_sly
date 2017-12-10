@@ -68,13 +68,13 @@
 			<ul class="nav nav-pills nav-fill">
 			</ul>
 			
-					
-					<s:form class="form-horizontal" role="form"  action="OthersDedails.action">
+				
+					<s:form class="form-horizontal" role="form"  action="QueryTeams.action">
 						<div class="col-md-6">
   						<div class="form-group">
     						<label for="firstname" class="col-sm-2 control-label">关键字</label>
 						    <div class="col-sm-10">
-						      <input type="text" class="form-control" name="id" placeholder="请输入关键字进行查询">
+						      <input type="text" class="form-control" name="keywords" placeholder="请输入关键字进行查询">
 						    </div>
 						  </div>
 						  </div>
@@ -86,46 +86,6 @@
 						 </div>
 						 </div>
 					</s:form>
-					<s:fielderror name="error"></s:fielderror>
-					
-					<table class="table">
-			  <caption>${name}详细信息</caption>
-			  <thead>
-			    <tr>
-			      <th>属性</th>
-			      <th>属性值</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr class="active">
-			      <td>ID</td>
-			      <td>${id}</td></tr>
-			    <tr class="success">
-			      <td>NickName</td>
-			      <td>${nickname}</td></tr>
-			    <tr class="warning">
-			      <td>Name</td>
-			      <td>${name}</td></tr>
-			    <tr class="danger">
-			      <td>Sex</td>
-			      <td>${sex}</td></tr>
-			 	<tr class="active">
-			      <td>ComCity</td>
-			      <td>${comcity}</td></tr>
-			    <tr class="success">
-			      <td>Birthday</td>
-			      <td>${birthday}</td></tr>
-			    <tr class="warning">
-			      <td>PhoneNum</td>
-			      <td>${phonenum}</td></tr>
-			    <tr class="active">
-					      <td>操作</td>
-					      <td><a class="nav-link active" href="AddFriends.action?followed=${id}">加好友</a></td></tr>
-			  </tbody>
-			</table>
-				
-					    
-				
 		</div>
 		
 	

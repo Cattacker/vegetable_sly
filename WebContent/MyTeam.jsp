@@ -1,21 +1,59 @@
-﻿<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ page contentType="text/html; charset=UTF-8"  language="java"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-  	<meta charset="utf-8">
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>个人主页</title>
+    
 
     <meta name="description" content="Source code generated using layoutit.com">
     <meta name="author" content="LayoutIt!">
 	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>编辑表格数据</title>
+    <style type="text/css">
+        <!--
+        body,div,p,ul,li,font,span,td,th{
+            font-size:10pt;
+            line-height:155%;
+        }
+        table{
+            border-top-width: 1px;
+            border-right-width: 1px;
+            border-bottom-width: 0px;
+            border-left-width: 1px;
+            border-top-style: solid;
+            border-right-style: solid;
+            border-bottom-style: none;
+            border-left-style: solid;
+            border-top-color: #CCCCCC;
+            border-right-color: #CCCCCC;
+            border-bottom-color: #CCCCCC;
+            border-left-color: #CCCCCC;
+        }
+        td{
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: #CCCCCC;
+        }
+        .EditCell_TextBox {
+            width: 90%;
+            border:1px solid #0099CC;
+        }
+        .EditCell_DropDownList {
+            width: 90%;
+        }
+        -->
+    </style>
     
-  </head>
-  <body>
-  	<div class="container-fluid">
+
+    <title>我的旅游计划</title>
+</head>
+<body>
+	<div class="container-fluid">
   	<div class="col-md-12">
 			<div class="row">
 				<div class="col-md-10">
@@ -61,52 +99,33 @@
 		          <a class="nav-link" href="QueryTravelPlan.action">全部计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="QueryTeam.action">我的团队</a>
-		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="QueryApplyTeam.action">系统消息</a>
+		          <a class="nav-link" href="searchauthorrequest?">待加</a>
 		        </li>
 		      </ul>
 			</div>
 			<ul><s:fielderror name="error"/></ul>
-			<table class="table">
-			  <caption>我的信息</caption>
-			  <thead>
-			    <tr>
-			      <th>属性</th>
-			      <th>属性值</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr class="active">
-			      <td>ID</td>
-			      <td>${id}</td></tr>
-			    <tr class="success">
-			      <td>NickName</td>
-			      <td>${nickname}</td></tr>
-			    <tr class="warning">
-			      <td>Name</td>
-			      <td>${name}</td></tr>
-			    <tr class="danger">
-			      <td>Sex</td>
-			      <td>${sex}</td></tr>
-			 	<tr class="active">
-			      <td>ComCity</td>
-			      <td>${comcity}</td></tr>
-			    <tr class="success">
-			      <td>Birthday</td>
-			      <td>${birthday}</td></tr>
-			    <tr class="warning">
-			      <td>PhoneNum</td>
-			      <td>${phonenum}</td></tr>
-			    
-			  </tbody>
-			</table>
-		</div>
-		
-	
-	
-	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-	<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+			</div>
+			
+<form id="form1" name="form1" method="post" action="">
+    <h3>可编辑的表格</h3>
+    <table width="698" border="0" cellpadding="0" cellspacing="0" id="tabProduct">
+        <tr>
+            <td width="186" bgcolor="#EFEFEF" >团队名称</td>
+            <td width="186" bgcolor="#EFEFEF" >计划id</td>
+            <td width="152" bgcolor="#EFEFEF" >队长id</td>
+        </tr>
+
+        <s:iterator value="myteam">
+            <tr>
+                <td>${Name}</td>
+                <td >${Plan_id}</td>
+                <td >${Captain_id}</td>
+            </tr>
+        </s:iterator>
+
+    </table>
+
+    <br />
+</form>
 </body>
 </html>

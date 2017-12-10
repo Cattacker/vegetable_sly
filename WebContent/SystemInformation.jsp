@@ -88,41 +88,23 @@
 					</s:form>
 					<s:fielderror name="error"></s:fielderror>
 					
-					<table class="table">
-			  <caption>${name}详细信息</caption>
-			  <thead>
-			    <tr>
-			      <th>属性</th>
-			      <th>属性值</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr class="active">
-			      <td>ID</td>
-			      <td>${id}</td></tr>
-			    <tr class="success">
-			      <td>NickName</td>
-			      <td>${nickname}</td></tr>
-			    <tr class="warning">
-			      <td>Name</td>
-			      <td>${name}</td></tr>
-			    <tr class="danger">
-			      <td>Sex</td>
-			      <td>${sex}</td></tr>
-			 	<tr class="active">
-			      <td>ComCity</td>
-			      <td>${comcity}</td></tr>
-			    <tr class="success">
-			      <td>Birthday</td>
-			      <td>${birthday}</td></tr>
-			    <tr class="warning">
-			      <td>PhoneNum</td>
-			      <td>${phonenum}</td></tr>
-			    <tr class="active">
-					      <td>操作</td>
-					      <td><a class="nav-link active" href="AddFriends.action?followed=${id}">加好友</a></td></tr>
-			  </tbody>
-			</table>
+					<table width="698" border="0" cellpadding="0" cellspacing="0" id="tabProduct">
+        <tr>
+        	<td width="186" bgcolor="#EFEFEF" >团队id</td>
+            <td width="186" bgcolor="#EFEFEF" >申请者id</td>
+            <td width="186" bgcolor="#EFEFEF" >操作</td>
+            <td width="186" bgcolor="#EFEFEF" >操作</td>
+        </tr>
+
+        <s:iterator value="applyteams">
+            <tr>
+            	<td>${teamid}</td>
+                <td>${userid}</td>
+                <td><a class="nav-link active" href="AllowApplyTeam.action?teamid=${teamid}&userid=${userid}">同意</a></td>  
+                <td><a class="nav-link active" href="RefuseApplyTeam.action?teamid=${teamid}&userid=${userid}">拒绝</a></td>  
+            </tr>
+            
+        </s:iterator>
 				
 					    
 				
