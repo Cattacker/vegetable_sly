@@ -28,9 +28,11 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
     
     private Date date;
     
-    private Path path;
+    private long planId;
     
-    private long pathId;
+    private Plan plan;
+    
+    private long choosenPathId;
     
     private List<Path> recommendPaths;
 
@@ -47,13 +49,20 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
         while (iter.hasPrevious()) {
             Path path = iter.previous();
             if (path.size() == 2) {
-                setPath(path);
-                Plan.newPersonalPlan(tools.UserState.getUsername()
+                plan = Plan.newPersonalPlan(tools.UserState.getUsername()
                         , date, path, name);
+                planId = plan.getId();
                 return NEXT;
             }
         }
         return ERROR;
+    }
+    
+    public String choosePath() throws Exception {
+        setPlan(Plan.getPlan(planId));
+        getPlan().changePath(Path.getPath(getChoosenPathId()));
+        getPlan().save();
+        return SUCCESS;
     }
     
     public String getStart() {
@@ -96,20 +105,28 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
         return recommendPaths;
     }
 
-    public Path getPath() {
-        return path;
+    public long getPlanId() {
+        return planId;
     }
 
-    public void setPath(Path path) {
-        this.path = path;
+    public void setPlanId(long planId) {
+        this.planId = planId;
     }
 
-    public long getPathId() {
-        return pathId;
+    public Plan getPlan() {
+        return plan;
     }
 
-    public void setPathId(long pathId) {
-        this.pathId = pathId;
+    public void setPlan(Plan plan) {
+        this.plan = plan;
+    }
+
+    public long getChoosenPathId() {
+        return choosenPathId;
+    }
+
+    public void setChoosenPathId(long choosenPathId) {
+        this.choosenPathId = choosenPathId;
     }
     
 }

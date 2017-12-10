@@ -31,7 +31,7 @@
 				<th>
 					<form action="SetMyTravelPlan_newLocation">
 						<div id = "r-result">
-						<input type="text" name="newLocation" id="suggestId3" value="百度"/>
+						<input type="text" name="newLocation" id="suggestId${status.index}" value="百度"/>
 						<a href="#" rel="external nofollow" rel="external nofollow" 
 								rel="external nofollow" class="removeclass"></a>
 						</div>
@@ -53,7 +53,7 @@
 			<th>
 				<form action="SetMyTravelPlan_newLocation">
 				<div id = "r-result">
-					<input type="text" name="newLocation" id="suggestId3" value="百度"/>
+					<input type="text" name="newLocation" id="suggestId" value="百度"/>
 					<a href="#" rel="external nofollow" rel="external nofollow" 
 						rel="external nofollow" class="removeclass"></a>
 				</div>

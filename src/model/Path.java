@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Objects;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -365,6 +366,15 @@ public class Path implements localization.LocalSettings {
         if (locations.getClass() == ArrayList.class)
             return ((ArrayList<Location>)locations).get(locations.size() - 1);
         return null;
+    }
+    
+    public String getText() {
+        StringBuilder ret = new StringBuilder();
+        ListIterator<Location> iter = locations.listIterator();
+        ret.append(iter.next().getName());
+        while (iter.hasNext())
+            ret.append("->" + iter.next().getName());
+        return ret.toString();
     }
     
     public int size() {
