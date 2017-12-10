@@ -21,6 +21,11 @@
 			<result name="success">myTravelPlanList.jsp</result>
 			<result name="login">login.jsp</result>
 		</action>
+		<action name="NewTravelPlan_*"
+				class="action.personal.NewPersonalTravelPlanAction"
+				method="{1}">
+			<result name="next">choosePath.jsp</result>
+		</action>
 		<action name="SetMyTravelPlan_*"
 				class="action.personal.SetMyTravelPlanAction"
 				method="{1}">

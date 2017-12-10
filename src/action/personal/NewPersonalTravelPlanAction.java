@@ -18,6 +18,8 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
      */
     private static final long serialVersionUID = 1L;
 
+    public static final String NEXT = "next";
+    
     private String start;
     
     private String end;
@@ -28,6 +30,8 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
     
     private Path path;
     
+    private long pathId;
+    
     private List<Path> recommendPaths;
 
     @Override
@@ -37,8 +41,7 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
             addFieldError("date", "请选择正确的开始日期");
     }
     
-    @Override
-    public String execute() throws Exception {
+    public String newTravelPlan() throws Exception {
         recommendPaths = Path.getPath(start, end);
         ListIterator<Path> iter = recommendPaths.listIterator(recommendPaths.size());
         while (iter.hasPrevious()) {
@@ -47,7 +50,7 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
                 setPath(path);
                 Plan.newPersonalPlan(tools.UserState.getUsername()
                         , date, path, name);
-                return SUCCESS;
+                return NEXT;
             }
         }
         return ERROR;
@@ -99,6 +102,14 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
 
     public void setPath(Path path) {
         this.path = path;
+    }
+
+    public long getPathId() {
+        return pathId;
+    }
+
+    public void setPathId(long pathId) {
+        this.pathId = pathId;
     }
     
 }
