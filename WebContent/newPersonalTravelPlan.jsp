@@ -5,7 +5,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html {width: 100%;height: 100%; margin:0;font-family:"Ã¥Â¾Â®Ã¨Â½Â¯Ã©ÂÂÃ©Â»Â";}
+        #allmap{height:500px;width:100%;}
+        #r-result,#r-result table{width:100%;}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BG9q7yWsanxwi7twxs95xyv3KtEvfWna"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BG9q7yWsanxwi7twxs95xyv3KtEvfWna"></script>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 <title>新建计划</title>
 <sx:head/>
 </head>
@@ -14,47 +23,35 @@
 		<s:textfield name="name" label="计划名"/>
 		<sx:datetimepicker name="date" label="出发日期"
 			displayFormat="yyyy-MM-dd" value="%{'today'}"/>
+		<div id="l-map"></div>
 		<div id = "r-result">
 			起点:<input type="text" name="start" id="suggestId3" value="百度"/>
-			<a href="#" rel="external nofollow" rel="external nofollow" 
-				rel="external nofollow" class="removeclass"></a>
+			
 		</div><br/>
+		
 		<div id = "r-result">
 			终点:<input type="text" name="end" id="suggestId4" value="百度"/>
-			<a href="#" rel="external nofollow" rel="external nofollow" 
-				rel="external nofollow" class="removeclass"></a>
+			
 		</div><br/>
 		<input type="submit" value="下一步"/>
 	</form>
+	
+	
+	<div id="allmap"></div>
+<div id="driving_way">
+    <div id="l-map"></div>
+    <div id="r-result1">èµ·å§å°ç¹ï¼<input type="text" name = "location" id="suggestId" size="20" value="Ã§ÂÂ¾Ã¥ÂºÂ¦" style="width:150px;" /></div>
+    <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+    <div id="2-map"></div>
+    <div id="r-result2">ç»æ­¢å°ç¹:<input type="text" name = "location2" id="suggestId2" size="20" value="Ã§ÂÂ¾Ã¥ÂºÂ¦" style="width:150px;" /></div>
+    <div id="searchResultPanel2" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+    <input type="button" id="result" value="Ã¦ÂÂ¥Ã¨Â¯Â¢" />
+</div>
+<div id="r-result"></div>
 </body>
 </html>
 
 <script type="text/javascript">
-$(document).ready(function() {
-	var MaxInputs    = 8; //maximum input boxes allowed
-	var InputsWrapper  = $("#InputsWrapper"); //Input boxes wrapper ID
-	var AddButton    = $("#AddMoreFileBox"); //Add button ID
-	var x = InputsWrapper.length; //initlal text box count
-	var FieldCount=4; //to keep track of text box added
-	$(AddButton).click(function (e) //on add input button click
-	{
-	    if(x <= MaxInputs) //max input box allowed
-	    {
-	      FieldCount++; //text box added increment
-	      //add input box
-	      $(InputsWrapper).append('<div id="l-map"></div><div id = "r-result"><input type="text" name="mytext[]" id="suggestId4" value="百度"/><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="removeclass"><input type="button" value="删除"></a></div>');
-	      x++; //text box increment
-	    }
-	return false;
-	});
-	$("body").on("click",".removeclass", function(e){ //user click on remove text
-	    if( x > 1 ) {
-	        $(this).parent('div').remove(); //remove text box
-	        x--; //decrement textbox
-	    }
-	return false;
-	})
-	});
 	
 	// 百度地图API功能
 	function G(id) {
