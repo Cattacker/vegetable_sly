@@ -79,7 +79,9 @@
         	<result name="success">/start.jsp</result>
         	<result >start.jsp</result>
         </action>
-        
+        <action name="editor" class="action.Editor">
+            <result name="success">start.jsp</result>
+        </action>
     </package>
 	<include file="action/personal/personal.xml"/>
 </struts>

@@ -17,6 +17,32 @@ public class MySQL {
 	private static String username = LocalSettings.username;
 	private static String pword = LocalSettings.password;
 	
+	public Boolean InsertStratety(Stratety temp) {
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+    		
+    		String sql = "INSERT INTO stratety (editor) VALUES ('"+temp.getEditor()+"');";
+    		
+//    			sql = "INSERT INTO Basic (ID,PassWord,NickName) VALUES ('"+temp.getID()+"','"+temp.getPassword()+"','"
+//    					+temp.getNickname()+ "','"+temp.getName()+"','"+temp.isSex()+"','"
+//    					+temp.getComcity()+"','"+temp.getBirthday()+"','"+temp.getPhonenum()+"');";
+	        Statement stmt= conn.createStatement();
+	        stmt.execute(sql);
+	        
+	        stmt.close();conn.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+    	
+    }
+	
 	public boolean InsertBasic(Basic temp) {
     	try {
     		try {
