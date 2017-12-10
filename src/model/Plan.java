@@ -684,4 +684,11 @@ public class Plan implements localization.LocalSettings {
         return name;
     }
     
+    public int size() {
+        return path.size();
+    }
+    
+    public int getSize() {
+        return size();
+    }
 }
