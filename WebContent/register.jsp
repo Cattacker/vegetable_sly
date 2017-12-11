@@ -39,25 +39,25 @@
   						<div class="form-group">
     						<label for="firstname" class="col-sm-2 control-label">用户名</label>
 						    <div class="col-sm-10">
-						      <input type="text" class="form-control" name="id" placeholder="请输入用户名10位字符">
+						      <input type="text" class="form-control" name="id" placeholder="请输入用户名,8~16位字符">
 						    </div>
 						  </div>
 						  <div class="form-group">
 						    <label for="lastname" class="col-sm-2 control-label">昵 称</label>
 						    <div class="col-sm-10">
-						      <input type="password" class="form-control" name="nickname" placeholder="请输入昵称6-8位字符">
+						      <input type="text" class="form-control" name="nickname" placeholder="请输入昵称,10位以下字符">
 						    </div>
 						  </div>
 						  <div class="form-group">
 						    <label for="lastname" class="col-sm-2 control-label">密 码</label>
 						    <div class="col-sm-10">
-						      <input type="password" class="form-control" name="password" placeholder="请输入密码8位数字">
+						      <input type="password" class="form-control" name="password" placeholder="请输入密码,8~16位字符">
 						    </div>
 						  </div>
 						  <div class="form-group">
 						    <label for="lastname" class="col-sm-2 control-label">确认密码</label>
 						    <div class="col-sm-10">
-						      <input type="password" class="form-control" name="repassword" placeholder="请再次输入密码8位数字">
+						      <input type="password" class="form-control" name="repassword" placeholder="请再次输入密码">
 						    </div>
 						  </div>
 						  <li>  
