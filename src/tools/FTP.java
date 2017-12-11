@@ -4,147 +4,110 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.logging.Logger;
+import java.nio.file.Files;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
-
-public class FTP { 
-
-private static FTPClient ftp;
-
-
-/**
- * 获取ftp连接
- * @param f
- * @return
- * @throws Exception
- */
-public static boolean connectFtp(FtpConfig f) throws Exception{
-    ftp=new FTPClient();
-    boolean flag=false;
-    if (f.getFtpPort()==null) {
-        ftp.connect(f.getFtpHost(),21);
-    }else{
-        ftp.connect(f.getFtpHost(),f.getFtpPort());
-    }
-    ftp.login(f.getFtpUser(), f.getFtpPassword());
-    int reply = ftp.getReplyCode();      
-    if (!FTPReply.isPositiveCompletion(reply)) {      
-          ftp.disconnect();      
-          return flag;      
-    }      
-    ftp.changeWorkingDirectory(f.getFtpPath());      
-    flag = true;      
-    return flag;
-}
-
-/**
- * 关闭ftp连接
- */
-public static void closeFtp(){
-  try {
-      if (ftp!=null && ftp.isConnected()) {
-            ftp.logout();
-            ftp.disconnect();
+  
+public class FTP {
+    
+  /**
+   * 上传文件（可供Action/Controller层使用）
+   * @param hostname FTP服务器地址
+   * @param port  FTP服务器端口号
+   * @param username  FTP登录帐号
+   * @param password  FTP登录密码
+   * @param pathname  FTP服务器保存目录
+   * @param fileName  上传到FTP服务器后的文件名称
+   * @param inputStream 输入文件流
+   * @return
+   */
+  public static boolean uploadFile(String hostname, int port, String username, String password, String pathname, String fileName, InputStream inputStream){
+    boolean flag = false;
+    FTPClient ftpClient = new FTPClient();
+    ftpClient.setControlEncoding("UTF-8");
+    try {
+      //连接FTP服务器
+      ftpClient.connect(hostname, port);
+      //登录FTP服务器
+      ftpClient.login(username, password);
+      //是否成功登录FTP服务器
+      int replyCode = ftpClient.getReplyCode();
+      if(!FTPReply.isPositiveCompletion(replyCode)){
+        return flag;
       }
-  }catch (IOException e){
-    e.printStackTrace();
-  }   
-}
-
-/**
- * ftp上传文件
- * @param f
- * @throws Exception
- */
-public static void upload(File f) throws Exception{
-    if (f.isDirectory()) {
-        ftp.makeDirectory(f.getName());
-        ftp.changeWorkingDirectory(f.getName());
-        String[] files=f.list();
-        for(String fstr : files){
-            File file1=new File(f.getPath()+File.separator+fstr);
-            if (file1.isDirectory()) {
-                upload(file1);
-                ftp.changeToParentDirectory();
-            }else{
-                File file2=new File(f.getPath()+File.separator+fstr);
-                FileInputStream input=new FileInputStream(file2);
-                ftp.storeFile(file2.getName(),input);
-                input.close();
-            }
-        }
-    }else{
-        File file2=new File(f.getPath());
-        FileInputStream input=new FileInputStream(file2);
-        ftp.storeFile(file2.getName(),input);
-        input.close();
-    }
-}
-
-/**
- * 下载链接配置
- * @param f
- * @param localBaseDir 本地目录
- * @param remoteBaseDir 远程目录
- * @throws Exception
- */
-public static void startDownDir(FtpConfig f,String localBaseDir,String remoteBaseDir) throws Exception{
-    if (FTP.connectFtp(f)) {
-        try { 
-            FTPFile[] files = null; 
-            boolean changedir = ftp.changeWorkingDirectory(remoteBaseDir); 
-            if (changedir) { 
-                ftp.setControlEncoding("UTF-8"); 
-                files = ftp.listFiles(); 
-                for (int i = 0; i < files.length; i++) { 
-                     downloadFile(files[i], localBaseDir, remoteBaseDir); 
-                } 
-            }else{
-                 System.out.println("不存在的相对路径！");
-            } 
-        } catch (Exception e) { 
-          e.printStackTrace();
-        } 
-    }else{
-       System.out.println("连接失败");
-    }
-
-}
-
-public static void startDownFile(FtpConfig f,String localBaseDir,String remoteFilePath) throws Exception{
-  if (FTP.connectFtp(f)) {
-    try { 
-      FileOutputStream outputStream = new FileOutputStream(localBaseDir + remoteFilePath); 
-      ftp.retrieveFile(remoteFilePath, outputStream);
-      outputStream.flush();
-      outputStream.close();
-    } catch (Exception e) { 
+        
+      ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
+      ftpClient.makeDirectory(pathname);
+      ftpClient.changeWorkingDirectory(pathname);
+      ftpClient.enterLocalPassiveMode();
+      ftpClient.storeFile(fileName, inputStream);
+      inputStream.close();
+      ftpClient.logout();
+      flag = true;
+    } catch (Exception e) {
       e.printStackTrace();
-    } 
-  }else{
-    System.out.println("连接FTP服务器失败");
+    } finally{
+      if(ftpClient.isConnected()){
+        try {
+          ftpClient.disconnect();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+    return flag;
   }
-
-}
-
-
-public static void main(String[] args) throws Exception{  
-        FtpConfig f=new FtpConfig();
-        f.setFtpHost("192.168.3.100");
-        f.setFtpPort(21);
-        f.setFtpUser("anonymous");
-        f.setFtpPassword("");
-        // f.setFtpPath("/data1/");//相对路径
-        FTP.connectFtp(f);
-        File file = new File("E:\\data1\\physics.txt");
-
-        //FtpUtil.upload(file);//把文件上传在ftp上
-        // FtpUtil.startDownFile(f, "E:/",  "physics.txt");
-        FTP.startDownDir(f, "E:/data1/",  "/data1/");
-
-   }  
+    
+    
+  /**
+   * 上传文件（可对文件进行重命名）
+   * @param hostname FTP服务器地址
+   * @param port  FTP服务器端口号
+   * @param username  FTP登录帐号
+   * @param password  FTP登录密码
+   * @param pathname  FTP服务器保存目录
+   * @param filename  上传到FTP服务器后的文件名称
+   * @param originfilename 待上传文件的名称（绝对地址）
+   * @return
+   */
+  public static boolean uploadFileFromProduction(String hostname, int port, String username, String password, String pathname, String filename, String originfilename){
+    boolean flag = false;
+    try {
+      InputStream inputStream = new FileInputStream(new File(originfilename));
+      flag = uploadFile(hostname, port, username, password, pathname, filename, inputStream);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return flag;
+  }
+    
+  /**
+   * 上传文件（不可以进行文件的重命名操作）
+   * @param hostname FTP服务器地址
+   * @param port  FTP服务器端口号
+   * @param username  FTP登录帐号
+   * @param password  FTP登录密码
+   * @param pathname  FTP服务器保存目录
+   * @param originfilename 待上传文件的名称（绝对地址）
+   * @return
+   */
+  public static boolean uploadFileFromProduction(String hostname, int port, String username, String password, String pathname, String originfilename){
+    boolean flag = false;
+    try {
+      String fileName = new File(originfilename).getName();
+      InputStream inputStream = new FileInputStream(new File(originfilename));
+      flag = uploadFile(hostname, port, username, password, pathname, fileName, inputStream);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return flag;
+  }
+    
+    
+  
+  
 }

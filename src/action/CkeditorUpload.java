@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-
+import tools.FTP;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
@@ -82,26 +82,20 @@ public class CkeditorUpload extends ActionSupport {
             return null;  
         }  
         
-        InputStream is = new FileInputStream(upload);  
-        String uploadPath ="G:/java/test1/WebContent/image/";
+        InputStream is = new FileInputStream(upload); 
         String fileName = java.util.UUID.randomUUID().toString(); // 采用UUID的方式命名保证不会重复  
-        fileName += expandedName;  
-        File toFile = new File(uploadPath, fileName);  
-        OutputStream os = new FileOutputStream(toFile);  
-          
-        // 文件复制到指定位置  
-        byte[] buffer = new byte[1024];  
-        int length = 0;  
-        while ((length = is.read(buffer)) > 0) {  
-            os.write(buffer, 0, length);  
-        }  
+        fileName += expandedName;   
+        fileName="image"+fileName;
+        new FTP();
+		// 文件复制到指定位置  
+        FTP.uploadFile("ftp.sinas3.com", 10021, "j3o1xmmw2z", "0w2mj3wkw3lkiml5xmw24myl2jiyzjy453kj40wh","/image/", fileName, is);
+        
         is.close();  
-        os.close();  
   
         // 返回“图像”选项卡并显示图片  
         out.println("<script type=\"text/javascript\">");  
         out.println("window.parent.CKEDITOR.tools.callFunction(" + callback  
-                + ",'http://localhost:8080/test1/image/" + fileName + "','')"); // 相对路径用于显示图片  
+                + ",'http://vegetablesly-image.stor.sinaapp.com/" + fileName + "','')"); // 相对路径用于显示图片  
         out.println("</script>");  
         return null;  
     }  
