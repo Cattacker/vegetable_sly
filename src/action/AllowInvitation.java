@@ -1,14 +1,11 @@
 package action;
 
-import java.util.ArrayList;
-
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import model.ApplyTeamModel;
 import mysql.MySQL;
 
-public class AllowApplyTeam extends ActionSupport{
+public class AllowInvitation extends ActionSupport{
 	
 	/**查询旅游计划
 	 * 返回旅游计划列表
@@ -16,8 +13,6 @@ public class AllowApplyTeam extends ActionSupport{
 	private static final long serialVersionUID = 1L;
 	
 	private long teamid;
-	
-	private String userid;
 	
 	public void validate() {
 		 super.validate();
@@ -30,7 +25,8 @@ public class AllowApplyTeam extends ActionSupport{
 	
 	public String execute(){
 		MySQL my = new MySQL();
-		my.AllowApplyTeams(teamid, userid);
+		String id = (String) ActionContext.getContext().getSession().get("user_ID");
+		my.AllowInvitations(teamid, id);
 		return SUCCESS;
 	}
 	public void setTeamid(long teamid){
@@ -40,13 +36,4 @@ public class AllowApplyTeam extends ActionSupport{
 	public long getTeamid(){
 		return this.teamid;
 	}
-	
-	public void setUserid(String userid){
-		this.userid = userid;
-	}
-	
-	public String getUserid(){
-		return this.userid;
-	}
 }
-

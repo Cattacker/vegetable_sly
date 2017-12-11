@@ -110,16 +110,20 @@
     <h3>可编辑的表格</h3>
     <table width="698" border="0" cellpadding="0" cellspacing="0" id="tabProduct">
         <tr>
+            <td width="186" bgcolor="#EFEFEF" >团队id</td>
             <td width="186" bgcolor="#EFEFEF" >团队名称</td>
             <td width="186" bgcolor="#EFEFEF" >计划id</td>
             <td width="152" bgcolor="#EFEFEF" >队长id</td>
+            <td width="152" bgcolor="#EFEFEF" >操作</td>
         </tr>
 
         <s:iterator value="myteam">
             <tr>
+            	<td>${ID}</td>
                 <td>${Name}</td>
                 <td >${Plan_id}</td>
                 <td >${Captain_id}</td>
+                <td><a class="nav-link active" href="InviteFriends.action?teamid=${ID}">邀请好友</a></td>
             </tr>
         </s:iterator>
 

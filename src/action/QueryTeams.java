@@ -34,7 +34,6 @@ private static final long serialVersionUID = 1L;
     
     public String execute() throws Exception {
     	teamid = Long.parseLong(keywords);
-    	System.out.println(teamid);
     	teams=new MySQL().QueryTeamsByIdOrName(teamid,keywords);
         return SUCCESS;
     }

@@ -5,17 +5,16 @@ import java.util.ArrayList;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import model.TeamMember;
 import mysql.MySQL;
-import mysql.UserRelation;
-import model.*;
 
-public class ApplyTeam extends ActionSupport {
+public class InviteRelation extends ActionSupport {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private long teamid;
-	private String captainid;
+	private String friendid;
 	String follow = (String) ActionContext.getContext().getSession().get("user_ID");
 	public boolean isInteam() {
 		 MySQL my = new MySQL();
@@ -25,7 +24,7 @@ public class ApplyTeam extends ActionSupport {
 			 return false;
 		 for(int i=0;i<teammembers.size();i++) {
 			 String memberid=teammembers.get(i).member_id;
-			 if(memberid.equals(follow))
+			 if(memberid.equals(friendid))
 				 return true;
 		 }
 		 return false;
@@ -43,8 +42,8 @@ public class ApplyTeam extends ActionSupport {
 				this.addFieldError("error", "您已加入该团队");
 			}
 			if(follow!=null&&isInteam()==false) {
-				boolean r =  my.InsertApplyTeam(teamid, follow, captainid);
-				this.addFieldError("error", "成功添加好友");
+				boolean w = my.InsertInvite(teamid, friendid);
+				this.addFieldError("error", "成功发出邀请");
 			}
 	}
 	public String execute(){
@@ -57,11 +56,11 @@ public class ApplyTeam extends ActionSupport {
 		this.teamid = teamid;
 	}
 	
-	public String getCaptainid(){
-		return this.captainid;
+	public String getFriendid(){
+		return this.friendid;
 	}
 	
-	public void setCaptainid(String cid){
-		this.captainid = cid;
+	public void setFriendid(String cid){
+		this.friendid = cid;
 	}
 }
