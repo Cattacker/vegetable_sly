@@ -1,4 +1,4 @@
-﻿<%@ page contentType="text/html; charset=UTF-8"  language="java"%>
+<%@ page contentType="text/html; charset=UTF-8"  language="java"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -13,7 +13,7 @@
     <meta name="author" content="LayoutIt!">
 	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>编辑表格数据</title>
+    <title>正在执行的计划</title>
     <style type="text/css">
         <!--
         body,div,p,ul,li,font,span,td,th{
@@ -358,10 +358,10 @@
 		          <a class="nav-link" href="GetMyTravelPlanList_getTraveling.action">正在执行计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="QueryTravelPlan.action?state=2">未评价计划</a>
+		          <a class="nav-link" href="GetMyTravelPlanList_getOver.action">未评价计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="QueryTravelPlan.action">全部计划</a>
+		          <a class="nav-link" href="GetMyTravelPlanList_getRated.action">已评价计划</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link" href="searchauthorrequest?">待加</a>
@@ -370,34 +370,54 @@
 			</div>
 			<ul><s:fielderror name="error"/></ul>
 			</div>
-			
-<form id="form1" name="form1" method="post" action="">
-    <h3>可编辑的表格</h3>
-    <table width="698" border="0" cellpadding="0" cellspacing="0" id="tabProduct">
+
+	<h4>我的计划</h4>
+    <table width="1200" border="0" cellpadding="0" cellspacing="0" id="tabProduct">
         <tr>
-            <td width="186" bgcolor="#EFEFEF" Name="TeamID" EditType="TextBox">用户ID</td>
-            <td width="186" bgcolor="#EFEFEF" Name="TeamID" EditType="TextBox">团队ID</td>
-            <td width="152" bgcolor="#EFEFEF" Name="Path" EditType="TextBox">路线 </td>
-            <td width="103" bgcolor="#EFEFEF" Name="WishDate" EditType="TextBox">日期</td>
+            <td width="100" bgcolor="#EFEFEF" Name="TeamID" EditType="TextBox">计划名</td>
+            <td width="100" bgcolor="#EFEFEF" Name="TeamID" EditType="TextBox">开始时间</td>
+            <td width="400" bgcolor="#EFEFEF" Name="Path" EditType="TextBox">出发地 </td>
+            <td width="400" bgcolor="#EFEFEF" Name="WishDate" EditType="TextBox">目的地</td>
+            <td width="200" bgcolor="#EFEFEF" Name="WishDate" EditType="TextBox">操作</td>
         </tr>
+		<s:iterator value="personalTravelingPlans">
+			<form action="SetMyTravelPlan_globalChangeName">
+			<tr>
+				<th><s:property value="name"/></th>
+				<th><s:property value="beginningDate"/></th>
+				<th><s:property value="path.start.name"/></th>
+				<th><s:property value="path.end.name"/></th>
+				<th>
+					<s:textfield name="newName"/>
+					<input type="submit" value="修改计划名"/>
+				</th>
+			</tr>
+			<input type="hidden" name="planId" value="${id}"/>
+			</form>
+		</s:iterator>
+	</table>
+	
+	<h4>我参与的计划</h4>
+    <table width="1200" border="0" cellpadding="0" cellspacing="0" id="tabProduct">
+        <tr>
+            <td width="100" bgcolor="#EFEFEF" Name="TeamID" EditType="TextBox">计划名</td>
+            <td width="100" bgcolor="#EFEFEF" Name="TeamID" EditType="TextBox">开始时间</td>
+            <td width="400" bgcolor="#EFEFEF" Name="Path" EditType="TextBox">出发地 </td>
+            <td width="400" bgcolor="#EFEFEF" Name="WishDate" EditType="TextBox">目的地</td>
+            <td width="200" bgcolor="#EFEFEF" Name="WishDate" EditType="TextBox">操作</td>
+        </tr>
+		<s:iterator value="teamTravelingPlans">
+			<tr>
+				<th><s:property value="name"/></th>
+				<th><s:property value="beginningDate"/></th>
+				<th><s:property value="path.start.name"/></th>
+				<th><s:property value="path.end.name"/></th>
+			</tr>
+		</s:iterator>
+	</table>
 
-        <s:iterator value="travelplan">
-            <tr>
-                <td>${ID}</td>
-                <td >${teamID}</td>
-                <td >${path}</td>
-                <td >${wishdate}</td>
-            </tr>
-        </s:iterator>
 
-    </table>
 
-    <br />
-    <input type="button" name="Submit" value="新增" onclick="AddRow(document.getElementById('tabProduct'),1)" />
-    <input type="button" name="Submit2" value="删除" onclick="DeleteRow(document.getElementById('tabProduct'),1)" />
-    <input type="button" name="Submit22" value="重置" onclick="window.location.reload()" />
-    <input type="submit" name="Submit3" value="提交" onclick="GetTableData(document.getElementById('tabProduct'));return false;" />
-</form>
 
 <script language="javascript" src="GridEdit.js"></script>
 <script language="javascript">

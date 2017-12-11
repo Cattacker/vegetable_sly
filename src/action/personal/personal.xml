@@ -16,9 +16,14 @@
 			<result name="success">myInformation.jsp</result>
 			<result name="getView">setMyInformation.jsp</result>
 		</action>
-		<action name="GetMyTravelPlanList"
-				class="action.personal.GetMyTravelPlanListAction">
+		<action name="GetMyTravelPlanList_*"
+				class="action.personal.GetMyTravelPlanListAction"
+				method="{1}">
 			<result name="success">myTravelPlanList.jsp</result>
+			<result name="unstart">unstartTravelPlan.jsp</result>
+			<result name="traveling">travelingTravelPlan.jsp</result>
+			<result name="over">overTravelPlan.jsp</result>
+			<result name="rated">ratedTravelPlan.jsp</result>
 			<result name="login">login.jsp</result>
 		</action>
 		<action name="NewTravelPlan_*"

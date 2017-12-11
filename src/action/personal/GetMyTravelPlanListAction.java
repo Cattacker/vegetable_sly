@@ -14,6 +14,14 @@ public class GetMyTravelPlanListAction extends ActionSupport {
      */
     private static final long serialVersionUID = 1L;
     
+    private static final String UNSTART = "unstart";
+
+    private static final String TRAVELING = "traveling";
+
+    private static final String OVER = "over";
+
+    private static final String RATED = "rated";
+    
     private List<Plan> plans;
     
     private List<Plan> personalUnstartPlans;
@@ -31,6 +39,42 @@ public class GetMyTravelPlanListAction extends ActionSupport {
     private List<Plan> teamOverPlans;
     
     private List<Plan> teamRatedPlans;
+    
+    public String getUnstart() throws Exception {
+        String userId = tools.UserState.getUsername();
+        if (userId == null)
+            return LOGIN;
+        plans = Plan.getPlan(userId);
+        makeList();
+        return UNSTART;
+    }
+    
+    public String getTraveling() throws Exception {
+        String userId = tools.UserState.getUsername();
+        if (userId == null)
+            return LOGIN;
+        plans = Plan.getPlan(userId);
+        makeList();
+        return TRAVELING;
+    }
+    
+    public String getOver() throws Exception {
+        String userId = tools.UserState.getUsername();
+        if (userId == null)
+            return LOGIN;
+        plans = Plan.getPlan(userId);
+        makeList();
+        return OVER;
+    }
+    
+    public String getRated() throws Exception {
+        String userId = tools.UserState.getUsername();
+        if (userId == null)
+            return LOGIN;
+        plans = Plan.getPlan(userId);
+        makeList();
+        return RATED;
+    }
     
     @Override
     public String execute() throws Exception {

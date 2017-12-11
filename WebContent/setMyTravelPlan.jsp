@@ -12,22 +12,65 @@
     <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 	<title>个人计划-修改</title>
 	<sx:head/>
+
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<table>
-	<tr><th>计划名:</th><th>${plan.name}</th><th>
+	
+	
+	
+	
+	    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			
+			<ul class="breadcrumb">
+				<li>
+				<a class="navbar-brand" href="index?">寻找“驴友”</a>
+				</li>
+				<li>
+					<a href="homepage.jsp">个人主页</a> <span class="divider">/</span>
+				</li>
+				<li>
+					<a href="start.jsp">首页</a> <span class="divider">/</span>
+				</li>
+				
+			</ul>
+			<div class="row">
+				<div class="col-md-3">
+				</div>
+				<div class="col-md-6">
+					<table>
+	<tr>
+		<th>计划名:</th>
+		<th>${plan.name}</th></tr>
+	<tr>
 	<form action="SetMyTravelPlan_changeName">
-		<s:textfield name="newName" label="新计划名:"></s:textfield>
-		<input name="planId" type="hidden" value="${planId}"/>
-		<s:submit type="submit" value="提交修改"/>
-	</form></th>
-	</tr><tr><th>出发时间</th><th>${plan.beginningDate}</th><th>
+		<th>新计划名:</th>
+		<th>
+			<s:textfield name="newName"></s:textfield>
+			<input name="planId" type="hidden" value="${planId}"/>
+			<s:submit type="submit" value="提交修改"/>
+		</th>
+	</form>
+	</tr>
+	<tr>
+		<th>出发时间:</th>
+		<th>${plan.beginningDate}</th>
+	</tr>
+	<tr>
 	<form action="SetMyTravelPlan_changeBeginningDate">
-		<sx:datetimepicker name="newBeginningDate" label="新出发日期"
-			displayFormat="yyyy-MM-dd"></sx:datetimepicker>
-		<input name="planId" type="hidden" value="${planId}"/>
-		<s:submit value="提交修改"/>
-	</form></th></tr>
+		<th>新出发日期:</th>
+		<th>
+			<sx:datetimepicker name="newBeginningDate"
+				displayFormat="yyyy-MM-dd"></sx:datetimepicker>
+			<input name="planId" type="hidden" value="${planId}"/>
+			<s:submit value="提交修改"/>
+		</th>
+	</form>
+	</tr>
 	</table>
 	<table>
 		<tr>
@@ -75,6 +118,19 @@
 			
 		</tr>
 	</table>
+				</div>
+				<div class="col-md-3">
+				</div>
+			</div>
+			<ul class="breadcrumb">
+				
+			</ul>
+		</div>
+	</div>
+</div>
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	
 </body>
 </html>
 

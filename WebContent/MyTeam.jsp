@@ -87,10 +87,10 @@
 		          <a class="nav-link active" href="QueryFriends.action">我的好友</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="QueryTravelPlan.action?state=0">待执行计划</a>
+		          <a class="nav-link" href="GetMyTravelPlanList_getUnstart.action">待执行计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="QueryTravelPlan.action?state=1">正在执行计划</a>
+		          <a class="nav-link" href="GetMyTravelPlanList_getTraveling.action">正在执行计划</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link" href="QueryTravelPlan.action?state=2">未评价计划</a>
