@@ -42,11 +42,11 @@ public class Log implements LocalSettings {
             conn = DriverManager.getConnection(databaseURL, username, password);
             stmt = conn.createStatement();
             String sql = "SELECT * FROM travel_log WHERE plan_id="
-                    + planId + " ORDER BY time DESC;";
+                    + planId + " ORDER BY log_index DESC;";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next())
                 ret.add(new Log(planId, rs.getInt("log_index")
-                        , rs.getDate("time"), rs.getString("text")));
+                        , rs.getDate("time"), rs.getString("log")));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -79,7 +79,7 @@ public class Log implements LocalSettings {
             conn = DriverManager.getConnection(databaseURL, username, password);
             stmt = conn.createStatement();
             String sql = "SELECT * FROM travel_log WHERE plan_id="
-                    + planId + " ORDER BY time;";
+                    + planId + " ORDER BY log_index;";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next())
                 ret.add(new Log(planId, rs.getInt("log_index")

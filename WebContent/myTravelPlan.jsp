@@ -44,7 +44,7 @@
 				<div class="col-md-6">
 	<table>
 	<tr>
-		<s:if test="#plan.team == false">
+		<s:if test="plan.teamPlan == false">
 			<th>个人计划名:</th>
 		</s:if>
 		<s:else>
@@ -74,44 +74,52 @@
 	</table>
 	<table>
 		<tr>
+			<th>
 			<s:if test="plan.unstart == true">
-				<s:if test="plan.team == false">
-					<th><a href="SetMyTravelPlan_show.action?planId=${planId}">修改</a></th>
+				<s:if test="plan.teamPlan == false">
+					<form action="SetMyTravelPlan_show">
+						<input type="hidden" name="planId" value="${planId}"/>
+						<input type="submit" value="修改"/>
+					</form>
 				</s:if>
 			</s:if>
 			<s:elseif test="plan.rated == true">
 				
 			</s:elseif>
 			<s:elseif test="plan.over == true">
-				<th>
-				<form action="RatePath?planId=${planId}">
+				<form action="RatePath">
+					<input type="hidden" name="planId" value="${planId}"/>
 					<s:textfield name="rate"/>
 					<s:submit value="评价"/>
 				</form>
-				</th>
 			</s:elseif>
 			<s:else>
-				<th>
 				<form action="AddLog">
 					<s:textfield name="text"/>
 					<input type="hidden" name="planId" value="${planId}"/>
 					<s:submit value="添加日志"/>
 				</form>
-				</th>
-				<s:if test="plan.team == false">
-					<th><a href="SetMyTravelPlan_over.action?planId=${planId}">完成旅行</a></th>
+				<s:if test="plan.teamPlan == false">
+					<a href="SetMyTravelPlan_over.action?planId=${planId}">完成旅行</a>
 				</s:if>
 			</s:else>
+			</th>
 		</tr>
 	</table>
 	<s:if test="plan.unstart == false">
+	<br/><br/>
 	<h4>日志</h4>
-	<table>
+	<table width="1200">
+		<tr>
+			<th width="50">序号</th>
+			<th width="100">日期</th>
+			<th width="1050">日志</th>
+		</tr>
 		<s:iterator value="plan.reverseLog" id="log">
 				<tr>
-					<th>${log.index + 1}</th>
-					<th>${log.date}</th>
-					<th>${log.text}</th>
+					<th width="50">${log.index + 1}</th>
+					<th width="100">${log.date}</th>
+					<th width="1050">${log.text}</th>
 				</tr>
 		</s:iterator>
 	</table>

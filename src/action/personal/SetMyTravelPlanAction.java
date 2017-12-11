@@ -93,7 +93,7 @@ public class SetMyTravelPlanAction extends ActionSupport {
             return LOGIN;
         setPlan(Plan.getPlan(planId));
         plan.over();
-        return SUCCESS;
+        return STRICT_SHOW;
     }
     
     public long getPlanId() {

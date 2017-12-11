@@ -162,6 +162,13 @@ public class Plan implements localization.LocalSettings {
         }
     }
     
+    public void rate(int rate) {
+        getPath().rate(rate);
+        setRated();
+        isSynchronous = false;
+        save();
+    }
+    
     public void over() {
         setOver();
         isSynchronous = false;
@@ -170,8 +177,7 @@ public class Plan implements localization.LocalSettings {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
-            conn.setAutoCommit(false);
-            String sql = "UPDATE travelplan SET"
+            String sql = "UPDATE travelplan SET "
                     + "path_id=?, date_begin=?, name=?, state=?, date_end=? "
                     + "WHERE id=?;";
             stmt = (PreparedStatement) conn.prepareStatement(sql
@@ -183,7 +189,7 @@ public class Plan implements localization.LocalSettings {
             setEndingDate(Date.valueOf(LocalDate.now()));
             stmt.setDate(5, getEndingDate());
             stmt.setLong(6, getId());
-            stmt.execute();
+            stmt.executeUpdate();
             isSynchronous = true;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -232,7 +238,7 @@ public class Plan implements localization.LocalSettings {
             stmt.setInt(2, index);
             stmt.setDate(3, new Date(new java.util.Date().getTime()));
             stmt.setString(4, log);
-            stmt.executeUpdate(sql);
+            stmt.executeUpdate();
             ret = true;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

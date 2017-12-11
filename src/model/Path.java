@@ -191,10 +191,45 @@ public class Path implements localization.LocalSettings {
         return !(getEquivalentPathId() == 0);
     }
     
+    @SuppressWarnings("finally")
     public boolean rate(int rate) {
         double rateSum = (double)(this.rateSize++) * this.rate;
-        this.rate = rateSum / (double)(this.rateSize);
-        return save();
+        this.rate = (rateSum + (double)rate) / (double)(this.rateSize);
+        this.hashCode = locations.hashCode();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        boolean ret = false;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(databaseURL, username, password);
+            String sql = "UPDATE path SET "
+                    + "rate_size=?, rate_aver=? "
+                    + "WHERE path_id=" + this.id + ";";
+            stmt = (PreparedStatement) conn.prepareStatement(sql);
+            stmt.setInt(1, getRateSize());
+            stmt.setDouble(2, getRate());
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }    
+        finally {
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return ret;
+        }
     }
     
     public Path getEquivalentPath() {
@@ -421,5 +456,9 @@ public class Path implements localization.LocalSettings {
     public int getRateSize() {
         return rateSize;
     }
-
+    
+    public static void main(String[] args) {
+        Path path = getPath(2);
+        path.rate(4);
+    }
 }

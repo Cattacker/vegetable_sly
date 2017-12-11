@@ -90,9 +90,11 @@ public class GetMyTravelPlanListAction extends ActionSupport {
         personalUnstartPlans = new LinkedList<Plan>();
         personalTravelingPlans = new LinkedList<Plan>();
         personalOverPlans = new LinkedList<Plan>();
+        personalRatedPlans = new LinkedList<Plan>();
         teamUnstartPlans = new LinkedList<Plan>();
         teamTravelingPlans = new LinkedList<Plan>();
         teamOverPlans = new LinkedList<Plan>();
+        teamRatedPlans = new LinkedList<Plan>();
         for (Plan plan : plans) {
             if (plan.isTeamPlan())
                 if (plan.isUnstart())

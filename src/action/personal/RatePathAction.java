@@ -26,7 +26,7 @@ public class RatePathAction extends ActionSupport {
         if (tools.UserState.isMember() == false)
             return LOGIN;
         Plan plan = Plan.getPlan(planId);
-        plan.getPath().rate(getRate());
+        plan.rate(rate);
         return SUCCESS;
     }
     

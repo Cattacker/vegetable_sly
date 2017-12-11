@@ -61,15 +61,15 @@
 		<th>${plan.beginningDate}</th>
 	</tr>
 	<tr>
-	<form action="SetMyTravelPlan_changeBeginningDate">
 		<th>新出发日期:</th>
 		<th>
+		<form action="SetMyTravelPlan_changeBeginningDate">
 			<sx:datetimepicker name="newBeginningDate"
 				displayFormat="yyyy-MM-dd"></sx:datetimepicker>
 			<input name="planId" type="hidden" value="${planId}"/>
 			<s:submit value="提交修改"/>
+		</form>
 		</th>
-	</form>
 	</tr>
 	</table>
 	<table>

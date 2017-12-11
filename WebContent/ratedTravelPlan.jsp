@@ -121,7 +121,9 @@
 				<th><s:property value="beginningDate"/></th>
 				<th><s:property value="path.start.name"/></th>
 				<th><s:property value="path.end.name"/></th>
-				<th></th>
+				<th>
+					<a href="GetMyTravelPlan.action?planId=${id}">查看</a>
+				</th>
 			</tr>
 		</s:iterator>
 	</table>
@@ -141,7 +143,9 @@
 				<th><s:property value="beginningDate"/></th>
 				<th><s:property value="path.start.name"/></th>
 				<th><s:property value="path.end.name"/></th>
-				<th></th>
+				<th>
+					<a href="GetMyTravelPlan.action?planId=${id}">查看</a>
+				</th>
 			</tr>
 		</s:iterator>
 	</table>
