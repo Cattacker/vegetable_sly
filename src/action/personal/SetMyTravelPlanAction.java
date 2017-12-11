@@ -29,6 +29,18 @@ public class SetMyTravelPlanAction extends ActionSupport {
     
     private int locationIndex;
     
+    public void validate() {
+        if (getNewBeginningDate() != null)
+            if (getNewBeginningDate().getTime() < (new java.util.Date()).getTime())
+                addFieldError("newBeginningDate", "请填写正确的日期");
+        if (getNewName() != null)
+            if (getNewName().trim().equals("") || getNewName().length() > 50)
+                addFieldError("newName", "计划名不能为空, 且不多于50个字符");
+        if (getNewLocation() != null)
+            if (getNewLocation().trim().equals(""))
+                addFieldError("newLocation", "请输入地址");
+    }
+    
     public String show() throws Exception {
         setPlan(Plan.getPlan(planId));
         System.out.println(getPlan().getPath().getText());

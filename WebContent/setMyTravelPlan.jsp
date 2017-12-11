@@ -14,17 +14,21 @@
 	<sx:head/>
 </head>
 <body>
+	<table>
+	<tr><th>计划名:</th><th>${plan.name}</th><th>
 	<form action="SetMyTravelPlan_changeName">
-		<s:textfield name="newName" label="计划名:">${plan.name}</s:textfield>
+		<s:textfield name="newName" label="新计划名:"></s:textfield>
 		<input name="planId" type="hidden" value="${planId}"/>
-		<input type="submit" value="提交修改"/>
-	</form>
+		<s:submit type="submit" value="提交修改"/>
+	</form></th>
+	</tr><tr><th>出发时间</th><th>${plan.beginningDate}</th><th>
 	<form action="SetMyTravelPlan_changeBeginningDate">
-		<sx:datetimepicker name="newBeginningDate" label="出发日期"
-			displayFormat="yyyy-MM-dd">${plan.beginningDate}</sx:datetimepicker>
+		<sx:datetimepicker name="newBeginningDate" label="新出发日期"
+			displayFormat="yyyy-MM-dd"></sx:datetimepicker>
 		<input name="planId" type="hidden" value="${planId}"/>
-		<input type="submit" value="提交修改"/>
-	</form>
+		<s:submit value="提交修改"/>
+	</form></th></tr>
+	</table>
 	<table>
 		<tr>
 			<th>

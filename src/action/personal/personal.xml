@@ -39,6 +39,10 @@
 			</result>
 			<result name="strict_show" type="redirectAction">GetMyTravelPlanList</result>
 			<result name="error">error.jsp</result>
+			<result name="input" type="redirectAction">
+				<param name="actionName">SetMyTravelPlan_show</param>
+				<param name="planId">${planId}</param>
+			</result>
 		</action>
 			
 	</package>
