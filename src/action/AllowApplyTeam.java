@@ -31,8 +31,6 @@ public class AllowApplyTeam extends ActionSupport{
 	public String execute(){
 		MySQL my = new MySQL();
 		my.AllowApplyTeams(teamid, userid);
-		System.out.println(teamid);
-		System.out.println(userid);
 		return SUCCESS;
 	}
 	public void setTeamid(long teamid){

@@ -105,6 +105,22 @@
             </tr>
             
         </s:iterator>
+        
+        <tr>
+        	<td width="186" bgcolor="#EFEFEF" >团队id</td>
+            <td width="186" bgcolor="#EFEFEF" >操作</td>
+            <td width="186" bgcolor="#EFEFEF" >操作</td>
+        </tr>
+
+        <s:iterator value="invitations">
+            <tr>
+            	<td>${teamid}</td>
+                <td>${userid}</td>
+                <td><a class="nav-link active" href="AllowInvitation.action?teamid=${teamid}">同意</a></td>  
+                <td><a class="nav-link active" href="RefuseInvitation.action?teamid=${teamid}">拒绝</a></td>  
+            </tr>
+            
+        </s:iterator>
 				
 					    
 				

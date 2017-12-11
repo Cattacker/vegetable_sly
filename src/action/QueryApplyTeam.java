@@ -16,7 +16,7 @@ public class QueryApplyTeam extends ActionSupport{
 	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<ApplyTeamModel> applyteams= new ArrayList<ApplyTeamModel>();
-	
+	private ArrayList<Invitations> invitations= new ArrayList<Invitations>();
 	public void validate() {
 		 super.validate();
 		 MySQL my = new MySQL();
@@ -24,7 +24,7 @@ public class QueryApplyTeam extends ActionSupport{
 			if(id==null) {
 				this.addFieldError("error", "请您先登陆！");
 			} 
-			if(id!=null&&my.QueryApplyTeams(id).isEmpty()) {
+			if(id!=null&&my.QueryApplyTeams(id).isEmpty()&&my.QueryInvitations(id).isEmpty()) {
 				this.addFieldError("error", "您还没有消息！");
 			}
 	}
@@ -33,7 +33,7 @@ public class QueryApplyTeam extends ActionSupport{
 		MySQL my = new MySQL();
 		String id = (String) ActionContext.getContext().getSession().get("user_ID");
 		setApplyteams(my.QueryApplyTeams(id));
-		System.out.println("QueryTeam");
+		setInvitations(my.QueryInvitations(id));
 		return SUCCESS;
 	}
 	public ArrayList<ApplyTeamModel> getApplyteams() {
@@ -41,6 +41,12 @@ public class QueryApplyTeam extends ActionSupport{
 	}
 	public void setApplyteams(ArrayList<ApplyTeamModel> applyteams) {
 		this.applyteams = applyteams;
+	}
+	public ArrayList<Invitations> getInvitations() {
+		return this.invitations;
+	}
+	public void setInvitations(ArrayList<Invitations> invitations) {
+		this.invitations = invitations;
 	}
 	
 }

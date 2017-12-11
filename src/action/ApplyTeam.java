@@ -34,9 +34,6 @@ public class ApplyTeam extends ActionSupport {
 	public void validate() {
 		 super.validate();
 		 MySQL my = new MySQL();
-		 System.out.println(teamid);
- 		 System.out.println(follow);
-		 System.out.println(captainid);
 		 String follow = (String) ActionContext.getContext().getSession().get("user_ID");
 		 
 			if(follow==null) {

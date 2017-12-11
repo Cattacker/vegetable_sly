@@ -380,10 +380,11 @@ public class MySQL {
 	        	String tempsql = "select * from team where id='" +teamids.get(i).team_id+ "';";
 	        	ResultSet rs1 = stmt.executeQuery(tempsql);
 	        	while(rs1.next()) {
+	        		long tid = rs1.getLong("ID");
 	        		String name = rs1.getString("name");
 	        		int planid = rs1.getInt("plan_id");
 	        		String cid = rs1.getString("captain_id");
-		        	Team tmp = new Team(name,planid,cid);
+		        	Team tmp = new Team(tid,name,planid,cid);
 		        	myteam.add(tmp);
 		        }
 	        }
@@ -413,7 +414,6 @@ public class MySQL {
 	        	int planid = rs.getInt("plan_id");
 	        	String cid = rs.getString("captain_id");
 	        	Team tmp = new Team(teamid,mz,planid,cid);
-	        	System.out.println(mz);
 	        	teams.add(tmp);
 	        }
 	        
@@ -461,7 +461,6 @@ public class MySQL {
     		Connection conn = DriverManager.getConnection(url,username,pword);
 			String sql = "INSERT INTO applyteam(team_id, user_id, captain_id) VALUES ('"+teamid+"','"
     		+userid+"','"+ captainid +"' );";
-			System.out.println(sql);
 	        Statement stmt= conn.createStatement();
 	        stmt.execute(sql);
 	        stmt.close();conn.close();
@@ -508,12 +507,10 @@ public class MySQL {
     		Connection conn = DriverManager.getConnection(url,username,pword);
 			String sql = "insert into team_member(team_id,member_id) value('"+teamid+"','"+userid+"');";
 			Statement stmt= conn.createStatement();
-			System.out.println(sql);
 	        stmt.execute(sql);
 	        
 	        
 	        String sql2 = "delete from applyteam where team_id = '"+teamid+"' and user_id = '"+userid+"';";
-	        System.out.println(sql2);
 	        stmt.execute(sql2);
 	        
 	        stmt.close();conn.close();
@@ -537,7 +534,6 @@ public class MySQL {
     		Connection conn = DriverManager.getConnection(url,username,pword);
 			String sql = "delete from applyteam where team_id = '"+teamid+"' and user_id = '"+userid+"';";
 			Statement stmt= conn.createStatement();
-			System.out.println(sql);
 	        stmt.execute(sql);
 	        stmt.close();conn.close();
 	        return true;
@@ -572,6 +568,100 @@ public class MySQL {
 			e.printStackTrace();
 			return false;
 		}
+    }
+
+    public boolean InsertInvite(long teamid, String friendid){
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "INSERT INTO invite(team_id, friend_id) VALUES ('"+teamid+"','"
+    		+friendid +"' );";
+	        Statement stmt= conn.createStatement();
+	        stmt.execute(sql);
+	        stmt.close();conn.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+    }
+
+    public ArrayList<Invitations> QueryInvitations(String userid){
+    	ArrayList<Invitations> invitations=new ArrayList<Invitations>();
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "select * from invite where friend_id='" +userid+ "';";
+	        Statement stmt= conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        while(rs.next()) {
+	        	long teamid = rs.getLong("team_id");
+	        	String memberid = rs.getString("friend_id");
+	        	Invitations tmp = new Invitations(teamid,memberid);
+	        	invitations.add(tmp);
+	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return invitations;
+    }
+    
+    public boolean AllowInvitations(long teamid, String userid){
+    	
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "insert into team_member(team_id,member_id) value('"+teamid+"','"+userid+"');";
+			Statement stmt= conn.createStatement();
+	        stmt.execute(sql);
+	        
+	        
+	        String sql2 = "delete from invite where team_id = '"+teamid+"' and friend_id = '"+userid+"';";
+	        stmt.execute(sql2);
+	        
+	        stmt.close();conn.close();
+	        return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    
+    	return false;
+    	
+    }
+
+    public boolean RefuseInvitations(long teamid, String userid){
+    	
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "delete from invite where team_id = '"+teamid+"' and friend_id = '"+userid+"';";
+			Statement stmt= conn.createStatement();
+	        stmt.execute(sql);
+	        stmt.close();conn.close();
+	        return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    
+    	return false;
+    	
     }
 }
 

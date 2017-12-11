@@ -75,6 +75,22 @@
         	<result name="success">/start.jsp</result>
         	<result >start.jsp</result>
         </action>
+        <action name="InviteFriends" class="action.InviteFriends">
+        	<result name="success">/InviteFriends.jsp</result>
+        	<result >InviteFriends.jsp</result>
+        </action>
+        <action name="InviteRelation" class="action.InviteRelation">
+        	<result name="input">/start.jsp</result>
+        	<result >start.jsp</result>
+        </action>
+        <action name="AllowInvitation" class="action.AllowInvitation">
+        	<result name="success">/start.jsp</result>
+        	<result >start.jsp</result>
+        </action>
+        <action name="RefuseInvitation" class="action.RefuseInvitation">
+        	<result name="success">/start.jsp</result>
+        	<result >start.jsp</result>
+        </action>
         
     </package>
 	<include file="action/personal/personal.xml"/>
