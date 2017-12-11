@@ -18,6 +18,8 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
      */
     private static final long serialVersionUID = 1L;
 
+    public static final String NEXT = "next";
+    
     private String start;
     
     private String end;
@@ -26,31 +28,49 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
     
     private Date date;
     
-    private Path path;
+    private long planId = 0;
+    
+    private Plan plan;
+    
+    private long choosenPathId;
     
     private List<Path> recommendPaths;
-
-    @Override
-    public void validate() {
-        super.validate();
-        if (date.compareTo(Date.valueOf(LocalDate.now())) <= 0)
-            addFieldError("date", "请选择正确的开始日期");
-    }
     
     @Override
-    public String execute() throws Exception {
+    public void validate() {
+        if (planId == 0) {
+            if (getStart() == null || getStart().trim().equals(""))
+                addFieldError("start", "请填写出发地!");
+            if (getEnd() == null || getEnd().trim().equals(""))
+                addFieldError("end", "请填写目的地!");
+            if (getName() == null || getName().trim().equals("")
+                    || getName().length() > 50)
+                addFieldError("name", "计划名不能为空, 且不多于50个字符");
+        }
+    }
+    
+    public String newTravelPlan() throws Exception {
+        if (tools.UserState.isMember() == false)
+            return LOGIN;
         recommendPaths = Path.getPath(start, end);
         ListIterator<Path> iter = recommendPaths.listIterator(recommendPaths.size());
         while (iter.hasPrevious()) {
             Path path = iter.previous();
             if (path.size() == 2) {
-                setPath(path);
-                Plan.newPersonalPlan(tools.UserState.getUsername()
+                plan = Plan.newPersonalPlan(tools.UserState.getUsername()
                         , date, path, name);
-                return SUCCESS;
+                planId = plan.getId();
+                break;
             }
         }
-        return ERROR;
+        return NEXT;
+    }
+    
+    public String choosePath() throws Exception {
+        setPlan(Plan.getPlan(planId));
+        getPlan().changePath(Path.getPath(getChoosenPathId()));
+        getPlan().save();
+        return SUCCESS;
     }
     
     public String getStart() {
@@ -93,12 +113,28 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
         return recommendPaths;
     }
 
-    public Path getPath() {
-        return path;
+    public long getPlanId() {
+        return planId;
     }
 
-    public void setPath(Path path) {
-        this.path = path;
+    public void setPlanId(long planId) {
+        this.planId = planId;
+    }
+
+    public Plan getPlan() {
+        return plan;
+    }
+
+    public void setPlan(Plan plan) {
+        this.plan = plan;
+    }
+
+    public long getChoosenPathId() {
+        return choosenPathId;
+    }
+
+    public void setChoosenPathId(long choosenPathId) {
+        this.choosenPathId = choosenPathId;
     }
     
 }

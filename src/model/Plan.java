@@ -321,7 +321,6 @@ public class Plan implements localization.LocalSettings {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
-            conn.setAutoCommit(false);
             String sql = "INSERT INTO travelplan"
                     + "(user_id, team_id, path_id, date_begin, name, state) "
                     + "VALUE (?, ?, ?, ?, ?, ?);";
@@ -333,12 +332,10 @@ public class Plan implements localization.LocalSettings {
             stmt.setDate(4, beginningDate);
             stmt.setString(5, name);
             stmt.setShort(6, (short)(UNSTART | PERSONAL));
-            stmt.execute();
+            stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
-                ret = new Plan(rs.getLong("id"), userId, teamId, path.getId(),
-                        (short)(UNSTART | PERSONAL), beginningDate,
-                        rs.getDate("date_end"), name);
+                ret = Plan.getPlan(rs.getLong(1));
             rs.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -684,4 +681,11 @@ public class Plan implements localization.LocalSettings {
         return name;
     }
     
+    public int size() {
+        return path.size();
+    }
+    
+    public int getSize() {
+        return size();
+    }
 }

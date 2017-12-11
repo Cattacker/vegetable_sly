@@ -13,8 +13,8 @@
         	<!--密码长度验证-->
         	<field-validator type="stringlength">
            		<param name="minLength">8</param>
-            	<param name="maxLength">8</param>
-            	<message>密码必须为8位！</message>
+            	<param name="maxLength">16</param>
+            	<message>密码必须为8~16位！</message>
         	</field-validator>
     	</field>
     	<field name="id">

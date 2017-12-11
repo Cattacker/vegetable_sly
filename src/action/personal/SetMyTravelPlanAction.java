@@ -27,7 +27,7 @@ public class SetMyTravelPlanAction extends ActionSupport {
     
     private String newLocation;
     
-    private int location_index;
+    private int locationIndex;
     
     public String show() throws Exception {
         setPlan(Plan.getPlan(planId));
@@ -62,7 +62,7 @@ public class SetMyTravelPlanAction extends ActionSupport {
     
     public String newLocation() throws Exception {
         setPlan(Plan.getPlan(planId));
-        if (plan.add(location_index, newLocation) == false)
+        if (plan.add(locationIndex, newLocation) == false)
             return ERROR;
         plan.save();
         return SUCCESS;
@@ -70,7 +70,7 @@ public class SetMyTravelPlanAction extends ActionSupport {
     
     public String deleteLocation() throws Exception {
         setPlan(Plan.getPlan(planId));
-        plan.remove(location_index);
+        plan.remove(locationIndex);
         plan.save();
         return SUCCESS;
     }
@@ -115,11 +115,11 @@ public class SetMyTravelPlanAction extends ActionSupport {
         this.newLocation = newLocation;
     }
 
-    public int getLocation_index() {
-        return location_index;
+    public int getLocationIndex() {
+        return locationIndex;
     }
 
-    public void setLocation_index(int location_index) {
-        this.location_index = location_index;
+    public void setLocationIndex(int locationIndex) {
+        this.locationIndex = locationIndex;
     }
 }
