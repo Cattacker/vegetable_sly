@@ -419,18 +419,5 @@
 
 
 
-<script language="javascript" src="GridEdit.js"></script>
-<script language="javascript">
-
-    var tabProduct = document.getElementById("tabProduct");
-
-    // 设置表格可编辑
-    // 可一次设置多个，例如：EditTables(tb1,tb2,tb2,......)
-    EditTables(tabProduct);
-
-
-</script>
-<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-	<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 </body>
 </html>
