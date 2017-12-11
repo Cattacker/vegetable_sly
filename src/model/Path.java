@@ -52,6 +52,7 @@ public class Path implements localization.LocalSettings {
         boolean ret = Location.hasLocation(location);
         Location.addLocation(location);
         locations.add(Location.getLocation(location));
+        isSynchronous = false;
         Path path = getEquivalentPath();
         if (path == null) {
             isSynchronous = false;
@@ -69,6 +70,7 @@ public class Path implements localization.LocalSettings {
     public boolean set(int index, String location) {
         Location.addLocation(location);
         locations.set(index, Location.getLocation(location));
+        isSynchronous = false;
         Path path = getEquivalentPath();
         if (path == null) {
             isSynchronous = false;
@@ -86,6 +88,7 @@ public class Path implements localization.LocalSettings {
     public boolean add(int index, String location) {
         Location.addLocation(location);
         locations.add(index, Location.getLocation(location));
+        isSynchronous = false;
         Path path = getEquivalentPath();
         if (path == null) {
             isSynchronous = false;
@@ -102,6 +105,7 @@ public class Path implements localization.LocalSettings {
     
     public void remove(int index) {
         locations.remove(index);
+        isSynchronous = false;
         Path path = getEquivalentPath();
         if (path == null) {
             isSynchronous = false;
@@ -329,7 +333,6 @@ public class Path implements localization.LocalSettings {
             LinkedList<Location> locations = new LinkedList<Location>();
             while (rs.next()) {
                 long location_id = rs.getLong("location_id");
-                System.out.println("location id = " + location_id);
                 locations.add(Location.getLocation(location_id));
             }
             if (locations.isEmpty() == false)
