@@ -55,10 +55,13 @@
 		          <a class="nav-link" href="GetMyTravelPlanList_getTraveling.action">正在执行计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="QueryTravelPlan.action?state=2">未评价计划</a>
+		          <a class="nav-link" href="GetMyTravelPlanList_getOver.action">未评价计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="QueryTravelPlan.action">全部计划</a>
+		          <a class="nav-link" href="GetMyTravelPlanList_getRated.action">已评价计划</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="newPersonalTravelPlan.jsp">新建计划</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link" href="QueryTeam.action">我的团队</a>

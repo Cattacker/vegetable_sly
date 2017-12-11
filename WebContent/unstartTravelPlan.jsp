@@ -366,6 +366,12 @@
 		        <li class="nav-item">
 		          <a class="nav-link" href="newPersonalTravelPlan.jsp">新建计划</a>
 		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="QueryTeam.action">我的团队</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="QueryApplyTeam.action">系统消息</a>
+		        </li>
 		      </ul>
 			</div>
 			<ul><s:fielderror name="error"/></ul>
