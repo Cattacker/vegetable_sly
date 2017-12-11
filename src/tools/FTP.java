@@ -2,14 +2,10 @@ package tools;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
 
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
   
 public class FTP {
@@ -84,7 +80,6 @@ public class FTP {
     }
     return flag;
   }
-    
   /**
    * 上传文件（不可以进行文件的重命名操作）
    * @param hostname FTP服务器地址
@@ -106,8 +101,4 @@ public class FTP {
     }
     return flag;
   }
-    
-    
-  
-  
 }
