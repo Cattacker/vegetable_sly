@@ -88,6 +88,14 @@ public class SetMyTravelPlanAction extends ActionSupport {
         return SUCCESS;
     }
     
+    public String over() throws Exception {
+        if (tools.UserState.isMember() == false)
+            return LOGIN;
+        setPlan(Plan.getPlan(planId));
+        plan.over();
+        return SUCCESS;
+    }
+    
     public long getPlanId() {
         return planId;
     }
@@ -135,4 +143,5 @@ public class SetMyTravelPlanAction extends ActionSupport {
     public void setLocationIndex(int locationIndex) {
         this.locationIndex = locationIndex;
     }
+
 }

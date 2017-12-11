@@ -364,7 +364,7 @@
 		          <a class="nav-link" href="GetMyTravelPlanList_getRated.action">已评价计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="searchauthorrequest?">待加</a>
+		          <a class="nav-link" href="newPersonalTravelPlan.jsp">新建计划</a>
 		        </li>
 		      </ul>
 			</div>

@@ -42,6 +42,20 @@
 				<param name="planId">${planId}</param>
 			</result>
 		</action>
+		<action name="AddLog" class="action.personal.AddLogAction">
+			<result name="login">login.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">GetMyTravelPlan</param>
+				<param name="planId">${planId}</param>
+			</result>
+		</action>
+		<action name="RatePath" class="action.personal.RatePathAction">
+			<result name="login">login.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">GetMyTravelPlan</param>
+				<param name="planId">${planId}</param>
+			</result>
+		</action>
 			
 	</package>
 </struts>

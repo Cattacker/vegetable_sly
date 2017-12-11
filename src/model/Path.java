@@ -130,14 +130,17 @@ public class Path implements localization.LocalSettings {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
-            String sql = "INSERT INTO path(start_id, end_id, path_size, hash_code) "
-                    + "VALUE (?, ?, ?, ?);";
+            String sql = "INSERT INTO path"
+                    + "(start_id, end_id, path_size, hash_code, rate_size, rate_aver) "
+                    + "VALUE (?, ?, ?, ?, ?, ?);";
             stmt = (PreparedStatement) conn.prepareStatement(sql
                     , Statement.RETURN_GENERATED_KEYS);
             stmt.setLong(1, getStart().getId());
             stmt.setLong(2, getEnd().getId());
             stmt.setInt(3, getSize());
             stmt.setInt(4, hashCode());
+            stmt.setInt(5, getRateSize());
+            stmt.setDouble(6, getRate());
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())

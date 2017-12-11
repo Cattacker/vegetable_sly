@@ -209,26 +209,29 @@ public class Plan implements localization.LocalSettings {
     @SuppressWarnings("finally")
     public boolean addLog(String log) {
         Connection conn = null;
-        Statement stmt = null;
+        PreparedStatement stmt = null;
+        Statement tempStmt = null;
         boolean ret = false;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
-            stmt = conn.createStatement();
-            String sql = "SELECT 1 FROM travel_log WHERE plan_id=" + this.id + ";";
-            ResultSet rs = stmt.executeQuery(sql);
+            String sql = "INSERT INTO travel_log"
+                    + "(plan_id, log_index, time, log)"
+                    + " VALUES(?, ?, ?, ?);";
+            stmt = (PreparedStatement) conn.prepareStatement(sql);
+            tempStmt = conn.createStatement();
+            sql = "SELECT 1 FROM travel_log WHERE plan_id=" + this.id + ";";
+            ResultSet rs = tempStmt.executeQuery(sql);
             int index = 0;
             if (rs.next()) {
                 rs.last();
                 index = rs.getRow();
             }
             rs.close();
-            sql = "INSERT INTO travel_log"
-                    + "(plan_id, log_index, time, log)"
-                    + " VALUES(" + this.id + ", "
-                    + index + ", "
-                    + Date.valueOf(LocalDate.now()) + ", "
-                    + "'" + log + "');";
+            stmt.setLong(1, id);
+            stmt.setInt(2, index);
+            stmt.setDate(3, new Date(new java.util.Date().getTime()));
+            stmt.setString(4, log);
             stmt.executeUpdate(sql);
             ret = true;
         } catch (ClassNotFoundException e) {

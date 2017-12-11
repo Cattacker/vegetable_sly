@@ -12,7 +12,7 @@
     <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 	<title>个人计划-修改</title>
 	<sx:head/>
-
+	
     <meta name="description" content="Source code generated using layoutit.com">
     <meta name="author" content="LayoutIt!">
 	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
@@ -59,31 +59,63 @@
 		<th>状态 : </th>
 		<th>${travelState}</th>
 	</tr>
+	<tr>
+		<th>路线 : </th>
+		<th>${plan.path.text}</th>
+	</tr>
+	<tr>
+		<th>路线评分 : </th>
+		<th>${plan.path.rate}</th>
+	</tr>
+	<tr>
+		<th>评价人数 : </th>
+		<th>${plan.path.rateSize}</th>
+	</tr>
 	</table>
-	
 	<table>
 		<tr>
-			<th>${plan.path.text}</th>
-		</tr>
-		<tr>
-			<th>
 			<s:if test="plan.unstart == true">
 				<s:if test="plan.team == false">
-					<a href="SetMyTravelPlan_show.action?planId=${planId}">修改</a>
+					<th><a href="SetMyTravelPlan_show.action?planId=${planId}">修改</a></th>
 				</s:if>
 			</s:if>
 			<s:elseif test="plan.rated == true">
 				
 			</s:elseif>
 			<s:elseif test="plan.over == true">
-			
+				<th>
+				<form action="RatePath?planId=${planId}">
+					<s:textfield name="rate"/>
+					<s:submit value="评价"/>
+				</form>
+				</th>
 			</s:elseif>
 			<s:else>
-				
+				<th>
+				<form action="AddLog">
+					<s:textfield name="text"/>
+					<input type="hidden" name="planId" value="${planId}"/>
+					<s:submit value="添加日志"/>
+				</form>
+				</th>
+				<s:if test="plan.team == false">
+					<th><a href="SetMyTravelPlan_over.action?planId=${planId}">完成旅行</a></th>
+				</s:if>
 			</s:else>
-			</th>
 		</tr>
 	</table>
+	<s:if test="plan.unstart == false">
+	<h4>日志</h4>
+	<table>
+		<s:iterator value="plan.reverseLog" id="log">
+				<tr>
+					<th>${log.index + 1}</th>
+					<th>${log.date}</th>
+					<th>${log.text}</th>
+				</tr>
+		</s:iterator>
+	</table>
+	</s:if>
 				</div>
 				<div class="col-md-3">
 				</div>
@@ -99,247 +131,3 @@
 	
 </body>
 </html>
-
-
-<script type="text/javascript">
-	// 百度地图API功能
-	function G(id) {
-		return document.getElementById(id);
-	}
-	
-	var map = new BMap.Map("l-map");
-	map.centerAndZoom("北京",12);                   // 初始化地图,设置城市和地图级别。
-
-	var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
-		{"input" : "suggestId"
-		,"location" : map
-	});
-	var ac1 = new BMap.Autocomplete(    //建立一个自动完成的对象
-		{"input" : "suggestId1"
-		,"location" : map
-	});
-  	var ac2 = new BMap.Autocomplete(    //建立一个自动完成的对象
-		{"input" : "suggestId2"
-		,"location" : map
-	});
-  	var ac3 = new BMap.Autocomplete(    //建立一个自动完成的对象
-  			{"input" : "suggestId3"
-  			,"location" : map
-  		});
-  	var ac4 = new BMap.Autocomplete(    //建立一个自动完成的对象
-  			{"input" : "suggestId4"
-  			,"location" : map
-  		});
-  	var ac5 = new BMap.Autocomplete(    //建立一个自动完成的对象
-  			{"input" : "suggestId5"
-  			,"location" : map
-  		});
-  	var ac6 = new BMap.Autocomplete(    //建立一个自动完成的对象
-  			{"input" : "suggestId6"
-  			,"location" : map
-  		});
-  	var ac7 = new BMap.Autocomplete(    //建立一个自动完成的对象
-  			{"input" : "suggestId7"
-  			,"location" : map
-  		});
-
-	ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
-	var str = "";
-		var _value = e.fromitem.value;
-		var value = "";
-		if (e.fromitem.index > -1) {
-			value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-		}    
-		str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
-		
-		value = "";
-		if (e.toitem.index > -1) {
-			_value = e.toitem.value;
-			value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-		}    
-		str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
-		G("searchResultPanel").innerHTML = str;
-	});
-	ac1.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
-	var str = "";
-		var _value = e.fromitem.value;
-		var value = "";
-		if (e.fromitem.index > -1) {
-			value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-		}    
-		str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
-		
-		value = "";
-		if (e.toitem.index > -1) {
-			_value = e.toitem.value;
-			value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-		}    
-		str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
-		G("searchResultPanel").innerHTML = str;
-	});
-  	ac2.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
-	var str = "";
-		var _value = e.fromitem.value;
-		var value = "";
-		if (e.fromitem.index > -1) {
-			value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-		}    
-		str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
-		
-		value = "";
-		if (e.toitem.index > -1) {
-			_value = e.toitem.value;
-			value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-		}    
-		str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
-		G("searchResultPanel").innerHTML = str;
-	});
-  	
-  	ac3.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
-  		var str = "";
-  			var _value = e.fromitem.value;
-  			var value = "";
-  			if (e.fromitem.index > -1) {
-  				value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-  			}    
-  			str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
-  			
-  			value = "";
-  			if (e.toitem.index > -1) {
-  				_value = e.toitem.value;
-  				value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-  			}    
-  			str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
-  			G("searchResultPanel").innerHTML = str;
-  		});
-
-  	ac4.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
-  		var str = "";
-  			var _value = e.fromitem.value;
-  			var value = "";
-  			if (e.fromitem.index > -1) {
-  				value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-  			}    
-  			str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
-  			
-  			value = "";
-  			if (e.toitem.index > -1) {
-  				_value = e.toitem.value;
-  				value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-  			}    
-  			str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
-  			G("searchResultPanel").innerHTML = str;
-  		});
-
-  	ac5.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
-  		var str = "";
-  			var _value = e.fromitem.value;
-  			var value = "";
-  			if (e.fromitem.index > -1) {
-  				value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-  			}    
-  			str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
-  			
-  			value = "";
-  			if (e.toitem.index > -1) {
-  				_value = e.toitem.value;
-  				value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-  			}    
-  			str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
-  			G("searchResultPanel").innerHTML = str;
-  		});
-
-  	ac6.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
-  		var str = "";
-  			var _value = e.fromitem.value;
-  			var value = "";
-  			if (e.fromitem.index > -1) {
-  				value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-  			}    
-  			str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
-  			
-  			value = "";
-  			if (e.toitem.index > -1) {
-  				_value = e.toitem.value;
-  				value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-  			}    
-  			str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
-  			G("searchResultPanel").innerHTML = str;
-  		});
-
-  	ac7.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
-  		var str = "";
-  			var _value = e.fromitem.value;
-  			var value = "";
-  			if (e.fromitem.index > -1) {
-  				value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-  			}    
-  			str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
-  			
-  			value = "";
-  			if (e.toitem.index > -1) {
-  				_value = e.toitem.value;
-  				value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-  			}    
-  			str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
-  			G("searchResultPanel").innerHTML = str;
-  		});
-
-
-	var myValue;
-	var myValue1;
-  	var myValue2;
-  	var myValue3;
-  	var myValue4;
-  	var myValue5;
-  	var myValue6;
-  	var myValue7;
-	ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
-	var _value = e.item.value;
-		myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-		G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
-		setPlace();
-	});
-	ac1.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
-	var _value = e.item.value;
-		myValue1 = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-		G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue1;
-		setPlace();
-	});
-  	ac2.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
-	var _value = e.item.value;
-		myValue2 = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-		G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue2;
-		setPlace();
-	});
-  	ac3.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
-  		var _value = e.item.value;
-  			myValue3 = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-  			G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue2;
-  			setPlace();
-  		});
-  	ac4.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
-  		var _value = e.item.value;
-  			myValue4 = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-  			G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue2;
-  			setPlace();
-  		});
-  	ac5.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
-  		var _value = e.item.value;
-  			myValue5 = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-  			G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue2;
-  			setPlace();
-  		});
-  	ac6.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
-  		var _value = e.item.value;
-  			myValue6 = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-  			G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue2;
-  			setPlace();
-  		});
-  	ac7.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
-  		var _value = e.item.value;
-  			myValue7 = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-  			G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue2;
-  			setPlace();
-  		});
-</script>
