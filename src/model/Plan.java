@@ -56,10 +56,11 @@ public class Plan implements localization.LocalSettings {
         this.name = name;
         this.setBeginningDate(begin);
         this.setEndingDate(end);
-        if (begin.compareTo(Date.valueOf(LocalDate.now())) < 0)
-            setUnstart();
-        else if (isOver() == false)
-            setTraveling();
+        if (isOver() == false)
+            if (begin.compareTo(new Date((new java.util.Date()).getTime())) > 0)
+                setUnstart();
+            else
+                setTraveling();
         this.path = Path.getPath(pathId);
         isSynchronous = true;
     }
@@ -429,6 +430,7 @@ public class Plan implements localization.LocalSettings {
                 Date begin = rs.getDate("date_begin");
                 Date end = rs.getDate("date_end");
                 String name = rs.getString("name");
+                System.out.println("pathId = " + pathId);
                 ret = new Plan(id, userId, teamId, pathId, state, begin, end, name);
             }
         } catch (ClassNotFoundException e) {
@@ -607,37 +609,37 @@ public class Plan implements localization.LocalSettings {
     }
     
     public void setUnstart() {
-        state &= TRAVEL_STATE;
+        state &= ~TRAVEL_STATE;
         state += UNSTART;
     }
     
     public void setTraveling() {
-        state &= TRAVEL_STATE;
+        state &= ~TRAVEL_STATE;
         state += TRAVELING;
     }
     
     public void setOver() {
-        state &= TRAVEL_STATE;
+        state &= ~TRAVEL_STATE;
         state += OVER;
     }
     
     public void setPersonalPlan() {
-        state &= RELATE_STATE;
+        state &= ~RELATE_STATE;
         state += PERSONAL;
     }
     
     public void setTeamPlan() {
-        state &= RELATE_STATE;
+        state &= ~RELATE_STATE;
         state += TEAM;
     }
     
     public void setRated() {
-        state &= RATED_STATE;
+        state &= ~RATED_STATE;
         state += RATED;
     }
     
     public void setUnrated() {
-        state &= RATED_STATE;
+        state &= ~RATED_STATE;
         state += UNRATED;
     }
 
@@ -682,10 +684,41 @@ public class Plan implements localization.LocalSettings {
     }
     
     public int size() {
+        if (path == null)
+            System.out.println("fuck!");
         return path.size();
     }
     
     public int getSize() {
         return size();
+    }
+    
+    public static void main(String[] args) {
+        /*
+        short state = 9;
+        if ((state & TRAVEL_STATE) == UNSTART)
+            System.out.println("bingo!");
+        else
+            System.out.println("fuck!");
+
+        if ((state & TRAVEL_STATE) != OVER)
+            System.out.println("bingo!");
+        else
+            System.out.println("fuck!");
+
+        state &= ~TRAVEL_STATE;
+        state += TRAVELING;
+        System.out.println(state);
+
+        state &= ~TRAVEL_STATE;
+        state += UNSTART;
+        System.out.println(state);
+        */ //test success;
+        
+        Plan plan = Plan.getPlan(1);
+        if (plan.getPath() == null)
+            System.out.println("fuck!");
+        else
+            System.out.println("success!");
     }
 }
