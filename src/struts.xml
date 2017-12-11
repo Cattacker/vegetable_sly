@@ -85,8 +85,7 @@
         <action name="expresseditor" class="action.ExpressEditor">
             <result name="success">raiders.jsp</result>
         </action>
-        <action name="ckeditor" class="action.CkeditorUpload">
-            
+        <action name="ckeditor" class="action.CkeditorUpload"> 
         </action>
     </package>
 	<include file="action/personal/personal.xml"/>

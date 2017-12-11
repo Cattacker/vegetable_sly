@@ -3,12 +3,10 @@ package action;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
@@ -83,7 +81,7 @@ public class CkeditorUpload extends ActionSupport {
             out.println("</script>");  
             return null;  
         }  
-  
+        
         InputStream is = new FileInputStream(upload);  
         String uploadPath ="G:/java/test1/WebContent/image/";
         String fileName = java.util.UUID.randomUUID().toString(); // 采用UUID的方式命名保证不会重复  
@@ -103,7 +101,7 @@ public class CkeditorUpload extends ActionSupport {
         // 返回“图像”选项卡并显示图片  
         out.println("<script type=\"text/javascript\">");  
         out.println("window.parent.CKEDITOR.tools.callFunction(" + callback  
-                + ",'image/" + fileName + "','')"); // 相对路径用于显示图片  
+                + ",'http://localhost:8080/test1/image/" + fileName + "','')"); // 相对路径用于显示图片  
         out.println("</script>");  
         return null;  
     }  

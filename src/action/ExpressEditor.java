@@ -20,7 +20,7 @@ public class ExpressEditor extends ActionSupport {
 		this.text1 = text1;
 	}
 	public String execute() {
-		text1=new MySQL().QueryStratety(3).getEditor();
+		text1=new MySQL().QueryStratety(2).getEditor();
 		return SUCCESS;
 	}
 }
