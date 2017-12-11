@@ -215,7 +215,7 @@ public class Plan implements localization.LocalSettings {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
             stmt = conn.createStatement();
-            String sql = "SELECT 1 FROM travel_log WHERE id=" + this.id + ";";
+            String sql = "SELECT 1 FROM travel_log WHERE plan_id=" + this.id + ";";
             ResultSet rs = stmt.executeQuery(sql);
             int index = 0;
             if (rs.next()) {
@@ -253,6 +253,14 @@ public class Plan implements localization.LocalSettings {
         }
     }
 
+    public List<Log> getLog() {
+        return Log.getLog(id);
+    }
+    
+    public List<Log> getReverseLog() {
+        return Log.getReverseLog(id);
+    }
+    
     public void setOver(Date endingDate) {
         setOver();
         setUnrated();
