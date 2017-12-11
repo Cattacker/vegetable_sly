@@ -30,7 +30,7 @@ public class Path implements localization.LocalSettings {
     
     
     
-    private Path(ArrayList<Location> locations, long id
+    private Path(List<Location> locations, long id
             , int rateSize, double rate) {
         this.locations = locations;
         this.id = id;
@@ -149,7 +149,7 @@ public class Path implements localization.LocalSettings {
             for (Location location : locations) {
                 stmt.setLong(1, this.id);
                 stmt.setLong(2, location.getId());
-                stmt.setInt(3, i);
+                stmt.setInt(3, i++);
                 stmt.addBatch();
             }
             stmt.executeBatch();
@@ -323,13 +323,14 @@ public class Path implements localization.LocalSettings {
                 rate = rs.getDouble("rate_aver");
             }
             rs.close();
-            sql = "SELECT * FROM path_struct WHERE path_id=" + id + ";";
+            sql = "SELECT location_id FROM path_struct WHERE path_id="
+                    + id + " ORDER BY location_index;";
             rs = stmt.executeQuery(sql);
-            ArrayList<Location> locations = new ArrayList<Location>(rs.getFetchSize());
+            LinkedList<Location> locations = new LinkedList<Location>();
             while (rs.next()) {
-                int index = rs.getInt("location_index");
                 long location_id = rs.getLong("location_id");
-                locations.set(index, Location.getLocation(location_id));
+                System.out.println("location id = " + location_id);
+                locations.add(Location.getLocation(location_id));
             }
             if (locations.isEmpty() == false)
                 ret = new Path(locations, id, rateSize, rate);
