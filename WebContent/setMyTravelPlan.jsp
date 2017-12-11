@@ -6,28 +6,34 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BG9q7yWsanxwi7twxs95xyv3KtEvfWna"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BG9q7yWsanxwi7twxs95xyv3KtEvfWna"></script>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 	<title>个人计划-修改</title>
 	<sx:head/>
 </head>
 <body>
 	<form action="SetMyTravelPlan_changeName">
-		<s:textfield name="newName" label="计划名:" value="${plan.name}"/>
+		<s:textfield name="newName" label="计划名:">${plan.name}</s:textfield>
 		<input name="planId" type="hidden" value="${planId}"/>
 		<input type="submit" value="提交修改"/>
 	</form>
 	<form action="SetMyTravelPlan_changeBeginningDate">
 		<sx:datetimepicker name="newBeginningDate" label="出发日期"
-			displayFormat="yyyy-MM-dd" value="${plan.beginningDate}"/>
+			displayFormat="yyyy-MM-dd">${plan.beginningDate}</sx:datetimepicker>
 		<input name="planId" type="hidden" value="${planId}"/>
 		<input type="submit" value="提交修改"/>
 	</form>
 	<table>
 		<tr>
 			<th>
-				${plan.path.start}
+				${plan.path.start.name}
 			</th>
 			
-			<s:iterator value="plan.path" id="location" status="status">
+			<s:iterator value="plan.path.locations" id="location" status="status">
+			<s:if test="#status.first == false">
+			<s:if test="#status.last == false">
 				<th>
 					<form action="SetMyTravelPlan_newLocation">
 						<div id="l-map"></div>
@@ -38,13 +44,15 @@
 					</form>
 				</th>
 				<th>
-					<s:property value="location.name"/>
+					${name}
 					<form action="SetMyTravelPlan_deleteLocation">
 						<input name="locationIndex" type="hidden" value="${status.index}"/>
 						<input name="planId" type="hidden" value="${planId}"/>
 						<input type="submit" value="删除"/>
 					</form>
 				</th>
+			</s:if>
+			</s:if>
 			</s:iterator>
 			
 			<th>
@@ -52,13 +60,13 @@
 					<div id="l-map"></div>
 					<input type="text" name="newLocation" id="suggestId" value="百度"/>
 					<input name="planId" type="hidden" value="${planId}"/>
-					<input name="locationIndex" type="hidden" value="${plan.size}"/>
+					<input name="locationIndex" type="hidden" value="${plan.size - 1}"/>
 					<input type="submit" value="添加地点"/>
 				</form>
 			</th>
 			
 			<th>
-				${plan.path.end}
+				${plan.path.end.name}
 			</th>
 			
 		</tr>

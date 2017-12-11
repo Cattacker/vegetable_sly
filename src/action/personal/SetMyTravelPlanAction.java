@@ -31,6 +31,7 @@ public class SetMyTravelPlanAction extends ActionSupport {
     
     public String show() throws Exception {
         setPlan(Plan.getPlan(planId));
+        System.out.println(getPlan().getPath().getText());
         if (plan.isUnstart() == false)
             return ERROR;
         return SHOW;

@@ -38,6 +38,7 @@
 				<param name="planId">${planId}</param>
 			</result>
 			<result name="strict_show" type="redirectAction">GetMyTravelPlanList</result>
+			<result name="error">error.jsp</result>
 		</action>
 			
 	</package>

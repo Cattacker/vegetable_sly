@@ -205,15 +205,17 @@ public class Path implements localization.LocalSettings {
         this.hashCode = this.locations.hashCode();
         Connection conn = null;
         Statement stmt = null;
+        Statement tempStmt = null;
         long ret = 0;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
             String sql = "SELECT * FROM path WHERE hash_code=" + hashCode() + ";";
             stmt = conn.createStatement();
+            tempStmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                if (Objects.equals(rs.getInt("size"), size())
+                if (Objects.equals(rs.getInt("path_size"), size())
                         && Objects.equals(getStart().getId() 
                                 , rs.getLong("start_id"))
                         && Objects.equals(getEnd().getId()
@@ -221,9 +223,12 @@ public class Path implements localization.LocalSettings {
                     sql = "SELECT * FROM path_struct"
                             + " WHERE path_id=" + rs.getLong("path_id")
                             + " ORDER BY location_index";
-                    ResultSet temp = stmt.executeQuery(sql);
+                    ResultSet temp = tempStmt.executeQuery(sql);
                     boolean isEqual = false;
-                    if (locations.size() == temp.getFetchSize()) {
+                    temp.last();
+                    int rowCount = temp.getRow();
+                    temp.beforeFirst();
+                    if (locations.size() == rowCount) {
                         isEqual = true;
                         for (Location location : locations) {
                             temp.next();
@@ -242,6 +247,7 @@ public class Path implements localization.LocalSettings {
                 }
             }
             rs.close();
+            tempStmt.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {

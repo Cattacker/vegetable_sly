@@ -92,25 +92,33 @@ public class Plan implements localization.LocalSettings {
     
     public boolean add(String location) {
         boolean ret = path.add(location);
+        path.save();
         pathId = path.getId();
+        isSynchronous = false;
         return ret;
     }
     
     public boolean add(int index, String location) {
         boolean ret = path.add(index, location);
+        path.save();
         pathId = path.getId();
+        isSynchronous = false;
         return ret;
     }
     
     public boolean set(int index, String location) {
         boolean ret = path.set(index, location);
+        path.save();
         pathId = path.getId();
+        isSynchronous = false;
         return ret;
     }
     
     public void remove(int index) {
         path.remove(index);
+        path.save();
         pathId = path.getId();
+        isSynchronous = false;
     }
     
     public void save() {
@@ -121,8 +129,7 @@ public class Plan implements localization.LocalSettings {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
-            conn.setAutoCommit(false);
-            String sql = "UPDATE travelplan"
+            String sql = "UPDATE travelplan "
                     + "set path_id=?, date_begin=?, name=?, state=? "
                     + "WHERE id=?;";
             stmt = (PreparedStatement) conn.prepareStatement(sql
@@ -132,7 +139,7 @@ public class Plan implements localization.LocalSettings {
             stmt.setString(3, getName());
             stmt.setShort(4, this.state);
             stmt.setLong(5, getId());
-            stmt.execute();
+            stmt.executeUpdate();
             isSynchronous = true;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -211,8 +218,10 @@ public class Plan implements localization.LocalSettings {
             String sql = "SELECT 1 FROM travel_log WHERE id=" + this.id + ";";
             ResultSet rs = stmt.executeQuery(sql);
             int index = 0;
-            if (rs.next())
-                index = rs.getFetchSize();
+            if (rs.next()) {
+                rs.last();
+                index = rs.getRow();
+            }
             rs.close();
             sql = "INSERT INTO travel_log"
                     + "(plan_id, log_index, time, log)"
@@ -430,7 +439,6 @@ public class Plan implements localization.LocalSettings {
                 Date begin = rs.getDate("date_begin");
                 Date end = rs.getDate("date_end");
                 String name = rs.getString("name");
-                System.out.println("pathId = " + pathId);
                 ret = new Plan(id, userId, teamId, pathId, state, begin, end, name);
             }
         } catch (ClassNotFoundException e) {
@@ -684,8 +692,6 @@ public class Plan implements localization.LocalSettings {
     }
     
     public int size() {
-        if (path == null)
-            System.out.println("fuck!");
         return path.size();
     }
     
