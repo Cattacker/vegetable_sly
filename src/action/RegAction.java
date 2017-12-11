@@ -5,6 +5,12 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import mysql.*;
 
+import java.io.UnsupportedEncodingException;
+
+import javax.servlet.http.*;
+
+import org.apache.struts2.ServletActionContext;
+
 public class RegAction extends ActionSupport {
 
 	/**
@@ -17,7 +23,7 @@ public class RegAction extends ActionSupport {
 	private String nickname;
 	private String repassword;
 	private String none;
-
+	HttpServletRequest request = ServletActionContext.getRequest();
 	public void validate() {
 		 super.validate();
 	       
@@ -29,10 +35,15 @@ public class RegAction extends ActionSupport {
 	    	 this.addFieldError("error", "该ID已被注册！请重新输入");
 	     }
 	}
-	public String execute(){
+	public String execute() throws UnsupportedEncodingException{
+			request.setCharacterEncoding("gbk");  
+			String[] checkbox= request.getParameterValues("type"); //根据名字获得checkbox的值，注意是getParameters，后面要加上s，因为是一个数组  
 			Basic temp = new Basic();
+			TravelHobby tmp = new TravelHobby(id, checkbox);
 			temp.setID(id);temp.setPassword(password);temp.setNickname(nickname);
+			boolean q = new MySQL().InsertTravelHobby(tmp);
 			new MySQL().InsertBasic(temp);
+			System.out.println(q);
 			return SUCCESS;//注册成功
 	}
 	

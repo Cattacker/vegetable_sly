@@ -548,6 +548,31 @@ public class MySQL {
     	return false;
     	
     }
+    
+    public boolean InsertTravelHobby(TravelHobby temp){
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+    		String tempid = temp.getId();
+    		Statement stmt= conn.createStatement();
+    		for(int i =0;i<temp.getCheckbox().length;i++) //对checkbox进行遍历  
+			{  
+    			int t = Integer.parseInt(temp.getCheckbox()[i]);
+    			String sql = "insert into travelhobby values('"+tempid+"','"+t+"');";
+		        stmt.execute(sql);
+		        
+			}  
+    		stmt.close();conn.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+    }
 }
 
 	
