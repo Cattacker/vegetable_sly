@@ -72,7 +72,7 @@
 			</ul>
 			
 					
-					<s:form class="form-horizontal" role="form"  action="OthersDedails.action">
+					<s:form class="form-horizontal" role="form"  action="OthersDedails1.action">
 						<div class="col-md-6">
   						<div class="form-group">
     						<label for="firstname" class="col-sm-2 control-label">关键字</label>
@@ -122,8 +122,8 @@
 			      <td>PhoneNum</td>
 			      <td>${phonenum}</td></tr>
 			    <tr class="active">
-					      <td>操作</td>
-					      <td><a class="nav-link active" href="AddFriends.action?followed=${id}">加好友</a></td></tr>
+				<td>操作</td>
+				<td><a class="nav-link active" href="AddFriends.action?followed=${id}">加好友</a></td></tr>
 			  </tbody>
 			</table>
 				

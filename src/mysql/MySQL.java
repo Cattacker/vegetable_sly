@@ -148,7 +148,7 @@ public class MySQL {
 		}
     }
     public Basic QueryBasic(String ID) {
-    	Basic temp = new Basic();
+    	Basic temp = null;
     	try {
     		try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -161,6 +161,7 @@ public class MySQL {
 	        Statement stmt= conn.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 	        if(rs.next()) {
+	        	temp=new Basic();
             	temp.setBirthday(rs.getDate("Birthday"));
             	temp.setComcity(rs.getString("Comcity"));
             	temp.setID(ID);

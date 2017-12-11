@@ -51,6 +51,10 @@
         	<result name="input">/QueryUsers.jsp</result>
         	<result name="success">/result2.jsp</result>
 		</action>
+		<action name="OthersDetails1" class="action.FriendDetails">
+        	<result name="input">/result2.jsp</result>
+        	<result name="success">/QueryUsers.jsp</result>
+		</action>
         <action name="QueryTravelPlan" class="action.QueryTravelPlan">
         	<result name="input">/travelplan.jsp</result>
         	<result name="success">/travelplan.jsp</result>
