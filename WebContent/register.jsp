@@ -3,11 +3,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  	<meta charset="utf-8">
+  	<meta charset="GBK">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>注册</title>
-
     <meta name="description" content="Source code generated using layoutit.com">
     <meta name="author" content="LayoutIt!">
 	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
@@ -19,7 +18,6 @@
     <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
-			
 			<ul class="breadcrumb">
 				<li>
 				<a class="navbar-brand" href="index?">寻找“驴友”</a>
@@ -62,13 +60,72 @@
 						      <input type="password" class="form-control" name="repassword" placeholder="请再次输入密码8位数字">
 						    </div>
 						  </div>
+						  <li>  
+                    <label class="enterText">旅行爱好：</label>  
+                    <p class="enterRadio">  
+                        <input type="checkbox" value="1" class="type" id="typeA" name="type"/>  
+                        <label for="typeA">地文景观</label>  
+                    </p>  
+                    <p class="enterRadio">  
+                        <input type="checkbox" value="2" class="type" id="typeB" name="type"/>  
+                        <label for="typeB">水域风光</label>   
+                    </p>  
+                    <p class="enterRadio">  
+                        <input type="checkbox" value="3" class="type" id="typeC" name="type"/>  
+                        <label for="typeC">生物景观</label>   
+                    </p>  
+                    <p class="enterRadio">  
+                        <input type="checkbox" value="4" class="type" id="typeD" name="type"/>  
+                        <label for="typeD">天象与气候</label>   
+                    </p>  
+                    <p class="enterRadio">  
+                        <input type="checkbox" value="5" class="type" id="typeA" name="type"/>  
+                        <label for="typeA">历史遗迹</label>  
+                    </p>  
+                    <p class="enterRadio">  
+                        <input type="checkbox" value="6" class="type" id="typeB" name="type"/>  
+                        <label for="typeB">建筑物</label>   
+                    </p>  
+                    <p class="enterRadio">  
+                        <input type="checkbox" value="7" class="type" id="typeC" name="type"/>  
+                        <label for="typeC">博物馆</label>   
+                    </p>  
+                    <p class="enterRadio">  
+                        <input type="checkbox" value="8" class="type" id="typeD" name="type"/>  
+                        <label for="typeD">民族民俗</label>   
+                    </p>  
+                    <p class="enterRadio">  
+                        <input type="checkbox" value="9" class="type" id="typeA" name="type"/>  
+                        <label for="typeA">宗教</label>  
+                    </p>  
+                    <p class="enterRadio">  
+                        <input type="checkbox" value="10" class="type" id="typeB" name="type"/>  
+                        <label for="typeB">主题公园</label>   
+                    </p>
+                    <p class="enterRadio">
+                        <input type="checkbox" value="11" class="type" id="typeC" name="type"/>  
+                        <label for="typeC">旅游度假区</label>   
+                    </p>  
+                    <p class="enterRadio">  
+                        <input type="checkbox" value="12" class="type" id="typeD" name="type"/>  
+                        <label for="typeD">美食类</label>   
+                    </p>  
+                    <p class="enterRadio">  
+                        <input type="checkbox" value="13" class="type" id="typeA" name="type"/>  
+                        <label for="typeA">探险类</label>  
+                    </p>  
+                    <p class="enterRadio">  
+                        <input type="checkbox" value="14" class="type" id="typeB" name="type"/>  
+                        <label for="typeB">刺激类</label>   
+                    </p>  
+                    <div class="Validform_checktip"></div>  
+                </li>  
 						  <div class="form-group">
 						    <div class="col-sm-offset-2 col-sm-10">
 						      <button type="submit" class="btn btn-default">注册</button>
 						  </div>
 						</div>
 					</form>
-					
 				</div>
 				<div class="col-md-3">
 				</div>
