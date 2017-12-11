@@ -381,16 +381,16 @@
             <td width="200" bgcolor="#EFEFEF" Name="WishDate" EditType="TextBox">操作</td>
         </tr>
 		<s:iterator value="personalUnstartPlans">
-			<form action="SetMyTravelPlan_show">
 			<tr>
 				<th><s:property value="name"/></th>
 				<th><s:property value="beginningDate"/></th>
 				<th><s:property value="path.start.name"/></th>
 				<th><s:property value="path.end.name"/></th>
-				<th><input type="submit" value="修改"/></th>
+				<th>
+					<a href="SetMyTravelPlan_show.action?planId=${id}">修改</a>
+					<a href="GetMyTravelPlan.action?planId=${id}">查看</a>
+				</th>
 			</tr>
-			<input type="hidden" name="planId" value="${id}"/>
-			</form>
 		</s:iterator>
 	</table>
 	

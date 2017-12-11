@@ -42,83 +42,46 @@
 				<div class="col-md-3">
 				</div>
 				<div class="col-md-6">
-					<table>
+	<table>
 	<tr>
-		<th>计划名:</th>
+		<s:if test="#plan.team == false">
+			<th>个人计划名:</th>
+		</s:if>
+		<s:else>
+			<th>团队计划名:</th>
+		</s:else>
 		<th>${plan.name}</th></tr>
-	<tr>
-	<form action="SetMyTravelPlan_changeName">
-		<th>新计划名:</th>
-		<th>
-			<s:textfield name="newName"></s:textfield>
-			<input name="planId" type="hidden" value="${planId}"/>
-			<s:submit type="submit" value="提交修改"/>
-		</th>
-	</form>
-	</tr>
 	<tr>
 		<th>出发时间:</th>
 		<th>${plan.beginningDate}</th>
 	</tr>
 	<tr>
-	<form action="SetMyTravelPlan_changeBeginningDate">
-		<th>新出发日期:</th>
-		<th>
-			<sx:datetimepicker name="newBeginningDate"
-				displayFormat="yyyy-MM-dd"></sx:datetimepicker>
-			<input name="planId" type="hidden" value="${planId}"/>
-			<s:submit value="提交修改"/>
-		</th>
-	</form>
+		<th>状态 : </th>
+		<th>${travelState}</th>
 	</tr>
 	</table>
+	
 	<table>
 		<tr>
-			<th>
-				${plan.path.start.name}
-			</th>
-			
-			<s:iterator value="plan.path.locations" id="location" status="status">
-			<s:if test="#status.first == false">
-			<s:if test="#status.last == false">
-				<th>
-					<form action="SetMyTravelPlan_newLocation">
-						<div id="l-map"></div>
-						<input type="text" name="newLocation" id="suggestId${status.index}" value="百度"/>
-						<input name="planId" type="hidden" value="${planId}"/>
-						<input name="locationIndex" type="hidden" value="${status.index}"/>
-						<input type="submit" value="添加地点"/>
-					</form>
-				</th>
-				<th>
-					${name}
-					<form action="SetMyTravelPlan_deleteLocation">
-						<input name="locationIndex" type="hidden" value="${status.index}"/>
-						<input name="planId" type="hidden" value="${planId}"/>
-						<input type="submit" value="删除"/>
-					</form>
-				</th>
-			</s:if>
-			</s:if>
-			</s:iterator>
-			
-			<th>
-				<form action="SetMyTravelPlan_newLocation">
-					<div id="l-map"></div>
-					<input type="text" name="newLocation" id="suggestId" value="百度"/>
-					<input name="planId" type="hidden" value="${planId}"/>
-					<input name="locationIndex" type="hidden" value="${plan.size - 1}"/>
-					<input type="submit" value="添加地点"/>
-				</form>
-			</th>
-			
-			<th>
-				${plan.path.end.name}
-			</th>
-			
+			<th>${plan.path.text}</th>
 		</tr>
 		<tr>
-			<th><a href="GetMyTravelPlan.action?planId=${planId}">完成修改</a></th>
+			<th>
+			<s:if test="plan.unstart == true">
+				<s:if test="plan.team == false">
+					<a href="SetMyTravelPlan_show.action?planId=${planId}">修改</a>
+				</s:if>
+			</s:if>
+			<s:elseif test="plan.rated == true">
+				
+			</s:elseif>
+			<s:elseif test="plan.over == true">
+			
+			</s:elseif>
+			<s:else>
+				
+			</s:else>
+			</th>
 		</tr>
 	</table>
 				</div>
