@@ -82,6 +82,12 @@
         <action name="editor" class="action.Editor">
             <result name="success">start.jsp</result>
         </action>
+        <action name="expresseditor" class="action.ExpressEditor">
+            <result name="success">raiders.jsp</result>
+        </action>
+        <action name="ckeditor" class="action.CkeditorUpload">
+            
+        </action>
     </package>
 	<include file="action/personal/personal.xml"/>
 </struts>

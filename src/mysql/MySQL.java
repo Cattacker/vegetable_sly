@@ -25,16 +25,20 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-    		
-    		String sql = "INSERT INTO stratety (editor) VALUES ('"+temp.getEditor()+"');";
+    		String sql1="select * from stratety";
+    		Statement stmt1= conn.createStatement();
+	        ResultSet rs = stmt1.executeQuery(sql1);
+	        rs.last();
+	        int t=rs.getInt("id");
+	        temp.setIndex(t+1);
+    		String sql = "INSERT INTO stratety (editor,id) VALUES ('"+temp.getEditor()+"','"+temp.getIndex()+"');";
     		
 //    			sql = "INSERT INTO Basic (ID,PassWord,NickName) VALUES ('"+temp.getID()+"','"+temp.getPassword()+"','"
 //    					+temp.getNickname()+ "','"+temp.getName()+"','"+temp.isSex()+"','"
 //    					+temp.getComcity()+"','"+temp.getBirthday()+"','"+temp.getPhonenum()+"');";
-	        Statement stmt= conn.createStatement();
-	        stmt.execute(sql);
+	        stmt1.execute(sql);
 	        
-	        stmt.close();conn.close();
+	        stmt1.close();conn.close();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -42,7 +46,33 @@ public class MySQL {
 		}
     	
     }
-	
+	public Stratety QueryStratety(int id) {
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "select editor from stratety where id='" +id+ "';";
+	        Statement stmt= conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        String editor = new String();
+	        if(rs.next()) {
+            	editor=rs.getString("editor");
+            	Stratety temp=new Stratety();
+            	temp.setEditor(editor);
+	        	stmt.close();conn.close();rs.close();
+	        	return temp;
+	        }
+	        else
+	        	return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+    }
 	public boolean InsertBasic(Basic temp) {
     	try {
     		try {
