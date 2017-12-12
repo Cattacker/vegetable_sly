@@ -22,10 +22,10 @@ public class QueryApplyTeam extends ActionSupport{
 		 MySQL my = new MySQL();
 		 String id = (String) ActionContext.getContext().getSession().get("user_ID");
 			if(id==null) {
-				this.addFieldError("error", "ï¿½ï¿½ï¿½ï¿½ï¿½Èµï¿½Â½ï¿½ï¿½");
+				this.addFieldError("error", "ÇëÄúÏÈµÇÂ¼");
 			} 
 			if(id!=null&&my.QueryApplyTeams(id).isEmpty()&&my.QueryInvitations(id).isEmpty()) {
-				this.addFieldError("error", "ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½");
+				this.addFieldError("error", "Ã»ÓÐÈëÍÅÉêÇë");
 			}
 	}
 	

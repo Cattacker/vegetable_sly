@@ -49,13 +49,13 @@
 						</div>
 					</div>
 					<div class="item">
-						<img alt="转盘Bootstrap Second" src="http://localhost:8080/Sprint1MasterE/image/index2.png" />
+						<img alt="转盘Bootstrap Second" src="http://vegetablesly.applinzi.com/sprint2222/WebContent/image/index2.png" />
 						<div class="carousel-caption">
 							
 						</div>
 					</div>
 					<div class="item">
-						<img alt="Carousel Bootstrap Third" src="http://localhost:8080/Sprint1MasterE/image/index3.png" />
+						<img alt="Carousel Bootstrap Third" src="http://vegetablesly.applinzi.com/sprint2222/WebContent/image/index3.png" />
 						<div class="carousel-caption">
 							
 						</div>

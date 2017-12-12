@@ -189,7 +189,7 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "select PassWord from Basic where ID='" +ID+ "';";
+			String sql = "select PassWord from basic where ID='" +ID+ "';";
 	        Statement stmt= conn.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 	        String password_temp = new String();
@@ -218,7 +218,7 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "select PassWord from Basic where ID='" +ID+ "';";
+			String sql = "select PassWord from basic where ID='" +ID+ "';";
 	        Statement stmt= conn.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 	        if(rs.next()) {
@@ -241,7 +241,7 @@ public class MySQL {
                 e.printStackTrace();
             }
             Connection conn = DriverManager.getConnection(url,username,pword);
-            String sql = "select PassWord from Basic where ID='" +ID+ "';";
+            String sql = "select PassWord from basic where ID='" +ID+ "';";
             Statement stmt= conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if(rs.next()) {
@@ -264,7 +264,7 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "INSERT INTO TravelPlan VALUES ('"+temp.getID()+"','"+temp.getTeamID()+"','"
+			String sql = "INSERT INTO travelplan VALUES ('"+temp.getID()+"','"+temp.getTeamID()+"','"
     		+temp.getPath()+ "','"+temp.getWishdate()+"');";
 	        Statement stmt= conn.createStatement();
 	        stmt.execute(sql);
@@ -286,7 +286,7 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "update TravelPlan set TeamID=?,Path=?,WishDate=? where ID=?";
+			String sql = "update travelplan set TeamID=?,Path=?,WishDate=? where ID=?";
 	        PreparedStatement ptmt = (PreparedStatement) conn.prepareStatement(sql);
 	        ptmt.setLong(1, temp.getTeamID());
 	        ptmt.setLong(2, temp.getPath());
@@ -309,7 +309,7 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "delete from TravelPlan where ID=?";
+			String sql = "delete from travelplan where ID=?";
 	        PreparedStatement ptmt = (PreparedStatement) conn.prepareStatement(sql);
 	        ptmt.setString(1, temp.getID());
 	        ptmt.execute();

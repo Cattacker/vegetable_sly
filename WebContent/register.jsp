@@ -79,43 +79,43 @@
                         <label for="typeD">天象与气候</label>   
                     </p>  
                     <p class="enterRadio">  
-                        <input type="checkbox" value="5" class="type" id="typeA" name="type"/>  
+                        <input type="checkbox" value="5" class="type" id="typeE" name="type"/>  
                         <label for="typeA">历史遗迹</label>  
                     </p>  
                     <p class="enterRadio">  
-                        <input type="checkbox" value="6" class="type" id="typeB" name="type"/>  
+                        <input type="checkbox" value="6" class="type" id="typeF" name="type"/>  
                         <label for="typeB">建筑物</label>   
                     </p>  
                     <p class="enterRadio">  
-                        <input type="checkbox" value="7" class="type" id="typeC" name="type"/>  
+                        <input type="checkbox" value="7" class="type" id="typeG" name="type"/>  
                         <label for="typeC">博物馆</label>   
                     </p>  
                     <p class="enterRadio">  
-                        <input type="checkbox" value="8" class="type" id="typeD" name="type"/>  
+                        <input type="checkbox" value="8" class="type" id="typeH" name="type"/>  
                         <label for="typeD">民族民俗</label>   
                     </p>  
                     <p class="enterRadio">  
-                        <input type="checkbox" value="9" class="type" id="typeA" name="type"/>  
+                        <input type="checkbox" value="9" class="type" id="typeI" name="type"/>  
                         <label for="typeA">宗教</label>  
                     </p>  
                     <p class="enterRadio">  
-                        <input type="checkbox" value="10" class="type" id="typeB" name="type"/>  
+                        <input type="checkbox" value="10" class="type" id="typeJ" name="type"/>  
                         <label for="typeB">主题公园</label>   
                     </p>
                     <p class="enterRadio">
-                        <input type="checkbox" value="11" class="type" id="typeC" name="type"/>  
+                        <input type="checkbox" value="11" class="type" id="typeK" name="type"/>  
                         <label for="typeC">旅游度假区</label>   
                     </p>  
                     <p class="enterRadio">  
-                        <input type="checkbox" value="12" class="type" id="typeD" name="type"/>  
+                        <input type="checkbox" value="12" class="type" id="typeL" name="type"/>  
                         <label for="typeD">美食类</label>   
                     </p>  
                     <p class="enterRadio">  
-                        <input type="checkbox" value="13" class="type" id="typeA" name="type"/>  
+                        <input type="checkbox" value="13" class="type" id="typeM" name="type"/>  
                         <label for="typeA">探险类</label>  
                     </p>  
                     <p class="enterRadio">  
-                        <input type="checkbox" value="14" class="type" id="typeB" name="type"/>  
+                        <input type="checkbox" value="14" class="type" id="typeN" name="type"/>  
                         <label for="typeB">刺激类</label>   
                     </p>  
                     <div class="Validform_checktip"></div>  
