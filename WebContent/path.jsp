@@ -1,3 +1,4 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -26,7 +27,7 @@
         <option value="1">最短距离</option>
         <option value="2">避开高速</option>
     </select>
-    <input type="button" id="result" value="æ¥è¯¢" />
+    <input type="button" id="result" value="查询" />
 </div>
 <div id="r-result"></div>
 </body>

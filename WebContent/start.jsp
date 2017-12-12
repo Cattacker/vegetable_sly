@@ -18,13 +18,13 @@
 	   var bannerADlink=new Array();
 	   var adNum=0;
 	 
-	   bannerAD[0]="http://localhost:8080/test1/image/gl2.png";
+	   bannerAD[0]="http://vegetablesly.applinzi.com/image/gl2.png";
 	   bannerADlink[0]="http://www.mafengwo.cn/poi/404.html"
-	   bannerAD[1]="http://localhost:8080/test1/image/gl3.png";
+	   bannerAD[1]="http://vegetablesly.applinzi.com/image/gl3.png";
 	   bannerADlink[1]="http://www.mafengwo.cn/poi/405.html";
-	   bannerAD[2]="http://localhost:8080/test1/image/gl4.png";
+	   bannerAD[2]="http://vegetablesly.applinzi.com/image/gl4.png";
 	   bannerADlink[2]="http://www.mafengwo.cn/poi/407.html";
-	   bannerAD[3]="http://localhost:8080/test1/image/gl5.png";
+	   bannerAD[3]="http://vegetablesly.applinzi.com/image/gl5.png";
 	   bannerADlink[3]="http://www.mafengwo.cn/poi/34011.html";
 	    
 	   var preloadedimages=new Array();
@@ -94,7 +94,7 @@
 							<a href="register.jsp">注册</a> <span class="divider">/</span>
 						</c:when>
 						 <c:when test="${sessionScope.user_ID!=null}">
-							<button type="button" class="btn btn-primary btn-lg" style="font-size: 10px" onclick="window.location.href='homepage.jsp';">
+							<button type="button" class="btn btn-primary btn-lg" style="font-size: 10px" onclick="window.location.href='MyDetails.action?id=${sessionScope.user_ID}';">
 										<span class="glyphicon glyphicon-user"></span> 我的主页
 							</button>
 							

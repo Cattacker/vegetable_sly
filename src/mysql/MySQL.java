@@ -82,7 +82,7 @@ public class MySQL {
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
     		
-    		String sql = "INSERT INTO Basic (ID,PassWord,NickName) VALUES ('"+temp.getID()+"','"+temp.getPassword()+"','"
+    		String sql = "INSERT INTO basic (ID,PassWord,NickName) VALUES ('"+temp.getID()+"','"+temp.getPassword()+"','"
     					+temp.getNickname()+"');";
     		
 //    			sql = "INSERT INTO Basic (ID,PassWord,NickName) VALUES ('"+temp.getID()+"','"+temp.getPassword()+"','"
@@ -109,14 +109,14 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "update Basic set PassWord=?,NickName=?,Name=?,Sex=?,ComCity=?,Birthday=?,PhoneNum=? where ID=?";
+			String sql = "update basic set PassWord=?,NickName=?,Name=?,Sex=?,ComCity=?,PhoneNum=? where ID=?";
 	        PreparedStatement ptmt = (PreparedStatement) conn.prepareStatement(sql);
 	        ptmt.setString(1, temp.getPassword());
 	        ptmt.setString(2, temp.getNickname());
 	        ptmt.setString(3, temp.getName());
 	        ptmt.setInt(4, temp.isSex());
 	        ptmt.setString(5, temp.getComcity());
-	        ptmt.setDate(6,temp.getBirthday());
+	        //ptmt.setDate(6,temp.getBirthday());
 	        ptmt.setString(7, temp.getPhonenum());
 	        ptmt.setString(8, temp.getID());
 	        ptmt.execute();
@@ -136,7 +136,7 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "delete from Basic where ID=?";
+			String sql = "delete from basic where ID=?";
 	        PreparedStatement ptmt = (PreparedStatement) conn.prepareStatement(sql);
 	        ptmt.setString(1, temp.getID());
 	        ptmt.execute();
@@ -157,7 +157,7 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "select * from Basic where ID='" +ID+ "';";
+			String sql = "select * from basic where ID='" +ID+ "';";
 	        Statement stmt= conn.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 	        if(rs.next()) {
@@ -166,8 +166,8 @@ public class MySQL {
             	temp.setComcity(rs.getString("Comcity"));
             	temp.setID(ID);
             	temp.setName(rs.getString("Name"));
-            	temp.setNickname("NickName");
-            	temp.setPhonenum("PhoneNum");
+            	temp.setNickname(rs.getString("NickName"));
+            	temp.setPhonenum(rs.getString("PhoneNum"));
             	if(rs.getInt("Sex")==1) {
             		temp.setSex(true);
             	}
@@ -189,7 +189,7 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "select PassWord from Basic where ID='" +ID+ "';";
+			String sql = "select PassWord from basic where ID='" +ID+ "';";
 	        Statement stmt= conn.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 	        String password_temp = new String();
@@ -218,7 +218,7 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "select PassWord from Basic where ID='" +ID+ "';";
+			String sql = "select PassWord from basic where ID='" +ID+ "';";
 	        Statement stmt= conn.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 	        if(rs.next()) {
@@ -241,7 +241,7 @@ public class MySQL {
                 e.printStackTrace();
             }
             Connection conn = DriverManager.getConnection(url,username,pword);
-            String sql = "select PassWord from Basic where ID='" +ID+ "';";
+            String sql = "select PassWord from basic where ID='" +ID+ "';";
             Statement stmt= conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if(rs.next()) {
@@ -264,7 +264,7 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "INSERT INTO TravelPlan VALUES ('"+temp.getID()+"','"+temp.getTeamID()+"','"
+			String sql = "INSERT INTO travelplan VALUES ('"+temp.getID()+"','"+temp.getTeamID()+"','"
     		+temp.getPath()+ "','"+temp.getWishdate()+"');";
 	        Statement stmt= conn.createStatement();
 	        stmt.execute(sql);
@@ -286,7 +286,7 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "update TravelPlan set TeamID=?,Path=?,WishDate=? where ID=?";
+			String sql = "update travelplan set TeamID=?,Path=?,WishDate=? where ID=?";
 	        PreparedStatement ptmt = (PreparedStatement) conn.prepareStatement(sql);
 	        ptmt.setLong(1, temp.getTeamID());
 	        ptmt.setLong(2, temp.getPath());
@@ -309,7 +309,7 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "delete from TravelPlan where ID=?";
+			String sql = "delete from travelplan where ID=?";
 	        PreparedStatement ptmt = (PreparedStatement) conn.prepareStatement(sql);
 	        ptmt.setString(1, temp.getID());
 	        ptmt.execute();
@@ -612,14 +612,16 @@ public class MySQL {
     		Connection conn = DriverManager.getConnection(url,username,pword);
     		String tempid = temp.getId();
     		Statement stmt= conn.createStatement();
-    		for(int i =0;i<temp.getCheckbox().length;i++) //��checkbox���б���  
-			{  
-    			int t = Integer.parseInt(temp.getCheckbox()[i]);
-    			String sql = "insert into travelhobby values('"+tempid+"','"+t+"');";
-		        stmt.execute(sql);
+    		if(temp.getCheckbox() != null){
+    			for(int i =0;i<temp.getCheckbox().length;i++) //��checkbox���б���  
+    			{  
+    				int t = Integer.parseInt(temp.getCheckbox()[i]);
+    				String sql = "insert into travelhobby values('"+tempid+"','"+t+"');";
+    				stmt.execute(sql);
 		        
-			}  
-    		stmt.close();conn.close();
+    			}  
+    			stmt.close();conn.close();
+    		}
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();

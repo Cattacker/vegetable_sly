@@ -39,12 +39,12 @@ public class GetMyTravelPlanAction extends ActionSupport {
     
     public String getTravelState() {
         if (plan.isUnstart())
-            return "å¾…æ‰§è¡Œ";
+            return "´ýÖ´ÐÐ";
         else if (plan.isRated())
-            return "å·²è¯„ä»·";
+            return "ÒÑÆÀ¼Û";
         else if (plan.isOver())
-            return "å¾…è¯„ä»·";
+            return "Î´ÆÀ¼Û";
         else
-            return "è¿›è¡Œä¸­";
+            return "½øÐÐÖÐ";
     }
 }

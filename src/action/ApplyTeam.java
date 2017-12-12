@@ -37,14 +37,14 @@ public class ApplyTeam extends ActionSupport {
 		 String follow = (String) ActionContext.getContext().getSession().get("user_ID");
 		 
 			if(follow==null) {
-				this.addFieldError("error", "ï¿½ï¿½ï¿½ï¿½ï¿½Èµï¿½Â½ï¿½ï¿½");
+				this.addFieldError("error", "ÇëÄúÏÈµÇÂ¼");
 			} 
 			if(follow!=null&&isInteam()==true) {
-				this.addFieldError("error", "ï¿½ï¿½ï¿½Ñ¼ï¿½ï¿½ï¿½ï¿½ï¿½Å¶ï¿½");
+				this.addFieldError("error", "ÒÑ¾­ÔÚÍÅ¶ÓÖÐ");
 			}
 			if(follow!=null&&isInteam()==false) {
 				boolean r =  my.InsertApplyTeam(teamid, follow, captainid);
-				this.addFieldError("error", "ï¿½É¹ï¿½ï¿½ï¿½Óºï¿½ï¿½ï¿½");
+				this.addFieldError("error", "Ö´ÐÐ³É¹¦");
 			}
 	}
 	public String execute(){

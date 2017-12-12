@@ -52,13 +52,13 @@
     		<div class="container" style="padding-top: 20px; margin-top: 20px">
 		      <ul class="nav nav-pills nav-fill">
 		        <li class="nav-item">
-		          <a class="nav-link" href="expresseditor.action">旅游攻略</a>
+		          <a class="nav-link" href="">旅游攻略</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link active" href="QueryUsers.jsp">用户查询</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="QueryTeams.jsp">团队查询</a>
+		          <a class="nav-link" href="path.jsp">查询路线</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link" href="path.jsp">路线查询</a>
@@ -71,8 +71,8 @@
 			<ul class="nav nav-pills nav-fill">
 			</ul>
 			
-					
-					<s:form class="form-horizontal" role="form"  action="OthersDedails.action">
+				
+					<s:form class="form-horizontal" role="form"  action="OthersDetails.action">
 						<div class="col-md-6">
   						<div class="form-group">
     						<label for="firstname" class="col-sm-2 control-label">关键字</label>
@@ -90,7 +90,6 @@
 						 </div>
 					</s:form>
 					<s:fielderror name="error"></s:fielderror>
-
 					<table class="table">
 			  <caption>${name}详细信息</caption>
 			  <thead>

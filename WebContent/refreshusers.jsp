@@ -52,57 +52,77 @@
     		<div class="container" style="padding-top: 20px; margin-top: 20px">
 		      <ul class="nav nav-pills nav-fill">
 		        <li class="nav-item">
-		          <a class="nav-link" href="expresseditor.action">旅游攻略</a>
+		          <a class="nav-link" href="">旅游攻略</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link active" href="QueryUsers.jsp">用户查询</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="QueryTeams.jsp">团队查询</a>
+		          <a class="nav-link" href="path.jsp">查询路线</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="path.jsp">路线查询</a>
+		          <a class="nav-link" href="searchauthorrequest?">待加</a>
 		        </li>
 		      </ul>
 			</div>
 			<ul class="nav nav-pills nav-fill">
 			</ul>
-					<s:fielderror name="error"></s:fielderror>
 					
-					<table width="698" border="0" cellpadding="0" cellspacing="0" id="tabProduct">
-        <tr>
-        	<td width="186" bgcolor="#EFEFEF" >团队id</td>
-            <td width="186" bgcolor="#EFEFEF" >申请者id</td>
-            <td width="186" bgcolor="#EFEFEF" >操作</td>
-            <td width="186" bgcolor="#EFEFEF" >操作</td>
-        </tr>
-
-        <s:iterator value="applyteams">
-            <tr>
-            	<td>${teamid}</td>
-                <td>${userid}</td>
-                <td><a class="nav-link active" href="AllowApplyTeam.action?teamid=${teamid}&userid=${userid}">同意</a></td>  
-                <td><a class="nav-link active" href="RefuseApplyTeam.action?teamid=${teamid}&userid=${userid}">拒绝</a></td>  
-            </tr>
-            
-        </s:iterator>
-        <tr>
-        	<td width="186" bgcolor="#EFEFEF" >团队id</td>
-            <td width="186" bgcolor="#EFEFEF" >操作</td>
-            <td width="186" bgcolor="#EFEFEF" >操作</td>
-        </tr>
-
-        <s:iterator value="invitations">
-            <tr>
-            	<td>${teamid}</td>
-                <td>${userid}</td>
-                <td><a class="nav-link active" href="AllowInvitation.action?teamid=${teamid}">同意</a></td>  
-                <td><a class="nav-link active" href="RefuseInvitation.action?teamid=${teamid}">拒绝</a></td>  
-            </tr>
-            
-        </s:iterator>
-				
-					    
+					<s:form class="form-horizontal" role="form"  action="refresh">
+						
+  						
+						  
+						  <div class="form-group">
+    						<label for="password" class="col-sm-2 control-label">PassWord</label>
+						    <div class="col-sm-10">
+						      <input type="password" class="form-control" name="password" >
+						    </div>
+						  </div>
+						  
+						  <div class="form-group">
+    						<label for="nickname" class="col-sm-2 control-label">NickName</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control" name="nickname" >
+						    </div>
+						  </div>
+						  
+						  <div class="form-group">
+    						<label for="name" class="col-sm-2 control-label">Name</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control" name="name" >
+						    </div>
+						  </div>
+						  
+						  <div class="form-group">
+    						<label for="sex" class="col-sm-2 control-label">Sex</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control" name="sex" >
+						    </div>
+						  </div>
+						  
+						  <div class="form-group">
+    						<label for="comcity" class="col-sm-2 control-label">ComCity</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control" name="comcity" >
+						    </div>
+						  </div>
+						 
+						  
+						  <div class="form-group">
+    						<label for="phonenum" class="col-sm-2 control-label">PhoneNum</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control" name="phonenum" >
+						    </div>
+						  </div>
+						  
+						  <div class="form-group">
+						    <div class="col-sm-offset-2 col-sm-10">
+						      <button type="submit" class="btn btn-primary">修改</button>
+						  	</div>
+						 </div>
+			
+					</s:form>
+					
 				
 		</div>
 		

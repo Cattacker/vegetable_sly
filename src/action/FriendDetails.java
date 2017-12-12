@@ -20,10 +20,10 @@ public class FriendDetails extends ActionSupport {
 		 super.validate();
 	    
 	     if(id.equals(""))  {
-	    	 this.addFieldError("error", "鏌ユ棤姝や汉");
+	    	 this.addFieldError("error", "请您先登录");
 	     }
 	     if(new MySQL().QueryBasic(id)==null) {
-	    	 this.addFieldError("error", "鏌ユ棤姝や汉");
+	    	 this.addFieldError("error", "该用户不存在");
 	     }
 	}
 	public String execute(){

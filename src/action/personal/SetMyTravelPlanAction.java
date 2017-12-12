@@ -32,13 +32,13 @@ public class SetMyTravelPlanAction extends ActionSupport {
     public void validate() {
         if (getNewBeginningDate() != null)
             if (getNewBeginningDate().getTime() < (new java.util.Date()).getTime())
-                addFieldError("newBeginningDate", "è¯·å¡«å†™æ­£ç¡®çš„æ—¥æœŸ");
+                addFieldError("newBeginningDate", "ÇëÊäÈëºÏÀíµÄÈÕÆÚ");
         if (getNewName() != null)
             if (getNewName().trim().equals("") || getNewName().length() > 50)
-                addFieldError("newName", "è®¡åˆ’åä¸èƒ½ä¸ºç©º, ä¸”ä¸å¤šäº50ä¸ªå­—ç¬¦");
+                addFieldError("newName", "¼Æ»®Ãû²»ÄÜÎª¿ÕÇÒÉÙÓÚ25×Ö");
         if (getNewLocation() != null)
             if (getNewLocation().trim().equals(""))
-                addFieldError("newLocation", "è¯·è¾“å…¥åœ°å€");
+                addFieldError("newLocation", "ÇëÊäÈëµØµãÃû");
     }
     
     public String show() throws Exception {

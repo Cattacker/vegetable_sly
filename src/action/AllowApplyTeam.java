@@ -25,7 +25,7 @@ public class AllowApplyTeam extends ActionSupport{
 		 MySQL my = new MySQL();
 		 String id = (String) ActionContext.getContext().getSession().get("user_ID");
 			if(id==null) {
-				this.addFieldError("error", "ï¿½ï¿½ï¿½ï¿½ï¿½Èµï¿½Â½ï¿½ï¿½");
+				this.addFieldError("error", "ÇëÄúÏÈµÇÂ¼");
 			} 
 	}
 	

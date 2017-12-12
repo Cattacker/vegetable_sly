@@ -40,14 +40,14 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
     public void validate() {
         if (planId == 0) {
             if (getStart() == null || getStart().trim().equals(""))
-                addFieldError("start", "è¯·å¡«å†™å‡ºå‘åœ°!");
+                addFieldError("start", "ÇëÊäÈëÆğµã");
             if (getEnd() == null || getEnd().trim().equals(""))
-                addFieldError("end", "è¯·å¡«å†™ç›®çš„åœ°!");
+                addFieldError("end", "ÇëÊäÈëÖÕµã");
             if (getName() == null || getName().trim().equals("")
                     || getName().length() > 50)
-                addFieldError("name", "è®¡åˆ’åä¸èƒ½ä¸ºç©º, ä¸”ä¸å¤šäº50ä¸ªå­—ç¬¦");
+                addFieldError("name", "¼Æ»®Ãû²»ÄÜÎª¿ÕÇÒÉÙÓÚ20×Ö");
             if (getDate() == null || getDate().getTime() < (new java.util.Date()).getTime())
-                addFieldError("date", "è¯·å¡«å†™æ­£ç¡®çš„æ—¥æœŸ");
+                addFieldError("date", "ÇëÑ¡ÔñÕıÈ·µÄÈÕÆÚ£¬×îÔç¿ÉÑ¡ÔñÃ÷Ìì");
         }
     }
     
