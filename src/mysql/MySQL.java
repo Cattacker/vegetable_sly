@@ -612,14 +612,16 @@ public class MySQL {
     		Connection conn = DriverManager.getConnection(url,username,pword);
     		String tempid = temp.getId();
     		Statement stmt= conn.createStatement();
-    		for(int i =0;i<temp.getCheckbox().length;i++) //��checkbox���б���  
-			{  
-    			int t = Integer.parseInt(temp.getCheckbox()[i]);
-    			String sql = "insert into travelhobby values('"+tempid+"','"+t+"');";
-		        stmt.execute(sql);
+    		if(temp != null){
+    			for(int i =0;i<temp.getCheckbox().length;i++) //��checkbox���б���  
+    			{  
+    				int t = Integer.parseInt(temp.getCheckbox()[i]);
+    				String sql = "insert into travelhobby values('"+tempid+"','"+t+"');";
+    				stmt.execute(sql);
 		        
-			}  
-    		stmt.close();conn.close();
+    			}  
+    			stmt.close();conn.close();
+    		}
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
