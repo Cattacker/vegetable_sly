@@ -110,6 +110,7 @@
 			    
 			  </tbody>
 			</table>
+			<a href="refreshusers.jsp">修改个人信息</a>
 		</div>
 		
 	

@@ -109,14 +109,14 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "update basic set PassWord=?,NickName=?,Name=?,Sex=?,ComCity=?,Birthday=?,PhoneNum=? where ID=?";
+			String sql = "update basic set PassWord=?,NickName=?,Name=?,Sex=?,ComCity=?,PhoneNum=? where ID=?";
 	        PreparedStatement ptmt = (PreparedStatement) conn.prepareStatement(sql);
 	        ptmt.setString(1, temp.getPassword());
 	        ptmt.setString(2, temp.getNickname());
 	        ptmt.setString(3, temp.getName());
 	        ptmt.setInt(4, temp.isSex());
 	        ptmt.setString(5, temp.getComcity());
-	        ptmt.setDate(6,temp.getBirthday());
+	        //ptmt.setDate(6,temp.getBirthday());
 	        ptmt.setString(7, temp.getPhonenum());
 	        ptmt.setString(8, temp.getID());
 	        ptmt.execute();
@@ -166,8 +166,8 @@ public class MySQL {
             	temp.setComcity(rs.getString("Comcity"));
             	temp.setID(ID);
             	temp.setName(rs.getString("Name"));
-            	temp.setNickname("NickName");
-            	temp.setPhonenum("PhoneNum");
+            	temp.setNickname(rs.getString("NickName"));
+            	temp.setPhonenum(rs.getString("PhoneNum"));
             	if(rs.getInt("Sex")==1) {
             		temp.setSex(true);
             	}

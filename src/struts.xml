@@ -103,6 +103,9 @@
         	<result name="success">/start.jsp</result>
         	<result >start.jsp</result>
         </action>
+        <action name="refresh" class="action.RefreshFriends">
+            <result name="success">start.jsp</result>
+        </action>
         <action name="RefuseInvitation" class="action.RefuseInvitation">
         	<result name="success">/start.jsp</result>
         	<result >start.jsp</result>
