@@ -82,7 +82,7 @@ public class MySQL {
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
     		
-    		String sql = "INSERT INTO Basic (ID,PassWord,NickName) VALUES ('"+temp.getID()+"','"+temp.getPassword()+"','"
+    		String sql = "INSERT INTO basic (ID,PassWord,NickName) VALUES ('"+temp.getID()+"','"+temp.getPassword()+"','"
     					+temp.getNickname()+"');";
     		
 //    			sql = "INSERT INTO Basic (ID,PassWord,NickName) VALUES ('"+temp.getID()+"','"+temp.getPassword()+"','"
@@ -109,7 +109,7 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "update Basic set PassWord=?,NickName=?,Name=?,Sex=?,ComCity=?,Birthday=?,PhoneNum=? where ID=?";
+			String sql = "update basic set PassWord=?,NickName=?,Name=?,Sex=?,ComCity=?,Birthday=?,PhoneNum=? where ID=?";
 	        PreparedStatement ptmt = (PreparedStatement) conn.prepareStatement(sql);
 	        ptmt.setString(1, temp.getPassword());
 	        ptmt.setString(2, temp.getNickname());
@@ -136,7 +136,7 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "delete from Basic where ID=?";
+			String sql = "delete from basic where ID=?";
 	        PreparedStatement ptmt = (PreparedStatement) conn.prepareStatement(sql);
 	        ptmt.setString(1, temp.getID());
 	        ptmt.execute();
@@ -157,7 +157,7 @@ public class MySQL {
 				e.printStackTrace();
 			}
     		Connection conn = DriverManager.getConnection(url,username,pword);
-			String sql = "select * from Basic where ID='" +ID+ "';";
+			String sql = "select * from basic where ID='" +ID+ "';";
 	        Statement stmt= conn.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 	        if(rs.next()) {
