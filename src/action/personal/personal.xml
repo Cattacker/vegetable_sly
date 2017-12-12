@@ -23,7 +23,10 @@
 				class="action.personal.NewPersonalTravelPlanAction"
 				method="{1}">
 			<result name="next">choosePath.jsp</result>
-			<result name="success" type="redirectAction">GetMyTravelPlanList_getUnstart</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">GetMyTravelPlan</param>
+				<param name="planId">${planId}</param>
+			</result>
 			<result name="login">login.jsp</result>
 			<result name="input">newPersonalTravelPlan.jsp</result>
 		</action>
