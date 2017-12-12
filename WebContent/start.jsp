@@ -94,7 +94,7 @@
 							<a href="register.jsp">注册</a> <span class="divider">/</span>
 						</c:when>
 						 <c:when test="${sessionScope.user_ID!=null}">
-							<button type="button" class="btn btn-primary btn-lg" style="font-size: 10px" onclick="window.location.href='homepage.jsp';">
+							<button type="button" class="btn btn-primary btn-lg" style="font-size: 10px" onclick="window.location.href='MyDetails.action?id=${sessionScope.user_ID}';">
 										<span class="glyphicon glyphicon-user"></span> 我的主页
 							</button>
 							
