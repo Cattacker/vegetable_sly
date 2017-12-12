@@ -656,6 +656,7 @@ public class Plan implements localization.LocalSettings {
     public void setTeamPlan() {
         state &= ~RELATE_STATE;
         state += TEAM;
+        isSynchronous = false;
     }
     
     public void setRated() {

@@ -6,6 +6,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import model.ApplyTeamModel;
+import model.Plan;
 import mysql.MySQL;
 
 public class AllowApplyTeam extends ActionSupport{
@@ -31,6 +32,7 @@ public class AllowApplyTeam extends ActionSupport{
 	public String execute(){
 		MySQL my = new MySQL();
 		my.AllowApplyTeams(teamid, userid);
+		Plan.newRelatedPlan(teamid, userid);
 		return SUCCESS;
 	}
 	public void setTeamid(long teamid){
