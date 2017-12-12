@@ -93,13 +93,19 @@
 		          <a class="nav-link" href="GetMyTravelPlanList_getTraveling.action">正在执行计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="QueryTravelPlan.action?state=2">未评价计划</a>
+		          <a class="nav-link" href="GetMyTravelPlanList_getOver.action">未评价计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="QueryTravelPlan.action">全部计划</a>
+		          <a class="nav-link" href="GetMyTravelPlanList_getRated.action">已评价计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="searchauthorrequest?">待加</a>
+		          <a class="nav-link" href="QueryTeam.action">我的团队</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="editor.jsp">编写攻略</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="QueryApplyTeam.action">系统消息</a>
 		        </li>
 		      </ul>
 			</div>
@@ -124,6 +130,7 @@
                 <td >${Plan_id}</td>
                 <td >${Captain_id}</td>
                 <td><a class="nav-link active" href="InviteFriends.action?teamid=${ID}">邀请好友</a></td>
+
             </tr>
         </s:iterator>
 

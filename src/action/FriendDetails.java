@@ -5,7 +5,7 @@ import mysql.MySQL;
 import mysql.Basic;
 public class FriendDetails extends ActionSupport {
 
-	/**²éÑ¯ºÃÓÑÏêÏ¸ÐÅÏ¢
+	/**ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ï¢
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
@@ -20,7 +20,10 @@ public class FriendDetails extends ActionSupport {
 		 super.validate();
 	    
 	     if(id.equals(""))  {
-	    	 this.addFieldError("error", "ÇëÄúÏÈµÇÂ½");
+	    	 this.addFieldError("error", "æŸ¥æ— æ­¤äºº");
+	     }
+	     if(new MySQL().QueryBasic(id)==null) {
+	    	 this.addFieldError("error", "æŸ¥æ— æ­¤äºº");
 	     }
 	}
 	public String execute(){

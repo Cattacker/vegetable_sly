@@ -61,6 +61,9 @@
 		          <a class="nav-link" href="QueryTravelPlan.action">全部计划</a>
 		        </li>
 		        <li class="nav-item">
+		          <a class="nav-link" href="editor.jsp">编写攻略</a>
+		        </li>
+		        <li class="nav-item">
 		          <a class="nav-link" href="searchauthorrequest?">待加</a>
 		        </li>
 		      </ul>

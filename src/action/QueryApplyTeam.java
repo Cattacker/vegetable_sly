@@ -11,8 +11,8 @@ import model.*;
 
 public class QueryApplyTeam extends ActionSupport{
 	
-	/**²éÑ¯ÂÃÓÎ¼Æ»®
-	 * ·µ»ØÂÃÓÎ¼Æ»®ÁÐ±í
+	/**ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Î¼Æ»ï¿½
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¼Æ»ï¿½ï¿½Ð±ï¿½
 	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<ApplyTeamModel> applyteams= new ArrayList<ApplyTeamModel>();
@@ -22,10 +22,10 @@ public class QueryApplyTeam extends ActionSupport{
 		 MySQL my = new MySQL();
 		 String id = (String) ActionContext.getContext().getSession().get("user_ID");
 			if(id==null) {
-				this.addFieldError("error", "ÇëÄúÏÈµÇÂ½£¡");
+				this.addFieldError("error", "ï¿½ï¿½ï¿½ï¿½ï¿½Èµï¿½Â½ï¿½ï¿½");
 			} 
 			if(id!=null&&my.QueryApplyTeams(id).isEmpty()&&my.QueryInvitations(id).isEmpty()) {
-				this.addFieldError("error", "Äú»¹Ã»ÓÐÏûÏ¢£¡");
+				this.addFieldError("error", "ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½");
 			}
 	}
 	

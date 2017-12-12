@@ -51,6 +51,14 @@
         	<result name="input">/QueryUsers.jsp</result>
         	<result name="success">/result2.jsp</result>
 		</action>
+		<action name="OthersDetails1" class="action.FriendDetails">
+        	<result name="input">/result2.jsp</result>
+        	<result name="success">/QueryUsers.jsp</result>
+		</action>
+        <action name="QueryTravelPlan" class="action.QueryTravelPlan">
+        	<result name="input">/travelplan.jsp</result>
+        	<result name="success">/travelplan.jsp</result>
+        </action>
         <action name="QueryTeam" class="action.QueryTeam">
         	<result name="input">/homepage.jsp</result>
         	<result name="success">/MyTeam.jsp</result>
@@ -74,6 +82,14 @@
         <action name="RefuseApplyTeam" class="action.RefuseApplyTeam">
         	<result name="success">/start.jsp</result>
         	<result >start.jsp</result>
+        </action>
+        <action name="editor" class="action.Editor">
+            <result name="success">start.jsp</result>
+        </action>
+        <action name="expresseditor" class="action.ExpressEditor">
+            <result name="success">raiders.jsp</result>
+        </action>
+        <action name="ckeditor" class="action.CkeditorUpload"> 
         </action>
         <action name="InviteFriends" class="action.InviteFriends">
         	<result name="success">/InviteFriends.jsp</result>

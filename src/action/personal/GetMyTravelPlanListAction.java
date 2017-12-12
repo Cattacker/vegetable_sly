@@ -21,7 +21,7 @@ public class GetMyTravelPlanListAction extends ActionSupport {
     private static final String OVER = "over";
 
     private static final String RATED = "rated";
-    
+
     private List<Plan> plans;
     
     private List<Plan> personalUnstartPlans;
@@ -75,7 +75,7 @@ public class GetMyTravelPlanListAction extends ActionSupport {
         makeList();
         return RATED;
     }
-    
+
     @Override
     public String execute() throws Exception {
         String userId = tools.UserState.getUsername();

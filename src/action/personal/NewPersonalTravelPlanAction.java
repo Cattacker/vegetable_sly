@@ -27,7 +27,7 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
     private String name;
     
     private Date date;
-    
+
     private long planId = 0;
     
     private Plan plan;

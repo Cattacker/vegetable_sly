@@ -52,7 +52,7 @@
     		<div class="container" style="padding-top: 20px; margin-top: 20px">
 		      <ul class="nav nav-pills nav-fill">
 		        <li class="nav-item">
-		          <a class="nav-link" href="raiders.jsp">旅游攻略</a>
+		          <a class="nav-link" href="expresseditor.action">旅游攻略</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link active" href="QueryUsers.jsp">用户查询</a>

@@ -52,16 +52,16 @@
     		<div class="container" style="padding-top: 20px; margin-top: 20px">
 		      <ul class="nav nav-pills nav-fill">
 		        <li class="nav-item">
-		          <a class="nav-link" href="">旅游攻略</a>
+		          <a class="nav-link" href="expresseditor.action">旅游攻略</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link active" href="QueryUsers.jsp">用户查询</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="path.jsp">查询路线</a>
+		          <a class="nav-link" href="QueryTeams.jsp">团队查询</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="searchauthorrequest?">待加</a>
+		          <a class="nav-link" href="path.jsp">路线查询</a>
 		        </li>
 		      </ul>
 			</div>
@@ -105,7 +105,6 @@
             </tr>
             
         </s:iterator>
-        
         <tr>
         	<td width="186" bgcolor="#EFEFEF" >团队id</td>
             <td width="186" bgcolor="#EFEFEF" >操作</td>
