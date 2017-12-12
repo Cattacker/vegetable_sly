@@ -38,7 +38,7 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
     
     @Override
     public void validate() {
-        if (getDate() != null) {
+        if (planId == 0) {
             if (getStart() == null || getStart().trim().equals(""))
                 addFieldError("start", "请填写出发地!");
             if (getEnd() == null || getEnd().trim().equals(""))
