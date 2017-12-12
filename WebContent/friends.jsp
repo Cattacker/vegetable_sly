@@ -63,6 +63,9 @@
 		        <li class="nav-item">
 		          <a class="nav-link" href="newPersonalTravelPlan.jsp">新建计划</a>
 		        </li>
+		        <li>
+		          <a class="nav-link" href="NewTeam_show.action">新建团队</a>
+		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link" href="QueryTeam.action">我的团队</a>
 		        <li class="nav-item">

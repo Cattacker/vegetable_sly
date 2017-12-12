@@ -21,19 +21,19 @@ public class Team implements localization.LocalSettings{
 	
 	public String Name;
 	
-	public int Plan_id;
+	public long Plan_id;
 	
 	public String Captain_id;
 	
 	public List<TeamMember> teammembers;
 	
-	public Team( String name, int planid ,String captainid){
+	public Team( String name, long planid ,String captainid){
 		this.Captain_id = captainid;
 		this.Name = name;
 		this.Plan_id = planid;
 	}
 	
-	public Team(long id, String name, int planid ,String captainid){
+	public Team(long id, String name, long planid ,String captainid){
 		this.Captain_id = captainid;
 		this.Name = name;
 		this.Plan_id = planid;
@@ -59,7 +59,7 @@ public class Team implements localization.LocalSettings{
             stmt.execute();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
-                this.ID = rs.getLong("id");
+                this.ID = rs.getLong(1);
             rs.close();
             stmt.executeBatch();
             conn.commit();
@@ -186,7 +186,7 @@ public class Team implements localization.LocalSettings{
 		return this.Captain_id;
 	}
 	
-	int getPlan_id(){
+	long getPlan_id(){
 		return this.Plan_id;
 	}
 	

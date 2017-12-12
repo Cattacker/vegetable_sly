@@ -108,6 +108,13 @@
         	<result >start.jsp</result>
         </action>
         
+        <action name="NewTeam_*" class="action.NewTeamAction" method="{1}">
+        	<result name="login">login.jsp</result>
+        	<result name="success">choosePlan.jsp</result>
+        	<result name="choossen">newTeam.jsp</result>
+        	<result name="complete">homepage.jsp</result>
+        </action>
+        
     </package>
 	<include file="action/personal/personal.xml"/>
 </struts>

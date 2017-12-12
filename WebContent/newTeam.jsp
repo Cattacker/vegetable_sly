@@ -10,7 +10,7 @@
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BG9q7yWsanxwi7twxs95xyv3KtEvfWna"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BG9q7yWsanxwi7twxs95xyv3KtEvfWna"></script>
     <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
-	<title>个人计划</title>
+	<title>输入团队名</title>
 	<sx:head/>
 	
     <meta name="description" content="Source code generated using layoutit.com">
@@ -56,10 +56,6 @@
 		<th>${plan.beginningDate}</th>
 	</tr>
 	<tr>
-		<th>状态 : </th>
-		<th>${travelState}</th>
-	</tr>
-	<tr>
 		<th>路线 : </th>
 		<th>${plan.path.text}</th>
 	</tr>
@@ -71,59 +67,18 @@
 		<th>评价人数 : </th>
 		<th>${plan.path.rateSize}</th>
 	</tr>
+	<tr>
+		<th>团队名称:</th>
+		<th>
+			<form action="NewTeam_newTeam">
+				<input type="text" name="name"/>
+				<input type="hidden" name="planId" value="${planId}"/>
+				<input type="submit" name="提交"/>
+			</form>
+		</th>
 	</table>
-	<table>
-		<tr>
-			<th>
-			<s:if test="plan.unstart == true">
-				<s:if test="plan.teamPlan == false">
-					<form action="SetMyTravelPlan_show">
-						<input type="hidden" name="planId" value="${planId}"/>
-						<input type="submit" value="修改"/>
-					</form>
-				</s:if>
-			</s:if>
-			<s:elseif test="plan.rated == true">
-				
-			</s:elseif>
-			<s:elseif test="plan.over == true">
-				<form action="RatePath">
-					<input type="hidden" name="planId" value="${planId}"/>
-					<s:textfield name="rate"/>
-					<s:submit value="评价"/>
-				</form>
-			</s:elseif>
-			<s:else>
-				<form action="AddLog">
-					<s:textfield name="text"/>
-					<input type="hidden" name="planId" value="${planId}"/>
-					<s:submit value="添加日志"/>
-				</form>
-				<s:if test="plan.teamPlan == false">
-					<a href="SetMyTravelPlan_over.action?planId=${planId}">完成旅行</a>
-				</s:if>
-			</s:else>
-			</th>
-		</tr>
-	</table>
-	<s:if test="plan.unstart == false">
-	<br/><br/>
-	<h4>日志</h4>
-	<table width="1200">
-		<tr>
-			<th width="50">序号</th>
-			<th width="100">日期</th>
-			<th width="1050">日志</th>
-		</tr>
-		<s:iterator value="plan.reverseLog" id="log">
-				<tr>
-					<th width="50">${log.index + 1}</th>
-					<th width="100">${log.date}</th>
-					<th width="1050">${log.text}</th>
-				</tr>
-		</s:iterator>
-	</table>
-	</s:if>
+
+	
 				</div>
 				<div class="col-md-3">
 				</div>
