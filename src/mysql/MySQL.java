@@ -612,7 +612,7 @@ public class MySQL {
     		Connection conn = DriverManager.getConnection(url,username,pword);
     		String tempid = temp.getId();
     		Statement stmt= conn.createStatement();
-    		if(temp != null){
+    		if(temp.getCheckbox() != null){
     			for(int i =0;i<temp.getCheckbox().length;i++) //��checkbox���б���  
     			{  
     				int t = Integer.parseInt(temp.getCheckbox()[i]);

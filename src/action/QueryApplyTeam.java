@@ -11,9 +11,6 @@ import model.*;
 
 public class QueryApplyTeam extends ActionSupport{
 	
-	/**ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Î¼Æ»ï¿½
-	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¼Æ»ï¿½ï¿½Ğ±ï¿½
-	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<ApplyTeamModel> applyteams= new ArrayList<ApplyTeamModel>();
 	private ArrayList<Invitations> invitations= new ArrayList<Invitations>();
@@ -25,7 +22,7 @@ public class QueryApplyTeam extends ActionSupport{
 				this.addFieldError("error", "ÇëÄúÏÈµÇÂ¼");
 			} 
 			if(id!=null&&my.QueryApplyTeams(id).isEmpty()&&my.QueryInvitations(id).isEmpty()) {
-				this.addFieldError("error", "Ã»ÓĞÈëÍÅÉêÇë");
+				this.addFieldError("error", "Ã»ÓĞÈëÍÅÉêÇëÓëÍÅ¶ÓÑûÇë");
 			}
 	}
 	

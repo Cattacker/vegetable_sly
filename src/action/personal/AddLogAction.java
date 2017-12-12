@@ -18,7 +18,7 @@ public class AddLogAction extends ActionSupport {
     @Override
     public void validate() {
         if (text == null || text.trim().equals("") || text.length() > 120)
-            addFieldError("text", "è¯·è¾“å…¥æ—¥å¿—ä¿¡æ¯!é•¿åº¦ä¸è¶…è¿‡120å­—!");
+            addFieldError("text", "ÇëÊäÈëÈÕÖ¾ĞÅÏ¢ÇÒ²»¶àÓÚ120×Ö");
     }
     
     @Override

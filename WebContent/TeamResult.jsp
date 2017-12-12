@@ -67,25 +67,6 @@
 			</div>
 			<ul class="nav nav-pills nav-fill">
 			</ul>
-			
-					
-					<s:form class="form-horizontal" role="form"  action="OthersDedails.action">
-						<div class="col-md-6">
-  						<div class="form-group">
-    						<label for="firstname" class="col-sm-2 control-label">关键字</label>
-						    <div class="col-sm-10">
-						      <input type="text" class="form-control" name="id" placeholder="请输入关键字进行查询">
-						    </div>
-						  </div>
-						  </div>
-						  <div class="col-md-3">
-						  <div class="form-group">
-						    <div class="col-sm-offset-2 col-sm-10">
-						      <button type="submit" class="btn btn-primary">查找</button>
-						  	</div>
-						 </div>
-						 </div>
-					</s:form>
 					<s:fielderror name="error"></s:fielderror>
 					
 					<table width="698" border="0" cellpadding="0" cellspacing="0" id="tabProduct">
@@ -103,7 +84,7 @@
                 <td>${Name}</td>
                 <td >${Plan_id}</td>
                 <td >${Captain_id}</td>
-                <td><a class="nav-link active" href="ApplyTeam.action?teamid=${ID}&captainid=${Captain_id}">加好友</a></td>    
+                <td><a class="nav-link active" href="ApplyTeam.action?teamid=${ID}&captainid=${Captain_id}">申请加入</a></td>    
             </tr>
             
         </s:iterator>

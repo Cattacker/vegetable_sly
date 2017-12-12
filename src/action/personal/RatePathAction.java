@@ -18,7 +18,7 @@ public class RatePathAction extends ActionSupport {
     @Override
     public void validate() {
         if (rate == null || rate > 5 || rate < 0)
-            addFieldError("rate", "璇烽�夋嫨0~5鍐呯殑璇勫垎!");
+            addFieldError("rate", "请输入正确的评分信息(0-5)");
     }
 
     @Override

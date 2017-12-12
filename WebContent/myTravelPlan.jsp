@@ -28,7 +28,7 @@
 			
 			<ul class="breadcrumb">
 				<li>
-				<a class="navbar-brand" href="index?">寻找“驴友”</a>
+				<a class="navbar-brand" href="index.jsp">寻找“驴友”</a>
 				</li>
 				<li>
 					<a href="homepage.jsp">个人主页</a> <span class="divider">/</span>
