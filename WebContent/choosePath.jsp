@@ -55,6 +55,7 @@
 		<s:iterator value="recommendPaths">
 		<tr>
 			<th>${text}</th>
+			<th>---评分-${rate}---评价人数-${rateSize}</th>
 			<th><form action="NewTravelPlan_choosePath">
 				<input name="planId" type="hidden" value="${planId}"/>
 				<input name="choosenPathId" type="hidden" value="${id}"/>
