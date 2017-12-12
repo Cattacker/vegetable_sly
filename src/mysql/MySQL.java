@@ -17,6 +17,62 @@ public class MySQL {
 	private static String username = LocalSettings.username;
 	private static String pword = LocalSettings.password;
 	
+	public Boolean InsertStratety(Stratety temp) {
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+    		String sql1="select * from stratety";
+    		Statement stmt1= conn.createStatement();
+	        ResultSet rs = stmt1.executeQuery(sql1);
+	        rs.last();
+	        int t=rs.getInt("id");
+	        temp.setIndex(t+1);
+    		String sql = "INSERT INTO stratety (editor,id) VALUES ('"+temp.getEditor()+"','"+temp.getIndex()+"');";
+    		
+//    			sql = "INSERT INTO Basic (ID,PassWord,NickName) VALUES ('"+temp.getID()+"','"+temp.getPassword()+"','"
+//    					+temp.getNickname()+ "','"+temp.getName()+"','"+temp.isSex()+"','"
+//    					+temp.getComcity()+"','"+temp.getBirthday()+"','"+temp.getPhonenum()+"');";
+	        stmt1.execute(sql);
+	        
+	        stmt1.close();conn.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+    	
+    }
+	public Stratety QueryStratety(int id) {
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "select editor from stratety where id='" +id+ "';";
+	        Statement stmt= conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        String editor = new String();
+	        if(rs.next()) {
+            	editor=rs.getString("editor");
+            	Stratety temp=new Stratety();
+            	temp.setEditor(editor);
+	        	stmt.close();conn.close();rs.close();
+	        	return temp;
+	        }
+	        else
+	        	return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+    }
 	public boolean InsertBasic(Basic temp) {
     	try {
     		try {
@@ -92,7 +148,7 @@ public class MySQL {
 		}
     }
     public Basic QueryBasic(String ID) {
-    	Basic temp = new Basic();
+    	Basic temp = null;
     	try {
     		try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -105,6 +161,7 @@ public class MySQL {
 	        Statement stmt= conn.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 	        if(rs.next()) {
+	        	temp=new Basic();
             	temp.setBirthday(rs.getDate("Birthday"));
             	temp.setComcity(rs.getString("Comcity"));
             	temp.setID(ID);
@@ -380,10 +437,11 @@ public class MySQL {
 	        	String tempsql = "select * from team where id='" +teamids.get(i).team_id+ "';";
 	        	ResultSet rs1 = stmt.executeQuery(tempsql);
 	        	while(rs1.next()) {
+	        		long tid = rs1.getLong("ID");
 	        		String name = rs1.getString("name");
 	        		int planid = rs1.getInt("plan_id");
 	        		String cid = rs1.getString("captain_id");
-		        	Team tmp = new Team(name,planid,cid);
+		        	Team tmp = new Team(tid,name,planid,cid);
 		        	myteam.add(tmp);
 		        }
 	        }
@@ -413,7 +471,6 @@ public class MySQL {
 	        	int planid = rs.getInt("plan_id");
 	        	String cid = rs.getString("captain_id");
 	        	Team tmp = new Team(teamid,mz,planid,cid);
-	        	System.out.println(mz);
 	        	teams.add(tmp);
 	        }
 	        
@@ -461,7 +518,6 @@ public class MySQL {
     		Connection conn = DriverManager.getConnection(url,username,pword);
 			String sql = "INSERT INTO applyteam(team_id, user_id, captain_id) VALUES ('"+teamid+"','"
     		+userid+"','"+ captainid +"' );";
-			System.out.println(sql);
 	        Statement stmt= conn.createStatement();
 	        stmt.execute(sql);
 	        stmt.close();conn.close();
@@ -508,12 +564,10 @@ public class MySQL {
     		Connection conn = DriverManager.getConnection(url,username,pword);
 			String sql = "insert into team_member(team_id,member_id) value('"+teamid+"','"+userid+"');";
 			Statement stmt= conn.createStatement();
-			System.out.println(sql);
 	        stmt.execute(sql);
 	        
 	        
 	        String sql2 = "delete from applyteam where team_id = '"+teamid+"' and user_id = '"+userid+"';";
-	        System.out.println(sql2);
 	        stmt.execute(sql2);
 	        
 	        stmt.close();conn.close();
@@ -537,7 +591,6 @@ public class MySQL {
     		Connection conn = DriverManager.getConnection(url,username,pword);
 			String sql = "delete from applyteam where team_id = '"+teamid+"' and user_id = '"+userid+"';";
 			Statement stmt= conn.createStatement();
-			System.out.println(sql);
 	        stmt.execute(sql);
 	        stmt.close();conn.close();
 	        return true;
@@ -559,7 +612,7 @@ public class MySQL {
     		Connection conn = DriverManager.getConnection(url,username,pword);
     		String tempid = temp.getId();
     		Statement stmt= conn.createStatement();
-    		for(int i =0;i<temp.getCheckbox().length;i++) //¶Ôcheckbox½øÐÐ±éÀú  
+    		for(int i =0;i<temp.getCheckbox().length;i++) //ï¿½ï¿½checkboxï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½  
 			{  
     			int t = Integer.parseInt(temp.getCheckbox()[i]);
     			String sql = "insert into travelhobby values('"+tempid+"','"+t+"');";
@@ -572,6 +625,100 @@ public class MySQL {
 			e.printStackTrace();
 			return false;
 		}
+    }
+
+    public boolean InsertInvite(long teamid, String friendid){
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "INSERT INTO invite(team_id, friend_id) VALUES ('"+teamid+"','"
+    		+friendid +"' );";
+	        Statement stmt= conn.createStatement();
+	        stmt.execute(sql);
+	        stmt.close();conn.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+    }
+
+    public ArrayList<Invitations> QueryInvitations(String userid){
+    	ArrayList<Invitations> invitations=new ArrayList<Invitations>();
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "select * from invite where friend_id='" +userid+ "';";
+	        Statement stmt= conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);
+	        while(rs.next()) {
+	        	long teamid = rs.getLong("team_id");
+	        	String memberid = rs.getString("friend_id");
+	        	Invitations tmp = new Invitations(teamid,memberid);
+	        	invitations.add(tmp);
+	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return invitations;
+    }
+    
+    public boolean AllowInvitations(long teamid, String userid){
+    	
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "insert into team_member(team_id,member_id) value('"+teamid+"','"+userid+"');";
+			Statement stmt= conn.createStatement();
+	        stmt.execute(sql);
+	        
+	        
+	        String sql2 = "delete from invite where team_id = '"+teamid+"' and friend_id = '"+userid+"';";
+	        stmt.execute(sql2);
+	        
+	        stmt.close();conn.close();
+	        return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    
+    	return false;
+    	
+    }
+
+    public boolean RefuseInvitations(long teamid, String userid){
+    	
+    	try {
+    		try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    		Connection conn = DriverManager.getConnection(url,username,pword);
+			String sql = "delete from invite where team_id = '"+teamid+"' and friend_id = '"+userid+"';";
+			Statement stmt= conn.createStatement();
+	        stmt.execute(sql);
+	        stmt.close();conn.close();
+	        return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    
+    	return false;
+    	
     }
 }
 

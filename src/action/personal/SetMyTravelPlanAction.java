@@ -29,8 +29,21 @@ public class SetMyTravelPlanAction extends ActionSupport {
     
     private int locationIndex;
     
+    public void validate() {
+        if (getNewBeginningDate() != null)
+            if (getNewBeginningDate().getTime() < (new java.util.Date()).getTime())
+                addFieldError("newBeginningDate", "请填写正确的日期");
+        if (getNewName() != null)
+            if (getNewName().trim().equals("") || getNewName().length() > 50)
+                addFieldError("newName", "计划名不能为空, 且不多于50个字符");
+        if (getNewLocation() != null)
+            if (getNewLocation().trim().equals(""))
+                addFieldError("newLocation", "请输入地址");
+    }
+    
     public String show() throws Exception {
         setPlan(Plan.getPlan(planId));
+        System.out.println(getPlan().getPath().getText());
         if (plan.isUnstart() == false)
             return ERROR;
         return SHOW;
@@ -73,6 +86,14 @@ public class SetMyTravelPlanAction extends ActionSupport {
         plan.remove(locationIndex);
         plan.save();
         return SUCCESS;
+    }
+    
+    public String over() throws Exception {
+        if (tools.UserState.isMember() == false)
+            return LOGIN;
+        setPlan(Plan.getPlan(planId));
+        plan.over();
+        return STRICT_SHOW;
     }
     
     public long getPlanId() {
@@ -122,4 +143,5 @@ public class SetMyTravelPlanAction extends ActionSupport {
     public void setLocationIndex(int locationIndex) {
         this.locationIndex = locationIndex;
     }
+
 }

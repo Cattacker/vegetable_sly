@@ -10,8 +10,8 @@ import mysql.MySQL;
 
 public class AllowApplyTeam extends ActionSupport{
 	
-	/**²éÑ¯ÂÃÓÎ¼Æ»®
-	 * ·µ»ØÂÃÓÎ¼Æ»®ÁÐ±í
+	/**ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Î¼Æ»ï¿½
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¼Æ»ï¿½ï¿½Ð±ï¿½
 	 */
 	private static final long serialVersionUID = 1L;
 	
@@ -24,15 +24,13 @@ public class AllowApplyTeam extends ActionSupport{
 		 MySQL my = new MySQL();
 		 String id = (String) ActionContext.getContext().getSession().get("user_ID");
 			if(id==null) {
-				this.addFieldError("error", "ÇëÄúÏÈµÇÂ½£¡");
+				this.addFieldError("error", "ï¿½ï¿½ï¿½ï¿½ï¿½Èµï¿½Â½ï¿½ï¿½");
 			} 
 	}
 	
 	public String execute(){
 		MySQL my = new MySQL();
 		my.AllowApplyTeams(teamid, userid);
-		System.out.println(teamid);
-		System.out.println(userid);
 		return SUCCESS;
 	}
 	public void setTeamid(long teamid){

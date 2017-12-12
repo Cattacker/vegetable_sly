@@ -11,21 +11,21 @@ import model.*;
 
 public class QueryApplyTeam extends ActionSupport{
 	
-	/**²éÑ¯ÂÃÓÎ¼Æ»®
-	 * ·µ»ØÂÃÓÎ¼Æ»®ÁÐ±í
+	/**ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Î¼Æ»ï¿½
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¼Æ»ï¿½ï¿½Ð±ï¿½
 	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<ApplyTeamModel> applyteams= new ArrayList<ApplyTeamModel>();
-	
+	private ArrayList<Invitations> invitations= new ArrayList<Invitations>();
 	public void validate() {
 		 super.validate();
 		 MySQL my = new MySQL();
 		 String id = (String) ActionContext.getContext().getSession().get("user_ID");
 			if(id==null) {
-				this.addFieldError("error", "ÇëÄúÏÈµÇÂ½£¡");
+				this.addFieldError("error", "ï¿½ï¿½ï¿½ï¿½ï¿½Èµï¿½Â½ï¿½ï¿½");
 			} 
-			if(id!=null&&my.QueryApplyTeams(id).isEmpty()) {
-				this.addFieldError("error", "Äú»¹Ã»ÓÐÏûÏ¢£¡");
+			if(id!=null&&my.QueryApplyTeams(id).isEmpty()&&my.QueryInvitations(id).isEmpty()) {
+				this.addFieldError("error", "ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½");
 			}
 	}
 	
@@ -33,7 +33,7 @@ public class QueryApplyTeam extends ActionSupport{
 		MySQL my = new MySQL();
 		String id = (String) ActionContext.getContext().getSession().get("user_ID");
 		setApplyteams(my.QueryApplyTeams(id));
-		System.out.println("QueryTeam");
+		setInvitations(my.QueryInvitations(id));
 		return SUCCESS;
 	}
 	public ArrayList<ApplyTeamModel> getApplyteams() {
@@ -41,6 +41,12 @@ public class QueryApplyTeam extends ActionSupport{
 	}
 	public void setApplyteams(ArrayList<ApplyTeamModel> applyteams) {
 		this.applyteams = applyteams;
+	}
+	public ArrayList<Invitations> getInvitations() {
+		return this.invitations;
+	}
+	public void setInvitations(ArrayList<Invitations> invitations) {
+		this.invitations = invitations;
 	}
 	
 }

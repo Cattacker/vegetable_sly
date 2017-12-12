@@ -87,19 +87,25 @@
 		          <a class="nav-link active" href="QueryFriends.action">我的好友</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="QueryTravelPlan.action?state=0">待执行计划</a>
+		          <a class="nav-link" href="GetMyTravelPlanList_getUnstart.action">待执行计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="QueryTravelPlan.action?state=1">正在执行计划</a>
+		          <a class="nav-link" href="GetMyTravelPlanList_getTraveling.action">正在执行计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="QueryTravelPlan.action?state=2">未评价计划</a>
+		          <a class="nav-link" href="GetMyTravelPlanList_getOver.action">未评价计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="QueryTravelPlan.action">全部计划</a>
+		          <a class="nav-link" href="GetMyTravelPlanList_getRated.action">已评价计划</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="searchauthorrequest?">待加</a>
+		          <a class="nav-link" href="QueryTeam.action">我的团队</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="editor.jsp">编写攻略</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="QueryApplyTeam.action">系统消息</a>
 		        </li>
 		      </ul>
 			</div>
@@ -110,16 +116,21 @@
     <h3>可编辑的表格</h3>
     <table width="698" border="0" cellpadding="0" cellspacing="0" id="tabProduct">
         <tr>
+            <td width="186" bgcolor="#EFEFEF" >团队id</td>
             <td width="186" bgcolor="#EFEFEF" >团队名称</td>
             <td width="186" bgcolor="#EFEFEF" >计划id</td>
             <td width="152" bgcolor="#EFEFEF" >队长id</td>
+            <td width="152" bgcolor="#EFEFEF" >操作</td>
         </tr>
 
         <s:iterator value="myteam">
             <tr>
+            	<td>${ID}</td>
                 <td>${Name}</td>
                 <td >${Plan_id}</td>
                 <td >${Captain_id}</td>
+                <td><a class="nav-link active" href="InviteFriends.action?teamid=${ID}">邀请好友</a></td>
+
             </tr>
         </s:iterator>
 

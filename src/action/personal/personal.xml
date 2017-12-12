@@ -4,21 +4,19 @@
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 	<package name="action.personal" namespace="/" extends="struts-default">
-		<action name="GetMyInformation" 
-				class="action.personal.GetMyInformationAction">
+		<action name="GetMyTravelPlan"
+				class="action.personal.GetMyTravelPlanAction">
 			<result name="login">login.jsp</result>
-			<result name="success">myInformation.jsp</result>
+			<result name="success">myTravelPlan.jsp</result>
 		</action>
-		<action name="SetMyInformation_*"
-				class="action.personal.SetMyInformationAction"
+		<action name="GetMyTravelPlanList_*"
+				class="action.personal.GetMyTravelPlanListAction"
 				method="{1}">
-			<result name="login">login.jsp</result>
-			<result name="success">myInformation.jsp</result>
-			<result name="getView">setMyInformation.jsp</result>
-		</action>
-		<action name="GetMyTravelPlanList"
-				class="action.personal.GetMyTravelPlanListAction">
 			<result name="success">myTravelPlanList.jsp</result>
+			<result name="unstart">unstartTravelPlan.jsp</result>
+			<result name="traveling">travelingTravelPlan.jsp</result>
+			<result name="over">overTravelPlan.jsp</result>
+			<result name="rated">ratedTravelPlan.jsp</result>
 			<result name="login">login.jsp</result>
 		</action>
 		<action name="NewTravelPlan_*"
@@ -28,6 +26,47 @@
 			<result name="success" type="redirectAction">GetMyTravelPlanList</result>
 			<result name="login">login.jsp</result>
 			<result name="input">newPersonalTravelPlan.jsp</result>
+		</action>
+		<action name="SetMyTravelPlan_*"
+				class="action.personal.SetMyTravelPlanAction"
+				method="{1}">
+			<result name="show">setMyTravelPlan.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">SetMyTravelPlan_show</param>
+				<param name="planId">${planId}</param>
+			</result>
+			<result name="strict_show" type="redirectAction">
+				<param name="actionName">GetMyTravelPlan</param>
+				<param name="planId">${planId}</param>
+			</result>
+			<result name="error">error.jsp</result>
+			<result name="input" type="redirectAction">
+				<param name="actionName">SetMyTravelPlan_show</param>
+				<param name="planId">${planId}</param>
+			</result>
+		</action>
+		<action name="AddLog" class="action.personal.AddLogAction">
+			<result name="login">login.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">GetMyTravelPlan</param>
+				<param name="planId">${planId}</param>
+			</result>
+			<result name="input" type="redirectAction">
+				<param name="actionName">GetMyTravelPlan</param>
+				<param name="planId">${planId}</param>
+			</result>
+		</action>
+		<action name="RatePath" class="action.personal.RatePathAction">
+			<result name="login">login.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">GetMyTravelPlan</param>
+				<param name="planId">${planId}</param>
+			</result>
+		</action>
+		<action name="GetMyTravelPlanList"
+				class="action.personal.GetMyTravelPlanListAction">
+			<result name="success">myTravelPlanList.jsp</result>
+			<result name="login">login.jsp</result>
 		</action>
 		<action name="SetMyTravelPlan_*"
 				class="action.personal.SetMyTravelPlanAction"

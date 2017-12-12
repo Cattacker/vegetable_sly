@@ -43,7 +43,6 @@ public class RegAction extends ActionSupport {
 			temp.setID(id);temp.setPassword(password);temp.setNickname(nickname);
 			boolean q = new MySQL().InsertTravelHobby(tmp);
 			new MySQL().InsertBasic(temp);
-			System.out.println(q);
 			return SUCCESS;//×¢²á³É¹¦
 	}
 	

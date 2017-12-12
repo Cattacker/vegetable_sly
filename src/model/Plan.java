@@ -56,10 +56,11 @@ public class Plan implements localization.LocalSettings {
         this.name = name;
         this.setBeginningDate(begin);
         this.setEndingDate(end);
-        if (begin.compareTo(Date.valueOf(LocalDate.now())) < 0)
-            setUnstart();
-        else if (isOver() == false)
-            setTraveling();
+        if (isOver() == false)
+            if (begin.compareTo(new Date((new java.util.Date()).getTime())) > 0)
+                setUnstart();
+            else
+                setTraveling();
         this.path = Path.getPath(pathId);
         isSynchronous = true;
     }
@@ -91,25 +92,33 @@ public class Plan implements localization.LocalSettings {
     
     public boolean add(String location) {
         boolean ret = path.add(location);
+        path.save();
         pathId = path.getId();
+        isSynchronous = false;
         return ret;
     }
     
     public boolean add(int index, String location) {
         boolean ret = path.add(index, location);
+        path.save();
         pathId = path.getId();
+        isSynchronous = false;
         return ret;
     }
     
     public boolean set(int index, String location) {
         boolean ret = path.set(index, location);
+        path.save();
         pathId = path.getId();
+        isSynchronous = false;
         return ret;
     }
     
     public void remove(int index) {
         path.remove(index);
+        path.save();
         pathId = path.getId();
+        isSynchronous = false;
     }
     
     public void save() {
@@ -120,8 +129,7 @@ public class Plan implements localization.LocalSettings {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
-            conn.setAutoCommit(false);
-            String sql = "UPDATE travelplan"
+            String sql = "UPDATE travelplan "
                     + "set path_id=?, date_begin=?, name=?, state=? "
                     + "WHERE id=?;";
             stmt = (PreparedStatement) conn.prepareStatement(sql
@@ -131,7 +139,7 @@ public class Plan implements localization.LocalSettings {
             stmt.setString(3, getName());
             stmt.setShort(4, this.state);
             stmt.setLong(5, getId());
-            stmt.execute();
+            stmt.executeUpdate();
             isSynchronous = true;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -154,6 +162,13 @@ public class Plan implements localization.LocalSettings {
         }
     }
     
+    public void rate(int rate) {
+        getPath().rate(rate);
+        setRated();
+        isSynchronous = false;
+        save();
+    }
+    
     public void over() {
         setOver();
         isSynchronous = false;
@@ -162,8 +177,7 @@ public class Plan implements localization.LocalSettings {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
-            conn.setAutoCommit(false);
-            String sql = "UPDATE travelplan SET"
+            String sql = "UPDATE travelplan SET "
                     + "path_id=?, date_begin=?, name=?, state=?, date_end=? "
                     + "WHERE id=?;";
             stmt = (PreparedStatement) conn.prepareStatement(sql
@@ -175,7 +189,7 @@ public class Plan implements localization.LocalSettings {
             setEndingDate(Date.valueOf(LocalDate.now()));
             stmt.setDate(5, getEndingDate());
             stmt.setLong(6, getId());
-            stmt.execute();
+            stmt.executeUpdate();
             isSynchronous = true;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -201,25 +215,30 @@ public class Plan implements localization.LocalSettings {
     @SuppressWarnings("finally")
     public boolean addLog(String log) {
         Connection conn = null;
-        Statement stmt = null;
+        PreparedStatement stmt = null;
+        Statement tempStmt = null;
         boolean ret = false;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
-            stmt = conn.createStatement();
-            String sql = "SELECT 1 FROM travel_log WHERE id=" + this.id + ";";
-            ResultSet rs = stmt.executeQuery(sql);
-            int index = 0;
-            if (rs.next())
-                index = rs.getFetchSize();
-            rs.close();
-            sql = "INSERT INTO travel_log"
+            String sql = "INSERT INTO travel_log"
                     + "(plan_id, log_index, time, log)"
-                    + " VALUES(" + this.id + ", "
-                    + index + ", "
-                    + Date.valueOf(LocalDate.now()) + ", "
-                    + "'" + log + "');";
-            stmt.executeUpdate(sql);
+                    + " VALUES(?, ?, ?, ?);";
+            stmt = (PreparedStatement) conn.prepareStatement(sql);
+            tempStmt = conn.createStatement();
+            sql = "SELECT 1 FROM travel_log WHERE plan_id=" + this.id + ";";
+            ResultSet rs = tempStmt.executeQuery(sql);
+            int index = 0;
+            if (rs.next()) {
+                rs.last();
+                index = rs.getRow();
+            }
+            rs.close();
+            stmt.setLong(1, id);
+            stmt.setInt(2, index);
+            stmt.setDate(3, new Date(new java.util.Date().getTime()));
+            stmt.setString(4, log);
+            stmt.executeUpdate();
             ret = true;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -243,6 +262,14 @@ public class Plan implements localization.LocalSettings {
         }
     }
 
+    public List<Log> getLog() {
+        return Log.getLog(id);
+    }
+    
+    public List<Log> getReverseLog() {
+        return Log.getReverseLog(id);
+    }
+    
     public void setOver(Date endingDate) {
         setOver();
         setUnrated();
@@ -607,37 +634,37 @@ public class Plan implements localization.LocalSettings {
     }
     
     public void setUnstart() {
-        state &= TRAVEL_STATE;
+        state &= ~TRAVEL_STATE;
         state += UNSTART;
     }
     
     public void setTraveling() {
-        state &= TRAVEL_STATE;
+        state &= ~TRAVEL_STATE;
         state += TRAVELING;
     }
     
     public void setOver() {
-        state &= TRAVEL_STATE;
+        state &= ~TRAVEL_STATE;
         state += OVER;
     }
     
     public void setPersonalPlan() {
-        state &= RELATE_STATE;
+        state &= ~RELATE_STATE;
         state += PERSONAL;
     }
     
     public void setTeamPlan() {
-        state &= RELATE_STATE;
+        state &= ~RELATE_STATE;
         state += TEAM;
     }
     
     public void setRated() {
-        state &= RATED_STATE;
+        state &= ~RATED_STATE;
         state += RATED;
     }
     
     public void setUnrated() {
-        state &= RATED_STATE;
+        state &= ~RATED_STATE;
         state += UNRATED;
     }
 
@@ -687,5 +714,34 @@ public class Plan implements localization.LocalSettings {
     
     public int getSize() {
         return size();
+    }
+    
+    public static void main(String[] args) {
+        /*
+        short state = 9;
+        if ((state & TRAVEL_STATE) == UNSTART)
+            System.out.println("bingo!");
+        else
+            System.out.println("fuck!");
+
+        if ((state & TRAVEL_STATE) != OVER)
+            System.out.println("bingo!");
+        else
+            System.out.println("fuck!");
+
+        state &= ~TRAVEL_STATE;
+        state += TRAVELING;
+        System.out.println(state);
+
+        state &= ~TRAVEL_STATE;
+        state += UNSTART;
+        System.out.println(state);
+        */ //test success;
+        
+        Plan plan = Plan.getPlan(1);
+        if (plan.getPath() == null)
+            System.out.println("fuck!");
+        else
+            System.out.println("success!");
     }
 }

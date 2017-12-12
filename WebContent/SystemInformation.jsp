@@ -52,16 +52,16 @@
     		<div class="container" style="padding-top: 20px; margin-top: 20px">
 		      <ul class="nav nav-pills nav-fill">
 		        <li class="nav-item">
-		          <a class="nav-link" href="">旅游攻略</a>
+		          <a class="nav-link" href="expresseditor.action">旅游攻略</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link active" href="QueryUsers.jsp">用户查询</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="path.jsp">查询路线</a>
+		          <a class="nav-link" href="QueryTeams.jsp">团队查询</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="searchauthorrequest?">待加</a>
+		          <a class="nav-link" href="path.jsp">路线查询</a>
 		        </li>
 		      </ul>
 			</div>
@@ -102,6 +102,21 @@
                 <td>${userid}</td>
                 <td><a class="nav-link active" href="AllowApplyTeam.action?teamid=${teamid}&userid=${userid}">同意</a></td>  
                 <td><a class="nav-link active" href="RefuseApplyTeam.action?teamid=${teamid}&userid=${userid}">拒绝</a></td>  
+            </tr>
+            
+        </s:iterator>
+        <tr>
+        	<td width="186" bgcolor="#EFEFEF" >团队id</td>
+            <td width="186" bgcolor="#EFEFEF" >操作</td>
+            <td width="186" bgcolor="#EFEFEF" >操作</td>
+        </tr>
+
+        <s:iterator value="invitations">
+            <tr>
+            	<td>${teamid}</td>
+                <td>${userid}</td>
+                <td><a class="nav-link active" href="AllowInvitation.action?teamid=${teamid}">同意</a></td>  
+                <td><a class="nav-link active" href="RefuseInvitation.action?teamid=${teamid}">拒绝</a></td>  
             </tr>
             
         </s:iterator>

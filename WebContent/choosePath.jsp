@@ -6,10 +6,45 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BG9q7yWsanxwi7twxs95xyv3KtEvfWna"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BG9q7yWsanxwi7twxs95xyv3KtEvfWna"></script>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+	<title>个人计划-修改</title>
+	<sx:head/>
+
+<meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
 <title>选择一条路线</title>
 </head>
 <body>
-	<h5>${name}</h5><br/>
+
+	
+	    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			
+			<ul class="breadcrumb">
+				<li>
+				<a class="navbar-brand" href="index?">寻找“驴友”</a>
+				</li>
+				<li>
+					<a href="homepage.jsp">个人主页</a> <span class="divider">/</span>
+				</li>
+				<li>
+					<a href="start.jsp">首页</a> <span class="divider">/</span>
+				</li>
+				
+			</ul>
+			<div class="row">
+				<div class="col-md-3">
+				</div>
+				<div class="col-md-6">
+
+
+	<h5>计划名 : ${name}</h5><br/>
 	<h5>开始日期 : ${date}</h5><br/>
 	<form action="SetMyTravelPlan_show">
 		<input name="planId" type="hidden" value="${planId}"/>

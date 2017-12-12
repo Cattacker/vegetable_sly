@@ -30,7 +30,7 @@ public class Path implements localization.LocalSettings {
     
     
     
-    private Path(ArrayList<Location> locations, long id
+    private Path(List<Location> locations, long id
             , int rateSize, double rate) {
         this.locations = locations;
         this.id = id;
@@ -52,6 +52,7 @@ public class Path implements localization.LocalSettings {
         boolean ret = Location.hasLocation(location);
         Location.addLocation(location);
         locations.add(Location.getLocation(location));
+        isSynchronous = false;
         Path path = getEquivalentPath();
         if (path == null) {
             isSynchronous = false;
@@ -69,6 +70,7 @@ public class Path implements localization.LocalSettings {
     public boolean set(int index, String location) {
         Location.addLocation(location);
         locations.set(index, Location.getLocation(location));
+        isSynchronous = false;
         Path path = getEquivalentPath();
         if (path == null) {
             isSynchronous = false;
@@ -86,6 +88,7 @@ public class Path implements localization.LocalSettings {
     public boolean add(int index, String location) {
         Location.addLocation(location);
         locations.add(index, Location.getLocation(location));
+        isSynchronous = false;
         Path path = getEquivalentPath();
         if (path == null) {
             isSynchronous = false;
@@ -102,6 +105,7 @@ public class Path implements localization.LocalSettings {
     
     public void remove(int index) {
         locations.remove(index);
+        isSynchronous = false;
         Path path = getEquivalentPath();
         if (path == null) {
             isSynchronous = false;
@@ -126,14 +130,17 @@ public class Path implements localization.LocalSettings {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
-            String sql = "INSERT INTO path(start_id, end_id, path_size, hash_code) "
-                    + "VALUE (?, ?, ?, ?);";
+            String sql = "INSERT INTO path"
+                    + "(start_id, end_id, path_size, hash_code, rate_size, rate_aver) "
+                    + "VALUE (?, ?, ?, ?, ?, ?);";
             stmt = (PreparedStatement) conn.prepareStatement(sql
                     , Statement.RETURN_GENERATED_KEYS);
             stmt.setLong(1, getStart().getId());
             stmt.setLong(2, getEnd().getId());
             stmt.setInt(3, getSize());
             stmt.setInt(4, hashCode());
+            stmt.setInt(5, getRateSize());
+            stmt.setDouble(6, getRate());
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
@@ -149,7 +156,7 @@ public class Path implements localization.LocalSettings {
             for (Location location : locations) {
                 stmt.setLong(1, this.id);
                 stmt.setLong(2, location.getId());
-                stmt.setInt(3, i);
+                stmt.setInt(3, i++);
                 stmt.addBatch();
             }
             stmt.executeBatch();
@@ -184,10 +191,45 @@ public class Path implements localization.LocalSettings {
         return !(getEquivalentPathId() == 0);
     }
     
+    @SuppressWarnings("finally")
     public boolean rate(int rate) {
         double rateSum = (double)(this.rateSize++) * this.rate;
-        this.rate = rateSum / (double)(this.rateSize);
-        return save();
+        this.rate = (rateSum + (double)rate) / (double)(this.rateSize);
+        this.hashCode = locations.hashCode();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        boolean ret = false;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(databaseURL, username, password);
+            String sql = "UPDATE path SET "
+                    + "rate_size=?, rate_aver=? "
+                    + "WHERE path_id=" + this.id + ";";
+            stmt = (PreparedStatement) conn.prepareStatement(sql);
+            stmt.setInt(1, getRateSize());
+            stmt.setDouble(2, getRate());
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }    
+        finally {
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return ret;
+        }
     }
     
     public Path getEquivalentPath() {
@@ -201,15 +243,17 @@ public class Path implements localization.LocalSettings {
         this.hashCode = this.locations.hashCode();
         Connection conn = null;
         Statement stmt = null;
+        Statement tempStmt = null;
         long ret = 0;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
             String sql = "SELECT * FROM path WHERE hash_code=" + hashCode() + ";";
             stmt = conn.createStatement();
+            tempStmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                if (Objects.equals(rs.getInt("size"), size())
+                if (Objects.equals(rs.getInt("path_size"), size())
                         && Objects.equals(getStart().getId() 
                                 , rs.getLong("start_id"))
                         && Objects.equals(getEnd().getId()
@@ -217,9 +261,12 @@ public class Path implements localization.LocalSettings {
                     sql = "SELECT * FROM path_struct"
                             + " WHERE path_id=" + rs.getLong("path_id")
                             + " ORDER BY location_index";
-                    ResultSet temp = stmt.executeQuery(sql);
+                    ResultSet temp = tempStmt.executeQuery(sql);
                     boolean isEqual = false;
-                    if (locations.size() == temp.getFetchSize()) {
+                    temp.last();
+                    int rowCount = temp.getRow();
+                    temp.beforeFirst();
+                    if (locations.size() == rowCount) {
                         isEqual = true;
                         for (Location location : locations) {
                             temp.next();
@@ -238,6 +285,7 @@ public class Path implements localization.LocalSettings {
                 }
             }
             rs.close();
+            tempStmt.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -323,13 +371,13 @@ public class Path implements localization.LocalSettings {
                 rate = rs.getDouble("rate_aver");
             }
             rs.close();
-            sql = "SELECT * FROM path_struct WHERE path_id=" + id + ";";
+            sql = "SELECT location_id FROM path_struct WHERE path_id="
+                    + id + " ORDER BY location_index;";
             rs = stmt.executeQuery(sql);
-            ArrayList<Location> locations = new ArrayList<Location>(rs.getFetchSize());
+            LinkedList<Location> locations = new LinkedList<Location>();
             while (rs.next()) {
-                int index = rs.getInt("location_index");
                 long location_id = rs.getLong("location_id");
-                locations.set(index, Location.getLocation(location_id));
+                locations.add(Location.getLocation(location_id));
             }
             if (locations.isEmpty() == false)
                 ret = new Path(locations, id, rateSize, rate);
@@ -408,5 +456,9 @@ public class Path implements localization.LocalSettings {
     public int getRateSize() {
         return rateSize;
     }
-
+    
+    public static void main(String[] args) {
+        Path path = getPath(2);
+        path.rate(4);
+    }
 }

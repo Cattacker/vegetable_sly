@@ -27,7 +27,7 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
     private String name;
     
     private Date date;
-    
+
     private long planId = 0;
     
     private Plan plan;
@@ -46,6 +46,8 @@ public class NewPersonalTravelPlanAction extends ActionSupport {
             if (getName() == null || getName().trim().equals("")
                     || getName().length() > 50)
                 addFieldError("name", "计划名不能为空, 且不多于50个字符");
+            if (getDate() == null || getDate().getTime() < (new java.util.Date()).getTime())
+                addFieldError("date", "请填写正确的日期");
         }
     }
     

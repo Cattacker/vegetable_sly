@@ -65,7 +65,7 @@ public class Location implements localization.LocalSettings{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
             stmt = conn.createStatement();
-            String sql = "SELECT * FROM location WHERE name='" + name + "';";
+            String sql = "SELECT * FROM location WHERE name=\"" + name + "\";";
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 ret = new Location(rs.getLong("id"), rs.getString("name"));
@@ -101,12 +101,12 @@ public class Location implements localization.LocalSettings{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
             stmt = conn.createStatement();
-            String sql = "SELECT 1 FROM location WHERE name='" + name + "' LIMIT 1;";
+            String sql = "SELECT 1 FROM location WHERE name=\"" + name + "\" LIMIT 1;";
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next())
                 ret = false;
             else {
-                sql = "INSERT INTO location (name) VALUES ('" + name + "');";
+                sql = "INSERT INTO location (name) VALUES (\"" + name + "\");";
                 stmt.executeUpdate(sql);
                 ret = true;
             }
@@ -140,7 +140,7 @@ public class Location implements localization.LocalSettings{
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
-            String sql = "SELECT 1 FROM location WHERE name='" + name + "' LIMIT 1;";
+            String sql = "SELECT 1 FROM location WHERE name=\"" + name + "\" LIMIT 1;";
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next())

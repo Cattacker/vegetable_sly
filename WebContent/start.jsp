@@ -107,7 +107,7 @@
     		<div class="container" style="padding-top: 20px; margin-top: 20px">
 		      <ul class="nav nav-pills nav-fill">
 		        <li class="nav-item">
-		          <a class="nav-link" href="raiders.jsp">旅游攻略</a>
+		          <a class="nav-link" href="expresseditor.action">旅游攻略</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link active" href="QueryUsers.jsp">用户查询</a>
@@ -119,7 +119,7 @@
 		          <a class="nav-link" href="path.jsp">路线查询</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="newplan.html">创建计划</a>
+		          <a class="nav-link" href="newPersonalTravelPlan.jsp">创建计划</a>
 		        </li>
 		      </ul>
 			</div>
@@ -128,6 +128,9 @@
 			</ul>
 			<A onmouseover="displayStatusMsg();return document.returnValue" href="javascript:jump2url()"><IMG style="FILTER: revealTrans(duration=2,transition=20)" src="http://image2.sina.com.cn/home/images/sina_logo2.gif" border=0 name=bannerADrotator></a>
 			<SCRIPT language=JavaScript>nextAd()</SCRIPT>
+		</div>
+		<div>
+			
 		</div>
 	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 	<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>

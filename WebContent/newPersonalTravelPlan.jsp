@@ -7,30 +7,117 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-        body, html {width: 100%;height: 100%; margin:0;font-family:"Ã¥Â¾Â®Ã¨Â½Â¯Ã©ÂÂÃ©Â»Â";}
-        #allmap{height:500px;width:100%;}
-        #r-result,#r-result table{width:100%;}
-    </style>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BG9q7yWsanxwi7twxs95xyv3KtEvfWna"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BG9q7yWsanxwi7twxs95xyv3KtEvfWna"></script>
     <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
-<title>新建计划</title>
-<sx:head/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+
+    <style type="text/css">
+        <!--
+        body,div,p,ul,li,font,span,td,th{
+            font-size:10pt;
+            line-height:155%;
+        }
+        table{
+            border-top-width: 1px;
+            border-right-width: 1px;
+            border-bottom-width: 0px;
+            border-left-width: 1px;
+            border-top-style: solid;
+            border-right-style: solid;
+            border-bottom-style: none;
+            border-left-style: solid;
+            border-top-color: #CCCCCC;
+            border-right-color: #CCCCCC;
+            border-bottom-color: #CCCCCC;
+            border-left-color: #CCCCCC;
+        }
+        td{
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: #CCCCCC;
+        }
+        .EditCell_TextBox {
+            width: 90%;
+            border:1px solid #0099CC;
+        }
+        .EditCell_DropDownList {
+            width: 90%;
+        }
+        -->
+    </style>
+	<title>新建计划</title>
+	<sx:head/>
 </head>
 <body>
+	<div class="container-fluid">
+  	<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-10">
+					<ul class="breadcrumb">
+						<li>
+						<a class="navbar-brand" href="index.jsp">寻找“驴友”</a>
+						</li>
+						<li>
+							<a href="MyDetails.action?id=${sessionScope.user_ID}">个人主页</a> <span class="divider">/</span>
+						</li>
+						<li>
+							<a href="start.jsp">首页</a> <span class="divider">/</span>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-2">
+					<ul class="breadcrumb">
+					<li>
+					 	<a href="LogoutAction.action">注销</a>
+					 </li>
+					</ul>
+				</div>
+			</div>
+			</div>
+    		<div class="container" style="padding-top: 20px; margin-top: 20px">
+		      <ul class="nav nav-pills nav-fill">
+		        <li class="nav-item">
+		          <a class="nav-link" href="MyDetails.action?id=${sessionScope.user_ID}">我的信息</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link active" href="QueryFriends.action">我的好友</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="GetMyTravelPlanList_getUnstart.action">待执行计划</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="GetMyTravelPlanList_getTraveling.action">正在执行计划</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="GetMyTravelPlanList_getOver.action">未评价计划</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="GetMyTravelPlanList_getRated.action">已评价计划</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="newPersonalTravelPlan.jsp">新建计划</a>
+		        </li>
+		      </ul>
+			</div>
+			<ul><s:fielderror name="error"/></ul>
+			</div>
 	<form action="NewTravelPlan_newTravelPlan">
-		<s:textfield name="name" label="计划名"/>
-		<sx:datetimepicker name="date" label="出发日期"
-			displayFormat="yyyy-MM-dd" value="%{'today'}"/>
+	
 		<div id="l-map"></div>
-		<s:textfield label="起点:" name="start" id="suggestId" value="百度"/>
-			
-		<br/>
-		
-		<s:textfield label="终点:" name="end" id="suggestId2" value="百度"/>
-			
+		计划名:<s:textfield name="name"/>
+		<br/>出发日期:<sx:datetimepicker name="date"
+				displayFormat="yyyy-MM-dd" value="%{'today'}"/>
+		<br/>起点:<s:textfield name="start" id="suggestId" value="百度"/>
+		<br/>终点:<s:textfield name="end" id="suggestId2" value="百度"/>
 		<input type="submit" value="下一步"/>
+		
 	</form>
 
 </body>
