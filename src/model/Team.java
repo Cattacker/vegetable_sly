@@ -48,7 +48,6 @@ public class Team implements localization.LocalSettings{
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(databaseURL, username, password);
-            conn.setAutoCommit(false);
             String sql = "INSERT INTO team(name, plan_id, captain_id) "
                     + "VALUE (?, ?, ?);";
             stmt = (PreparedStatement) conn.prepareStatement(sql
@@ -61,8 +60,6 @@ public class Team implements localization.LocalSettings{
             if (rs.next())
                 this.ID = rs.getLong(1);
             rs.close();
-            stmt.executeBatch();
-            conn.commit();
             ret = true;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
